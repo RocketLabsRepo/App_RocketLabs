@@ -1,51 +1,7 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<title>Rocket Labs</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'core_app/base.html' %}
+{% load static %}
 
-<!-- Hojas de Estilo -->
-<!-- Link no local para la hoja de estilos de la W3Schools
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
--->
-<link rel="stylesheet" type="text/css" href="{% static 'core_app/css/w3.css'%}">
-<link rel="stylesheet" href="{% static 'core_app/css/familyraleway.css'%}">
-<link rel="stylesheet" href="{% static 'core_app/css/font-awesome.min.css'%}">
-<link rel="stylesheet" type="text/css" href="{% static 'core_app/css/mystyle.css' %}">
-
-
-<body>
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-card-2" id="myNavbar">
-    <a href="#home" class="w3-bar-item w3-button w3-wide">LOGO</a>
-    <!-- Right-sided navbar links -->
-    <div class="w3-right w3-hide-small">
-      <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> TEAM</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> WORK</a>
-      <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRICING</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-    </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-</div>
-
-<!-- Sidebar on small screens when clicking the menu icon -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT</a>
-  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">TEAM</a>
-  <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">WORK</a>
-  <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">PRICING</a>
-  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
-</nav>
-
+{% block content %}
 <!-- Header with full-height image -->
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
   <div class="w3-display-left w3-text-white" style="padding:48px">
@@ -350,23 +306,4 @@
 
   </div>
 </div>
-
-<!-- Footer -->
-<footer class="w3-center w3-black w3-padding-64">
-  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Inicio del Portal</a>
-  <div class="w3-xlarge w3-section">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-  </div>
-  <p>Rocket Labs</p>
-</footer>
- <script src="{% static 'core_app/js/myjs.js'%}"></script>
-<!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
--->
-
-</body>
-</html>
+{% endblock %}
