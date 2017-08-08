@@ -19,10 +19,16 @@ body, html {
 
 /* Full height image header */
 .bgimg-1 {
+	background-image: url("../img/mac.jpg");
+	min-height: 100%;
+
+	/* Empleamos estas reglas para lograr efecto parallax */
+	background-attachment: fixed;
     background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("../img/mac.jpg");
-    min-height: 100%;
+    
+    
 }
 
 .w3-bar .w3-button {
