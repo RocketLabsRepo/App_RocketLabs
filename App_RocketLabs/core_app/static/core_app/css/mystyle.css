@@ -18,20 +18,23 @@ body, html {
 }
 
 /* Full height image header */
-.bgimg-1 {
+.bgimg-1{
 	background-image: url("../img/mac.jpg");
 	min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
 
-	/* Empleamos estas reglas para lograr efecto parallax */
+/* Empleamos estas reglas para lograr efecto parallax */
+.parallax{
 	background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
-    
 }
 
-.w3-bar .w3-button {
+
+.w3-bar .w3-button{
     padding: 16px;
 }
 
