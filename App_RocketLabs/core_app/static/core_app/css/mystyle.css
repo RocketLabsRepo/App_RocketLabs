@@ -28,3 +28,41 @@ body, html {
 .w3-bar .w3-button {
     padding: 16px;
 }
+
+#padding24-48{
+	padding: 24px 48px;
+}
+
+#padding48{
+	padding: 48px;
+}
+
+.padding128-16{
+	padding:  128px 16px;
+}
+
+#image700x394{
+	width : 700px;
+	height: 394px;
+}
+
+.margintop64{
+	margin-top: 64px;
+}
+
+.widthOHP{
+	width : 100%;
+}
+
+#widthNP{
+	width: 90%;
+}
+
+#widthEFP{
+	width: 85%;
+}
+
+#widthSFP{
+	width: 75%;
+}
+

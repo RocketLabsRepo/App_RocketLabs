@@ -4,13 +4,13 @@
 {% block content %}
 <!-- Header with full-height image -->
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
-  <div class="w3-display-left w3-text-white" style="padding:48px">
+  <div class="w3-display-left w3-text-white" id="padding48">
     <span class="w3-jumbo w3-hide-small">Start something that matters</span><br>
     <span class="w3-xxlarge w3-hide-large w3-hide-medium">Start something that matters</span><br>
     <span class="w3-large">Stop wasting valuable time with projects that just isn't you.</span>
     <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Learn more and start today</a></p>
   </div> 
-  <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
+  <div class="w3-display-bottomleft w3-text-grey w3-large" id="padding24-48">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>
     <i class="fa fa-snapchat w3-hover-opacity"></i>
@@ -21,10 +21,11 @@
 </header>
 
 <!-- About Section -->
-<div class="w3-container" style="padding:128px 16px" id="about">
+
+<div class="w3-container padding128-16" id="about">
   <h3 class="w3-center">ACERCA DE LA COMPAÑIA</h3>
   <p class="w3-center w3-large">Nuestros valores y habilidades</p>
-  <div class="w3-row-padding w3-center" style="margin-top:64px">
+  <div class="w3-row-padding w3-center margintop64">
     <div class="w3-quarter">
       <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
       <p class="w3-large">Alta calidad</p>
@@ -49,7 +50,7 @@
 </div>
 
 <!-- Promo Section - "We know design" -->
-<div class="w3-container w3-light-grey" style="padding:128px 16px">
+<div class="w3-container w3-light-grey padding128-16">
   <div class="w3-row-padding">
     <div class="w3-col m6">
       <h3>Sabemos diseñar.</h3>
@@ -57,19 +58,20 @@
       <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> View Our Works</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="{% static 'core_app/img/phone_buildings.jpg' %}" alt="Buildings" width="700" height="394">
+      <img class="w3-image w3-round-large" src="{% static 'core_app/img/phone_buildings.jpg' %}" alt="Buildings" id="image700x394">
     </div>
   </div>
 </div>
 
 <!-- Team Section -->
-<div class="w3-container" style="padding:128px 16px" id="team">
+<div class="w3-container padding128-16" id="team">
   <h3 class="w3-center">EL EQUIPO</h3>
   <p class="w3-center w3-large">Las caras de nuestra compañia</p>
-  <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
+  <div class="w3-row-padding w3-grayscale margintop64">
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team4.jpg' %}" alt="John" style="width:100%">
+        <img src="{% static 'core_app/img/team4.jpg' %}" alt="Rabindranath" class="widthOHP">
+
         <div class="w3-container">
           <h3>Rabindranath Ferreira</h3>
           <p class="w3-opacity">CEO & Founder</p>
@@ -80,7 +82,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team1.jpg' %}" alt="Jane" style="width:100%">
+        <img src="{% static 'core_app/img/team1.jpg' %}" alt="César" class="widthOHP">
         <div class="w3-container">
           <h3>César Gonzales</h3>
           <p class="w3-opacity">Diseñador Gráfico</p>
@@ -91,7 +93,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team3.jpg' %}" alt="Mike" style="width:100%">
+        <img src="{% static 'core_app/img/team3.jpg' %}" alt="Rafael" class="widthOHP">
         <div class="w3-container">
           <h3>Rafael Vasquez</h3>
           <p class="w3-opacity">Diseñador Web</p>
@@ -102,7 +104,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team2.jpg' %}" alt="Dan" style="width:100%">
+        <img src="{% static 'core_app/img/team2.jpg' %}" alt="Osvani" class="widthOHP">
         <div class="w3-container">
           <h3>Osvani Colina</h3>
           <p class="w3-opacity">Programador Backend</p>
@@ -135,42 +137,46 @@
 </div>
 
 <!-- Work Section -->
-<div class="w3-container" style="padding:128px 16px" id="work">
+
+<div class="w3-container padding128-16" id="work">
   <h3 class="w3-center">NUESTRO TRABAJO</h3>
   <p class="w3-center w3-large">Proyectos realizados para clientes satisfechos</p>
 
   <!-- CARGAR DINAMICAMENTE LOS TRABAJOS REALIZADOS -->
 
-  <div class="w3-row-padding" style="margin-top:64px">
+  <div class="w3-row-padding margintop64">
     <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_mic.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A microphone">
+      <img src="{% static 'core_app/img/tech_mic.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A microphone">
     </div>
-    <div class="w3-col l3 m6">
-      
-      <img src="{% static 'core_app/img/tech_phone.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A phone">
-    </div>
-    <div class="w3-col l3 m6">
-      
-      <img src="{% static 'core_app/img/foro_estudiantil.png' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Forum-Estudiantil">
-    </div>
-    <div class="w3-col l3 m6">
 
-      <img src="{% static 'core_app/img/tech_sound.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Soundbox">
+    <div class="w3-col l3 m6">
+      <img src="{% static 'core_app/img/tech_phone.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A phone">
+    </div>
+
+    <div class="w3-col l3 m6">
+      <img src="{% static 'core_app/img/foro_estudiantil.png' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="Forum-Estudiantil">
+    </div>
+
+    <div class="w3-col l3 m6">
+      <img src="{% static 'core_app/img/tech_sound.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="Soundbox">
     </div>
   </div>
 
   <div class="w3-row-padding w3-section">
     <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tablet.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A tablet">
+      <img src="{% static 'core_app/img/tech_tablet.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A tablet">
     </div>
+
     <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_camera.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A camera">
+      <img src="{% static 'core_app/img/tech_camera.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A camera">
     </div>
+
     <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_typewriter.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A typewriter">
+      <img src="{% static 'core_app/img/tech_typewriter.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A typewriter">
     </div>
+
     <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tableturner.jpg' %}" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A tableturner">
+      <img src="{% static 'core_app/img/tech_tableturner.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A tableturner">
     </div>
   </div>
 </div>
@@ -197,15 +203,15 @@
     <div class="w3-col m6">
       <p class="w3-wide"><i class="fa fa-desktop w3-margin-right"></i>Diseño Web</p>
       <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:90%">90%</div>
+        <div class="w3-container w3-dark-grey w3-center" id="widthNP">90%</div>
       </div>
       <p class="w3-wide"><i class="fa fa-check-square-o w3-margin-right"></i>Control de Calidad</p>
       <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:85%">85%</div>
+        <div class="w3-container w3-dark-grey w3-center" id="widthEFP">85%</div>
       </div>
       <p class="w3-wide"><i class="fa fa-database w3-margin-right"></i>Bases de Datos</p>
       <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:75%">75%</div>
+        <div class="w3-container w3-dark-grey w3-center" id="widthSFP">75%</div>
       </div>
       <p class="w3-wide"><strong>UX</strong> Experiencia de  Usuario</p>
       <div class="w3-grey">
@@ -216,10 +222,10 @@
 </div>
 
 <!-- Pricing Section -->
-<div class="w3-container w3-center w3-dark-grey" style="padding:128px 16px" id="pricing">
+<div class="w3-container w3-center w3-dark-grey padding128-16" id="pricing">
   <h3>PRECIOS</h3>
   <p class="w3-large">Elije un plan ajustado a tus necesidades.</p>
-  <div class="w3-row-padding" style="margin-top:64px">
+  <div class="w3-row-padding margintop64">
 
     <div class="w3-third w3-section">
       <ul class="w3-ul w3-white w3-hover-shadow">
@@ -276,10 +282,11 @@
 </div>
 
 <!-- Contact Section -->
-<div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
+
+<div class="w3-container w3-light-grey padding128-16" id="contact">
   <h3 class="w3-center">CONTÁCTANOS</h3>
   <p class="w3-center w3-large">Envianos un Mensaje</p>
-  <div class="w3-row-padding" style="margin-top:64px">
+  <div class="w3-row-padding margintop64">
     <div class="w3-col m5">
       <h4>Ubícanos</h4>
       <p>El infinito es nuestro límite</p>
