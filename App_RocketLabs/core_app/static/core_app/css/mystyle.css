@@ -33,9 +33,12 @@ body, html {
     background-size: cover;
 }
 
-
 .w3-bar .w3-button{
     padding: 16px;
+}
+
+.fadeInOnScroll{
+	opacity:0;
 }
 
 #padding24-48{
