@@ -23,6 +23,15 @@ body, html {
     min-height: 100%;
 }
 
+
+/* Empleamos estas reglas para lograr efecto parallax */
+.parallax{
+ 	background-attachment: fixed;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;    
+ }
+
 .w3-bar .w3-button {
     padding: 16px;
 }
