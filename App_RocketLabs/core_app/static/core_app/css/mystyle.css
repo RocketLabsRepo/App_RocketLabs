@@ -8,9 +8,7 @@ Colaboradores:
 - Rabindranath Ferreira
 */
 
-body,h1,h2,h3,h4,h5,h6 {
-	font-family: "Raleway", sans-serif;
-}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
 body, html {
     height: 100%;
@@ -18,27 +16,15 @@ body, html {
 }
 
 /* Full height image header */
-.bgimg-1{
-	background-image: url("../img/mac.jpg");
-	min-height: 100%;
+.bgimg-1 {
     background-position: center;
     background-size: cover;
+    background-image: url("../img/rocket.jpg");
+    min-height: 100%;
 }
 
-/* Empleamos estas reglas para lograr efecto parallax */
-.parallax{
-	background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.w3-bar .w3-button{
+.w3-bar .w3-button {
     padding: 16px;
-}
-
-.fadeInOnScroll{
-	opacity:0;
 }
 
 #padding24-48{
@@ -77,4 +63,3 @@ body, html {
 #widthSFP{
 	width: 75%;
 }
-
