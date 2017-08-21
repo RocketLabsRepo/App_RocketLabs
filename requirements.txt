@@ -1,19 +1,12 @@
-certifi==2017.4.17
-chardet==3.0.4
-defusedxml==0.5.0
-Django==1.11.2
-idna==2.5
-oauthlib==2.0.2
+Django==1.11.4
+	# Framework web.
 olefile==0.44
+	# Dependencia de Pillow
 Pillow==4.2.1
-pkg-resources==0.0.0
+	# Libreria de utilidades para manejar ImageFields en Django.
 psycopg2==2.7.1
-PyJWT==1.5.2
-python3-openid==3.1.0
+	# Libreria API para DB PostgreSQL, necesaria para trabajar desde python.
 pytz==2017.2
-requests==2.18.1
-requests-oauthlib==0.8.0
-six==1.10.0
-social-auth-app-django==1.2.0
-social-auth-core==1.4.0
-urllib3==1.21.1
+	# Definiciones de Usos Horarios mundiales para Python.
+selenium==3.5.0
+	# Aplicación para usar Webdriver y realizar tests funcionales en Firefox.
