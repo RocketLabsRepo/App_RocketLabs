@@ -15,10 +15,6 @@ Rafael Vasquez
 Rabindranath Ferreira
 
 
-Elaborado con:
-Python 3.5.2 
-Django 1.11.2
-
 
 
 
