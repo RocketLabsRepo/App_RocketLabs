@@ -9,6 +9,10 @@ Request Model
 """""""""""""""""""""""""""
 class Request(models.Model):
 
+	project_id = models.ForeignKey(Project, blank = True, default = None)
+	client_user = models.ForeignKey(User, blank = True, default = None)
+	admin_user = models.ForeignKey(User, blank = True, default = None)
+
 	requester_name = models.CharField(max_length=30)
 	telephone_number = models.DecimalField(max_digits=13, decimal_places=0, blank = True)
 	requester_mail = models.EmailField()
@@ -27,6 +31,8 @@ Skill Model
 """""""""""""""""""""""""""
 class Skill(models.Model):
 
+	profiles = models.ManyToManyField(Profile, blank = True, default = None)
+
 	name = models.CharField(max_length=50)
 	skill_logo = models.ImageField()
 	about = models.TextField(max_length=255)
@@ -40,6 +46,9 @@ knows Model
 
 """""""""""""""""""""""""""
 class knows(models.Model):
+
+	user_id = models.ManyToManyField(User) #Revisar
+	skill_id = models.ManyToManyField(Skill) #Revisar
 
 	exp_level = models.CharField(max_length=30)
 
@@ -72,6 +81,9 @@ Project Model
 
 """""""""""""""""""""""""""
 class Project(models.Model):
+
+	owner_profiles = models.ManyToManyField(Profile)
+	bundle = models.ForeignKey(Bundle)
 
 	title = models.CharField(max_length=100)
 	description = models.TextField(max_length=255)
