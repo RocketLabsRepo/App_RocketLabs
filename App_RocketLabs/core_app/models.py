@@ -3,54 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-"""""""""""""""""""""""""""
-Request Model
-
-"""""""""""""""""""""""""""
-class Request(models.Model):
-
-	project_id = models.ForeignKey(Project, blank = True, default = None)
-	client_user = models.ForeignKey(User, blank = True, default = None)
-	admin_user = models.ForeignKey(User, blank = True, default = None)
-
-	requester_name = models.CharField(max_length=30)
-	telephone_number = models.DecimalField(max_digits=13, decimal_places=0, blank = True)
-	requester_mail = models.EmailField()
-	subject = models.CharField(max_length=100)
-	message = models.TextField(max_length=500)
-	sent_date = models.DateTimeField(auto_now_add = True)
-	status = models.CharField(max_length=15)
-
-	def __str__(self):
-		return self.requester_mail
-
-
-"""""""""""""""""""""""""""
-Skill Model
-
-"""""""""""""""""""""""""""
-class Skill(models.Model):
-
-	profiles = models.ManyToManyField(Profile, blank = True, default = None)
-
-	name = models.CharField(max_length=50)
-	skill_logo = models.ImageField()
-	about = models.TextField(max_length=255)
-
-	def __str__(self):
-		return self.name
-
-
-"""""""""""""""""""""""""""
-knows Model
-
-"""""""""""""""""""""""""""
-class knows(models.Model):
-
-	user_id = models.ManyToManyField(User) #Revisar
-	skill_id = models.ManyToManyField(Skill) #Revisar
-
-	exp_level = models.CharField(max_length=30)
 
 
 """""""""""""""""""""""""""
@@ -74,6 +26,25 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return self.secret_link
+
+
+
+"""""""""""""""""""""""""""
+Bundle Model
+
+"""""""""""""""""""""""""""
+class Bundle(models.Model):
+
+	title = models.CharField(max_length = 100, unique=True)
+	about = models.TextField(max_length=255)
+	bundle_extra_fee = models.DecimalField(max_digits=4, decimal_places = 2)
+	bundle_total_fee = models.DecimalField(max_digits=4, decimal_places= 2)
+	is_custom = models.BooleanField()
+	is_active = models.BooleanField(default = True)
+
+	def __str__(self):
+		return self.title
+
 
 
 """""""""""""""""""""""""""
@@ -118,21 +89,6 @@ class Screenshot(models.Model):
 		return self.name
 
 
-"""""""""""""""""""""""""""
-Bundle Model
-
-"""""""""""""""""""""""""""
-class Bundle(models.Model):
-
-	title = models.CharField(max_length = 100, unique=True)
-	about = models.TextField(max_length=255)
-	bundle_extra_fee = models.DecimalField(max_digits=4, decimal_places = 2)
-	bundle_total_fee = models.DecimalField(max_digits=4, decimal_places= 2)
-	is_custom = models.BooleanField()
-	is_active = models.BooleanField(default = True)
-
-	def __str__(self):
-		return self.title
 
 
 """""""""""""""""""""""""""
@@ -151,3 +107,53 @@ class Service(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+"""""""""""""""""""""""""""
+Request Model
+
+"""""""""""""""""""""""""""
+class Request(models.Model):
+
+	project_id = models.ForeignKey(Project, blank = True, default = None)
+	client_user = models.ForeignKey(User, blank = True, default = None)
+	#admin_user = models.ForeignKey(User, blank = True, default = None)
+
+	requester_name = models.CharField(max_length=30)
+	telephone_number = models.DecimalField(max_digits=13, decimal_places=0, blank = True)
+	requester_mail = models.EmailField()
+	subject = models.CharField(max_length=100)
+	message = models.TextField(max_length=500)
+	sent_date = models.DateTimeField(auto_now_add = True)
+	status = models.CharField(max_length=15)
+
+	def __str__(self):
+		return self.requester_mail
+
+
+"""""""""""""""""""""""""""
+Skill Model
+
+"""""""""""""""""""""""""""
+class Skill(models.Model):
+
+	profiles = models.ManyToManyField(Profile, blank = True, default = None)
+
+	name = models.CharField(max_length=50)
+	skill_logo = models.ImageField()
+	about = models.TextField(max_length=255)
+
+	def __str__(self):
+		return self.name
+
+
+"""""""""""""""""""""""""""
+knows Model
+
+"""""""""""""""""""""""""""
+class knows(models.Model):
+
+	user_id = models.ManyToManyField(User) #Revisar
+	skill_id = models.ManyToManyField(Skill) #Revisar
+
+	exp_level = models.CharField(max_length=30)
