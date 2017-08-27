@@ -31,6 +31,10 @@ body, html {
     background-size: cover;
 }
 
+.link-hand{
+	cursor:pointer
+}
+
 .w3-bar .w3-button{
     padding: 16px;
 }

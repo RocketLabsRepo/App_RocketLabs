@@ -5,6 +5,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-	
-    
+	url(r'^projects/$', views.all_projects, name='all_projects'),
 ]
