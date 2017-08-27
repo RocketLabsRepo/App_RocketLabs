@@ -3,10 +3,11 @@ Este es el readme del proyecto principal de la pagina web de RocketLabs
 
 Contenido:
 
-Hola, la app principal donde trabajaremos se llama "core_app".
+* "core_app" : Es la app principal donde trabajaremos, esta se encargará de la pagina principal, el registro de los Usuarios sus perfiles, habilidades y atender solicitudes de contato(User, Request, Profile & Skill).
 
-Para agregar las plantillas por favor dejenlas en este directorio:
-	RocketLabs_App/App_RocketLabs/core_app/templates/core_app
+* "projects_app" : Es la app secundaria que almacena y regula los proyectos (Projects & Screenshots ), esta se encargará de desplegar todas las interfaces pertinentes.
+
+* "projects_app" : Es la app secundaria que almacena y regula los Paquetes y servicios (Bundles & Services), esta se encargará de desplegar todas las interfaces pertinentes.
 
 
 Desarrolladores:
