@@ -30,6 +30,8 @@ Requerimientos:
 		# Definiciones de Usos Horarios mundiales para Python.
 	selenium==3.5.0
 		# Aplicación para usar Webdriver y realizar tests funcionales en Firefox.
+	python-decouple==3.1
+		# Librerias empleadas para evitar subir información sensitiva a GitHub.
 
 
 
