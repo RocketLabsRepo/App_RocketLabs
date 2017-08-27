@@ -16,7 +16,7 @@ Project Model
 """""""""""""""""""""""""""
 class Project(models.Model):
 
-	owner_profiles = models.ManyToManyField('core_app.Profile')
+	owner_profiles = models.ManyToManyField('core_app.Profile', db_table ="projects_app_owner_profiles")
 	bundle = models.ForeignKey('bundles_app.Bundle')
 
 	title = models.CharField(max_length=100)
@@ -42,7 +42,7 @@ Screenshot Model
 """""""""""""""""""""""""""
 class Screenshot(models.Model):
 
-	project = models.ForeignKey(Project, blank=True, null = True ,default=None)
+	project = models.ForeignKey(Project, blank=True, null = True ,default=None, on_delete=models.CASCADE)
 
 	name = models.CharField(max_length=50)
 	screenshot = models.ImageField()

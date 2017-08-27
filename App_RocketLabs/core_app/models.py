@@ -64,6 +64,8 @@ Skill Model
 """""""""""""""""""""""""""
 class Skill(models.Model):
 
+	users = models.ManyToManyField(User, through='knows')
+
 	name = models.CharField(max_length=50)
 	skill_logo = models.ImageField()
 	about = models.TextField(max_length=255)
@@ -73,13 +75,13 @@ class Skill(models.Model):
 
 
 """""""""""""""""""""""""""
-knows Model
+knows Model -Es la tabla intermedia de la relacion many2many entre Skill y User
 
 """""""""""""""""""""""""""
 class knows(models.Model):
 
-	user_id = models.ForeignKey(User) 
-	skill_id = models.ForeignKey(Skill) 
+	user = models.ForeignKey(User)
+	skill = models.ForeignKey(Skill)
 
 	exp_level = models.CharField(max_length=30)
 

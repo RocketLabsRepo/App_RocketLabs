@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+# -*- coding: utf-8 necessary for django string usage -*-
+from __future__ import unicode_literals
 
 import os
 from decouple import config
