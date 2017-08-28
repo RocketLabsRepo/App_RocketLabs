@@ -1,6 +1,8 @@
 {% extends 'core_app/base.html' %}
 {% load static %}
 
+{% block title %}Home{% endblock %}
+
 {% block content %}
 <!-- Header with full-height image -->
 <header class="bgimg-1 parallax w3-display-container w3-grayscale-min" id="home">
@@ -148,18 +150,38 @@
   <div class="w3-row-padding margintop64">
     <div class="w3-col l3 m6">
       <img src="{% static 'core_app/img/tech_mic.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A microphone">
+      <p class="w3-center">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labo.
+        <br><a href="#">Ver detalles</a>
+      </p>
     </div>
 
     <div class="w3-col l3 m6">
       <img src="{% static 'core_app/img/tech_phone.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A phone">
+      <p class="w3-center">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labo.
+        <br><a href="#">Ver detalles</a>
+      </p>
     </div>
 
     <div class="w3-col l3 m6">
       <img src="{% static 'core_app/img/foro_estudiantil.png' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="Forum-Estudiantil">
+      <p class="w3-center">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labo.
+        <br><a href="#">Ver detalles</a>
+      </p>
     </div>
 
     <div class="w3-col l3 m6">
       <img src="{% static 'core_app/img/tech_sound.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="Soundbox">
+      <p class="w3-center">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labo.
+        <br><a href="#">Ver detalles</a>
+      </p>
     </div>
   </div>
 
@@ -180,7 +202,10 @@
       <img src="{% static 'core_app/img/tech_tableturner.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A tableturner">
     </div>
   </div>
-  <p class="fadeInOnScroll"><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> Echa un vistazo a todos nuestros proyectos</a></p>
+  <br>
+  <p class="w3-center">
+    <a href="{% url 'projects_app:all_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
+  </p>
 </div>
 
 <!-- Modal for full size images on click-->

@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     	#Incluyendo las urls de la app principal y secundarias.
     url(r'^', include('core_app.urls')),
-    url(r'^', include('projects_app.urls')),
+    url(r'^projects/', include('projects_app.urls')),
     url(r'^', include('bundles_app.urls')),
 ]

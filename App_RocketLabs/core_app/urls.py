@@ -5,6 +5,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from . import views
 
+app_name = 'core_app'
 urlpatterns = [
 
 	url(r'^$', views.home, name='home'),
