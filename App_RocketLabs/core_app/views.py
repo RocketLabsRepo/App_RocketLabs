@@ -6,8 +6,10 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterUserForm
 import uuid
+
 
 # Funciones adicionales
 def cod_generator(string_length=10):
@@ -57,11 +59,11 @@ def register_view(request):
 			
 			return HttpResponseRedirect('/login')
 		else:
-			return render(request,'register.html', {'registeruserform':ruf, 'loginf': loginf})
+			return render(request,'core_app/register.html', {'registeruserform':ruf, }) #'loginf': loginf (Futuro segundo parametro)
 	else:
 		ruf = RegisterUserForm()
 			#Si un usuario con sesión iniciada llega a esta página, se le cerrará la sesión.
 		if request.user.is_authenticated:
 			logout(request)
 
-		return render(request, 'register.html', {'registeruserform':ruf, 'loginf': loginf})
+		return render(request, 'core_app/register.html', {'registeruserform':ruf,}) #'loginf': loginf (Futuro segundo parametro)
