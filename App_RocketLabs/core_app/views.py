@@ -8,16 +8,20 @@ from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterUserForm
+from .models import Profile
 import uuid
 
 
 # Funciones adicionales
-def cod_generator(string_length=10):
+def cod_generator(string_length=25):
     """Returns a random string of length string_length."""
     random = str(uuid.uuid4()) # Convert UUID format to a Python string.
     random = random.upper() # Make all characters uppercase.
     random = random.replace("-","") # Remove the UUID '-'.
-    return random[0:string_length] # Return the random string.
+    cod = random[0:string_length] 
+    while Profile.objects.filter(secret_link=cod).exists():
+    	cod = random[0:string_length] 
+    return cod # Return the random string.
 
 
 
