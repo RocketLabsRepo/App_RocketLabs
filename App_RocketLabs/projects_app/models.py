@@ -12,7 +12,7 @@ from django.db import models
 
 def screenshot_directory_path(instance, filename):
     # El screenshot será subido a MEDIA_ROOT/project/<id>/<filename>
-    return 'project/{0}/{1}'.format(instance.project.id, filename)
+    return 'project_screenshots/{0}/{1}'.format(instance.project.id, filename)
 
 
 """""""""""""""""""""""""""
@@ -50,7 +50,7 @@ class Screenshot(models.Model):
 	project = models.ForeignKey(Project, null=True, default=None, blank=True, on_delete=models.CASCADE)
 
 	name = models.CharField(max_length=50)
-	screenshot = models.ImageField( upload_to = screenshot_directory_path )
+	img = models.ImageField( upload_to = screenshot_directory_path )
 	date_uploaded = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
