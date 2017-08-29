@@ -81,27 +81,30 @@ class LoginForm(forms.Form):
 		username = self.cleaned_data.get('usernameLogin')
 		password = self.cleaned_data.get('passwordLogin')
 		user = authenticate(username=username, password=password)
-		sanctioned = User.objects.get(username = username)
-		profile = Profile.objects.get(user = sanctioned.id)
+		
+		if User.objects.filter(username = username).exists():
+			sanctioned = User.objects.get(username = username)
+			profile = Profile.objects.get(user = sanctioned.id)
+			if sanctioned and profile.is_blocked:
+				raise forms.ValidationError(_("El usuario ingresado esta bloqueado!"), code='bloqueado')
 
-		if sanctioned and profile.is_blocked:
-			raise forms.ValidationError(_("El usuario ingresado esta bloqueado!"), code='bloqueado')
+			if not user:
+				if sanctioned and not profile.is_blocked: #Si esta el usuario registrado pero no bloqueado
+					profile.failed_logins +=  1
 
-		if not user:
-			if sanctioned and not profile.is_blocked: #Si esta el usuario registrado pero no bloqueado
-				profile.failed_logins +=  1
-
-				if profile.failed_logins > 4:
-					profile.is_blocked = True
-					profile.failed_logins = 0
-					
+					if profile.failed_logins > 4:
+						profile.is_blocked = True
+						profile.failed_logins = 0
+						
+					profile.save()
+					print (profile.is_blocked)
+				raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
+			else:
+				profile.failed_logins = 0
 				profile.save()
-				print (profile.is_blocked)
-			raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
+			return self.cleaned_data
 		else:
-			profile.failed_logins = 0
-			profile.save()
-		return self.cleaned_data
+			raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
 
 
 	def login(self, request):
