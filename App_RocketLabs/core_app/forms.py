@@ -6,7 +6,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
-
+from django.forms.models import inlineformset_factory
+from .models import Profile
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
 
@@ -56,3 +57,55 @@ class RegisterUserForm(UserCreationForm):
 		if password1 != password2:
 			raise forms.ValidationError("¡Las contraseñas nos son iguales!")
 		return password2
+
+
+# Formulario para iniciar sesión.
+my_default_errors = {
+    'required': 'Por favor rellene este campo.',
+    'invalid': 'Por favor ingrese un valor válido.'
+}
+
+class LoginForm(forms.Form):
+
+	def __init__(self, *args, **kwargs):
+		super(LoginForm, self).__init__(*args, **kwargs)
+		self.fields['usernameLogin'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['passwordLogin'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		
+
+	usernameLogin = forms.CharField(label="Usuario", max_length=64, required=True, error_messages=my_default_errors)
+	passwordLogin = forms.CharField(label="Contraseña", required=True, error_messages=my_default_errors) 
+	
+	#Este metodo es llamado para validar el formulario y nos permite verificar si el usuario existe o no.
+	def clean(self):
+		username = self.cleaned_data.get('usernameLogin')
+		password = self.cleaned_data.get('passwordLogin')
+		user = authenticate(username=username, password=password)
+		sanctioned = User.objects.get(username = username)
+		profile = Profile.objects.get(user = sanctioned.id)
+
+		if sanctioned and profile.is_blocked:
+			raise forms.ValidationError(_("El usuario ingresado esta bloqueado!"), code='bloqueado')
+
+		if not user:
+			if sanctioned and not profile.is_blocked: #Si esta el usuario registrado pero no bloqueado
+				profile.failed_logins +=  1
+
+				if profile.failed_logins > 4:
+					profile.is_blocked = True
+					profile.failed_logins = 0
+					
+				profile.save()
+				print (profile.is_blocked)
+			raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
+		else:
+			profile.failed_logins = 0
+			profile.save()
+		return self.cleaned_data
+
+
+	def login(self, request):
+		username = self.cleaned_data.get('usernameLogin')
+		password = self.cleaned_data.get('passwordLogin')
+		user = authenticate(username=username, password=password)
+		return user

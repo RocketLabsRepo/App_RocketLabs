@@ -4,15 +4,15 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginForm
 from .models import Profile
 import uuid
 
 
-# Funciones adicionales
+# ########################################################Funciones adicionales########################################################################
 def cod_generator(string_length=25):
     """Returns a random string of length string_length."""
     random = str(uuid.uuid4()) # Convert UUID format to a Python string.
@@ -22,7 +22,7 @@ def cod_generator(string_length=25):
     while Profile.objects.filter(secret_link=cod).exists():
     	cod = random[0:string_length] 
     return cod # Return the random string.
-
+##########################################################################################################################################################
 
 
 # Create your views here.
@@ -71,3 +71,22 @@ def register_view(request):
 			logout(request)
 
 		return render(request, 'core_app/register.html', {'registeruserform':ruf,}) #'loginf': loginf (Futuro segundo parametro)
+
+
+# View para autenticar usuarios e iniciar sesión
+def login_view(request):
+	
+	form = LoginForm(request.POST or None)
+
+	if request.POST and form.is_valid():
+		user = form.login(request)
+		if user:
+			login(request, user)
+			return redirect('/')
+	return render(request, 'core_app/login.html', {'loginf': form })
+
+
+# View para cerrar la sesión de usuarios
+def logout_view(request):
+	logout(request)
+	return HttpResponseRedirect('/')

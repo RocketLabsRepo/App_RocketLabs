@@ -1,11 +1,13 @@
 {% extends 'core_app/base.html' %}
 {% load staticfiles %}
   {% block content %}
-	<h1> Registrarse </h1>
+  </br></br></br>
 
-	
-		<div class="container main-container">
-			<div class="row login-form">
+  <h1> Registrarse </h1>
+
+  
+    <div class="container main-container">
+      <div class="row login-form">
                 <div class="col-md-10 col-md-offset-1">
 
                     <form method="post">
@@ -13,8 +15,8 @@
                         {% csrf_token %} 
 
                         <fieldset>
-                            <legend>Datos de Cuenta</legend>
-                            {% for field in registeruserform %}
+                            <legend>Login</legend>
+                            {% for field in loginf %}
                                 <div class="form-group">
                                     {{ field.label_tag }}<br>
 
@@ -31,9 +33,9 @@
                             {% endfor %}
                         </fieldset>
                         
-                        {% if registeruserform.non_field_errors %}
+                        {% if loginf.non_field_errors %}
                             <ul class='form-errors'>
-                                {% for error in registeruserform.non_field_errors %}
+                                {% for error in loginf.non_field_errors %}
                                     <li>{{ error }}</li>
                                 {% endfor %}
                             </ul>
@@ -41,12 +43,12 @@
 
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
-                                <p><button type= "submit" class="w3-button w3-black"><i class="fa fa-pencil"> </i> Registrar</button></p>
+                                <p><button type= "submit" class="w3-button w3-black"><i class="fa fa-user"> </i> Ingresa</button></p>
                             </div>
                         </div>
                         
                     </form>
                 </div>
-			</div>
-		</div>
+      </div>
+    </div>
   {% endblock %}
