@@ -4,8 +4,37 @@
 {% block title %}Proyectos{% endblock %}
 
 {% block content %}
-<div>
+
+<div class="w3-container padding128-16" id="home">
+	<h3 class="w3-center">TODOS NUESTROS TRABAJOS</h3>
+	<p class="w3-center w3-large">Proyectos realizados para clientes satisfechos</p>
+
+	{% for group in project_list %}
+		{% if forloop.first %}
+		<div class="w3-row-padding margintop64">
+		{% else %}
+		<div class="w3-row-padding w3-section">
+		{% endif %}
+
+		{% for object in group %}
+			<div class="w3-col l3 m6">
+				{% with object.screenshot_set.all|first as image %}
+				<img src="{{ image.url }}" class="widthOHP" alt="{{ image.name }}">
+				{% endwith %}
+				<p class="w3-center">
+					{{ object.title }}
+					<br><a href="{{ object.id }}">Ver detalles</a>
+				</p>
+			</div>
+
+		{% endfor %}
+
+		</div>
+	{% empty %}
 	<br><br>
-  <h1 class="w3-center">Aca están todos los proyectos reflejados</h1>
+	<p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
+
+	{% endfor %}
 </div>
+
 {% endblock %}

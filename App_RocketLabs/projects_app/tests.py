@@ -44,7 +44,12 @@ class AllProjectsPageTest(TestCase):
 		self.assertIn('Project One' , response.content.decode('utf-8') , "'{0}' did not appear in Page content".format('Project One'))
 		self.assertIn('Project Two' , response.content.decode('utf-8') ,"'{0}' did not appear in Page content".format('Project Two'))		
 
+	def test_message_shows_with_no_project_to_display(self):
 
+		response = self.client.get('/projects/')
+
+		self.assertEqual(Project.objects.count() , 0)
+		self.assertIn("Lo sentimos, actualmente no tenemos proyectos disponibles." , response.content.decode('utf-8') , "No hay mensaje sin proyectos.")
 
 class DetailsProjectsPageTest(TestCase):
 
@@ -104,3 +109,6 @@ class ScreenshotModelTest(TestCase):
 
 		project_with_screen_saved = Project.objects.get(screenshot__pk=screenshot.id)
 		self.assertEqual(project , project_with_screen_saved)
+	########
+		first_screenshot_of_project = project_with_screen_saved.screenshot_set.first()
+		self.assertEqual("A test Screenshot" , first_screenshot_of_project.name)
