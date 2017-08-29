@@ -7,3 +7,6 @@ from django.shortcuts import render
 
 def all_projects(request):
 	return render(request,'projects_app/projects.html')
+
+def project_details(request):
+	return render(request,'projects_app/project_details.html')

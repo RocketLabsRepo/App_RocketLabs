@@ -6,5 +6,6 @@ from . import views
 
 app_name = 'projects_app'
 urlpatterns = [
-	url(r'^$', views.all_projects, name='all_projects'),
+	url(r'^$', views.all_projects, name='all_completed_projects'),
+	url(r'^id$', views.project_details, name='project_details')
 ]
