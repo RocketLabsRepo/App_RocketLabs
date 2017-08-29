@@ -26,14 +26,14 @@ class Profile(models.Model):
 	linkedln_link = models.CharField(max_length=50, blank = True)
 	bio = models.TextField(max_length = 255, blank = True)
 	secret_link = models.CharField(max_length = 50, unique=True)
-	photo = models.ImageField()
+	photo = models.ImageField(blank = True)
 	is_admin = models.BooleanField(default=False)
 	is_team_member= models.BooleanField(default = False)
-	failed_logins = models.DecimalField(max_digits=1, decimal_places=0, default=0)
+	failed_logins = models.SmallIntegerField(default=0)
 	is_blocked = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.secret_link
+		return "{}'s profile.".format(self.user.get_username())
 
 
 """""""""""""""""""""""""""
