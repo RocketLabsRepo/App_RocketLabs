@@ -10,6 +10,11 @@ from django.db import models
 # Create your models here.
 
 
+def screenshot_directory_path(instance, filename):
+    # El screenshot será subido a MEDIA_ROOT/project/<id>/<filename>
+    return 'project/{0}/{1}'.format(instance.project.id, filename)
+
+
 """""""""""""""""""""""""""
 Project Model
 
@@ -17,20 +22,20 @@ Project Model
 class Project(models.Model):
 
 	owner_profiles = models.ManyToManyField('core_app.Profile', db_table ="projects_app_owner_profiles")
-	bundle = models.ForeignKey('bundles_app.Bundle', null=True, default=None) # Null y default solo para probar mientras no hay bundles implementados.
+	bundle = models.ForeignKey('bundles_app.Bundle', blank= True, null=True, default=None) # Null, blank y default solo para probar mientras no hay bundles implementados.
 
 	title = models.CharField(max_length=100)
-	description = models.TextField(max_length=255)
-	str_duration = models.CharField(max_length=50, blank = True)
-	estimated_duration = models.CharField(max_length=50, blank=True)
-	done_percentage = models.DecimalField(max_digits=3, decimal_places=2, blank = True)
-	current_stage = models.CharField(max_length=50, blank =True)
+	description = models.TextField(max_length=255, blank=True, default='')
+	str_duration = models.CharField(max_length=50, blank = True,default='')
+	estimated_duration = models.CharField(max_length=50, blank=True,default='')
+	done_percentage = models.SmallIntegerField(default=0)
+	current_stage = models.CharField(max_length=50, blank =True,default='')
 	is_complete = models.BooleanField(default = False)
-	owner_comment = models.TextField(max_length = 500, blank =True)
-	demo_link = models.CharField(max_length = 100, blank = True)
+	owner_comment = models.TextField(max_length = 500, blank =True, default='')
+	demo_link = models.CharField(max_length = 100, blank = True, default='')
 	last_update_date = models.DateTimeField(auto_now=True)
 	start_date = models.DateTimeField(auto_now_add=True)
-	finish_date = models.DateTimeField(blank = True)
+	finish_date = models.DateTimeField(blank = True, null=True, default=None)
 
 	def __str__(self):
 		return self.title
@@ -42,10 +47,10 @@ Screenshot Model
 """""""""""""""""""""""""""
 class Screenshot(models.Model):
 
-	project = models.ForeignKey(Project, blank=True, null = True ,default=None, on_delete=models.CASCADE)
+	project = models.ForeignKey(Project, null=True, default=None, blank=True, on_delete=models.CASCADE)
 
 	name = models.CharField(max_length=50)
-	screenshot = models.ImageField()
+	screenshot = models.ImageField( upload_to = screenshot_directory_path )
 	date_uploaded = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
