@@ -98,6 +98,24 @@ class ProjectModelTest(TestCase):
 		self.assertEqual(first_saved_project.title, 'This is a Project')
 		self.assertEqual(second_saved_project.title, 'This is another Project')
 
+	def test_can_return_preview_screenshot(self):
+		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+		project = create_project(user ,'This is a Project')
+		screenshot = Screenshot()
+		screenshot.name = "A test Screenshot"
+		screenshot.project = project
+
+		image = open('core_app/static/core_app/img/foro_estudiantil.png')
+		screenshot.img = SimpleUploadedFile(image.name, image.read())
+		screenshot.is_preview = True
+		screenshot.save()
+
+		saved_preview = project.get_preview_screenshot()
+
+		self.assertEqual(saved_preview.name , "A test Screenshot")
+		self.assertTrue(saved_preview.is_preview)
+
+
 	
 class ScreenshotModelTest(TestCase):
 

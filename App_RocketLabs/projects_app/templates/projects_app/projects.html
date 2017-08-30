@@ -18,7 +18,7 @@
 
 		{% for object in group %}
 			<div class="w3-col l3 m6">
-				{% with object.screenshot_set.all|first as image %}
+				{% with object.get_preview_screenshot as image %}
 				<img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
 				{% endwith %}
 				<p class="w3-center">

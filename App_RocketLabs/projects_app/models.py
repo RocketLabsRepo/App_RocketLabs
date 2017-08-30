@@ -40,6 +40,9 @@ class Project(models.Model):
 	def __str__(self):
 		return self.title.encode('utf-8', errors='replace')
 
+	def get_preview_screenshot(self):
+		return self.screenshot_set.get(is_preview=True)
+
 
 """""""""""""""""""""""""""
 Screenshot Model
