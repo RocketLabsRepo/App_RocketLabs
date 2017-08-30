@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterUserForm, LoginForm
+from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm
 from .models import Profile
 import uuid
 
@@ -90,3 +90,18 @@ def login_view(request):
 def logout_view(request):
 	logout(request)
 	return HttpResponseRedirect('/')
+
+
+#View para editar perfil de cliente
+def profileclient_view(request):
+	if request.method == 'POST':
+		ecpf = EditClientProfileForm(request.POST, prefix='editprofile')
+		euf = EditUserForm(request.POST, prefix='edituser')
+		if ecpf.is_valid() * euf.is_valid():
+			ecpf.save()
+			euf.save()			
+		return HttpResponseRedirect('/')		
+	else:
+		ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')
+		euf = EditUserForm(instance = request.user ,prefix='edituser')
+		return render(request, 'core_app/editclientprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML

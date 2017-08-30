@@ -112,3 +112,48 @@ class LoginForm(forms.Form):
 		password = self.cleaned_data.get('passwordLogin')
 		user = authenticate(username=username, password=password)
 		return user
+
+#Formulario para desplegar Perfil de usuario Promedio
+class EditClientProfileForm(forms.ModelForm):
+
+	class Meta:
+		model = Profile	
+		
+		fields = ['company_name', 'secret_link']
+		
+		labels = { 'company_name': _('Nombre de la empresa'),
+					'secret_link': _('Código unico'),				   
+				}
+		widgets = {'company_name': forms.TextInput(attrs={'class':'form-control' }),
+					'secret_link': forms.TextInput(attrs={'class':'form-control', 'readonly' : True }),}
+
+		"""
+		widgets = {'company_name': forms.TextInput(attrs={'placeholder': company_name,'class':'form-control' }),
+					'secret_link': forms.TextInput(attrs={'placeholder': secret_link,'class':'form-control', 'readonly' : True }),
+				}
+		"""
+
+class EditUserForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+
+		fields = ['first_name', 'last_name', 'email']
+
+		labels = {'first_name':_('Nombre'),
+					'last_name':_('Apellido'),
+					'email':_('Correo Electronico'),
+				}
+		
+		widgets = {'first_name': forms.TextInput(attrs={'class':'form-control' }),
+					'last_name': forms.TextInput(attrs={'class':'form-control' }),
+					'email_name': forms.TextInput(attrs={'class':'form-control' }),
+				}
+
+
+		"""
+		widgets = {'first_name': forms.TextInput(attrs={'placeholder': first_name,'class':'form-control' }),
+					'last_name': forms.TextInput(attrs={'placeholder': last_name,'class':'form-control' }),
+					'email_name': forms.TextInput(attrs={'placeholder': email,'class':'form-control' }),
+					}
+		"""
