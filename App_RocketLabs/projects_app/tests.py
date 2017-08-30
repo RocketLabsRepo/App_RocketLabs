@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
 from core_app.models import Profile
 from projects_app.models import Project, Screenshot
+
 
 # Create your tests here.
 
@@ -20,6 +22,12 @@ def create_project(user,  ptitle):
 	project = Project.objects.create(title=ptitle)
 	project.owner_profiles.add(user_profile)
 	return project
+
+def complete_project(project):
+	project.is_complete = True
+	project.finish_date = datetime.now()
+	project.save()
+
 
 
 """""""""""""""""""""""""""
@@ -35,14 +43,19 @@ class AllProjectsPageTest(TestCase):
 
 	def test_displays_all_completed_projects(self):
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-
-		create_project(user,'Project One')
-		create_project(user,'Project Two')
+		project1 = create_project(user,'Project One')
+		complete_project(project1)
+		project2 = create_project(user,'Project Two')
+		complete_project(project2)
+		project3 = create_project(user,'Project Three')
 
 		response = self.client.get('/projects/')
 
+		self.assertTrue(project1.is_complete)
+		self.assertTrue(project2.is_complete)
 		self.assertIn('Project One' , response.content.decode('utf-8') , "'{0}' did not appear in Page content".format('Project One'))
 		self.assertIn('Project Two' , response.content.decode('utf-8') ,"'{0}' did not appear in Page content".format('Project Two'))		
+		self.assertNotIn('Project Three', response.content.decode('utf-8'), "Project 3 appears even tho' it's not complete.")
 
 	def test_message_shows_with_no_project_to_display(self):
 
