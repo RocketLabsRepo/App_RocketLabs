@@ -1,0 +1,75 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Perfil{% endblock %}
+
+
+{% block content %}
+  </br></br></br>
+	<h1> Editando perfil : {{ user.username }} </h1>
+
+	
+	<div class="container perfil-container">
+		<div class="jumbotron">
+			
+					<form method="POST">
+	            		{% csrf_token %}
+	            		<div class="row">
+	            		<div class="col-md-5 ">
+							<fieldset>
+								<legend>Datos Usuario</legend>
+								{% for field in edituserform %}
+		                            <div class="form-group">
+		                                {{ field.label_tag }}<br>
+		                                {% if field.errors %}
+		                                    <div class="form-errors">
+		                                    {% for error in field.errors %}
+		                                        <p>{{ error }}</p>
+		                                    {% endfor %}
+		                                    </div>
+		                                {% endif %}
+
+		                                {{ field }}
+		                            </div>
+		                        {% endfor %}
+			                </fieldset>
+	            		</div>
+	            		<div class="col-md-5 col-md-offset-1">
+	            			<fieldset>
+							<legend>Datos Perfil</legend>
+							{% for field in editclientprofileform %}
+								{% if not forloop.first %}
+									<div class="form-group">
+		                                {{ field.label_tag }}<br>
+
+		                                {% if field.errors %}
+		                                    <div class="form-errors">
+		                                    {% for error in field.errors %}
+		                                        <p>{{ error }}</p>
+		                                    {% endfor %}
+		                                    </div>
+		                                {% endif %}
+
+		                                {{ field }}
+		                            </div>
+								{% endif %}
+	                        {% endfor %}
+		                </fieldset>
+	            		</div>
+	            		</div>
+
+	            		<br>
+			            <div class="row">
+		                    <div class="col-md-8 col-md-offset-2">
+		                        <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Confirmar <i class="fa fa-check" style="font-size:24px"></i></button>
+		                    </div>
+		                </div>
+	            
+        			</form>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+
+{% endblock %}
