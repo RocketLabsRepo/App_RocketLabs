@@ -127,11 +127,7 @@ class EditClientProfileForm(forms.ModelForm):
 		widgets = {'company_name': forms.TextInput(attrs={'class':'form-control' }),
 					'secret_link': forms.TextInput(attrs={'class':'form-control', 'readonly' : True }),}
 
-		"""
-		widgets = {'company_name': forms.TextInput(attrs={'placeholder': company_name,'class':'form-control' }),
-					'secret_link': forms.TextInput(attrs={'placeholder': secret_link,'class':'form-control', 'readonly' : True }),
-				}
-		"""
+
 
 class EditUserForm(forms.ModelForm):
 
@@ -150,10 +146,3 @@ class EditUserForm(forms.ModelForm):
 					'email_name': forms.TextInput(attrs={'class':'form-control' }),
 				}
 
-
-		"""
-		widgets = {'first_name': forms.TextInput(attrs={'placeholder': first_name,'class':'form-control' }),
-					'last_name': forms.TextInput(attrs={'placeholder': last_name,'class':'form-control' }),
-					'email_name': forms.TextInput(attrs={'placeholder': email,'class':'form-control' }),
-					}
-		"""
