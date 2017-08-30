@@ -7,69 +7,85 @@
 {% block content %}
   </br></br></br>
 	<h1> Editando perfil : {{ user.username }} </h1>
-
+	<h1> Código único : {{ user.profile.secret_link }} </h1>
+	{% if request.user.profile.is_team_member%}
+		<img src="{{user.profile.photo}}" height="100%" width="100%" alt = "Sin imagen de perfil">
+	{% endif %}
 	
 	<div class="container perfil-container">
 		<div class="jumbotron">
 			
-					<form method="POST">
-	            		{% csrf_token %}
-	            		<div class="row">
-	            		<div class="col-md-5 ">
-							<fieldset>
-								<legend>Datos Usuario</legend>
-								{% for field in edituserform %}
-		                            <div class="form-group">
-		                                {{ field.label_tag }}<br>
-		                                {% if field.errors %}
-		                                    <div class="form-errors">
-		                                    {% for error in field.errors %}
-		                                        <p>{{ error }}</p>
-		                                    {% endfor %}
-		                                    </div>
-		                                {% endif %}
-
-		                                {{ field }}
-		                            </div>
-		                        {% endfor %}
-			                </fieldset>
-	            		</div>
-	            		<div class="col-md-5 col-md-offset-1">
-	            			<fieldset>
-							<legend>Datos Perfil</legend>
-							{% for field in editclientprofileform %}
-								{% if not forloop.first %}
+			<form method="POST">
+        		{% csrf_token %}
+        		<div class="row">
+        			
+        			<div class="col-md-5 ">
+						<fieldset>
+							<legend>Datos Usuario</legend>
+							{% for field in edituserform %}
+                            <div class="form-group">
+                                {{ field.label_tag }}<br>
+                                {% if field.errors %}
+                                    <div class="form-errors">
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {{ field }}
+                            </div>
+                        	{% endfor %}
+	                	</fieldset>
+        			</div>
+            		{% if request.user.profile.is_team_member %}
+			    		<div class="col-md-5 col-md-offset-1">
+			    			<fieldset>
+								<legend>Datos Perfil</legend>
+								{% for field in editteammemberform %}
 									<div class="form-group">
-		                                {{ field.label_tag }}<br>
+			                        {{ field.label_tag }}<br>
+			                        	{% if field.errors %}
+			                            	<div class="form-errors">
+			                            	{% for error in field.errors %}
+			                                	<p>{{ error }}</p>
+			                            	{% endfor %}
+			                            	</div>
+			                        	{% endif %}
+			                       	{{ field }}
+			                    	</div>
+			          	  		{% endfor %}
+			            	</fieldset>
+			    		</div>			    		
+			    	{% else %}	
+			    		<div class="col-md-5 col-md-offset-1">
+			    			<fieldset>
+								<legend>Datos Perfil</legend>
+								{% for field in editclientprofileform %}
+									<div class="form-group">
+			                        {{ field.label_tag }}<br>
+			                        	{% if field.errors %}
+			                            	<div class="form-errors">
+			                            	{% for error in field.errors %}
+			                                	<p>{{ error }}</p>
+			                            	{% endfor %}
+			                            	</div>
+			                        	{% endif %}
+			                       	{{ field }}
+			                    	</div>
+			          	  		{% endfor %}
+			            	</fieldset>
+			    		</div>
+			    	{% endif %}	
+        		</div>
 
-		                                {% if field.errors %}
-		                                    <div class="form-errors">
-		                                    {% for error in field.errors %}
-		                                        <p>{{ error }}</p>
-		                                    {% endfor %}
-		                                    </div>
-		                                {% endif %}
-
-		                                {{ field }}
-		                            </div>
-								{% endif %}
-	                        {% endfor %}
-		                </fieldset>
-	            		</div>
-	            		</div>
-
-	            		<br>
-			            <div class="row">
-		                    <div class="col-md-8 col-md-offset-2">
-		                        <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Confirmar <i class="fa fa-check" style="font-size:24px"></i></button>
-		                    </div>
-		                </div>
+	            <br>
+	            <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Confirmar <i class="fa fa-check" style="font-size:24px"></i></button>
+                    </div>
+                </div>
 	            
-        			</form>
-				</div>
-			</div>
+        	</form>
 		</div>
 	</div>
-		
-
 {% endblock %}

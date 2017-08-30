@@ -119,13 +119,30 @@ class EditClientProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile	
 		
-		fields = ['company_name', 'secret_link']
+		fields = ['company_name']
 		
-		labels = { 'company_name': _('Nombre de la empresa'),
-					'secret_link': _('Código unico'),				   
+		labels = { 'company_name': _('Nombre de la empresa'),				   
 				}
 		widgets = {'company_name': forms.TextInput(attrs={'class':'form-control' }),
-					'secret_link': forms.TextInput(attrs={'class':'form-control', 'readonly' : True }),}
+			}
+
+class EditTeamMemberForm(forms.ModelForm):
+	
+	class Meta:
+		model = Profile
+		
+		fields = ['title', 'linkedln_link', 'photo', 'bio']
+			
+		labels = { 'title': _('Titulo'),	
+					'linkedln_link': _('Perfil Linkedin'),	
+					'photo': _('Foto'),
+					'bio': _('Biografia'),					   
+					}
+		widgets = {'title': forms.TextInput(attrs={'class':'form-control' }),
+					'linkedln': forms.TextInput(attrs={'class':'form-control' }),
+					'photo': forms.FileInput(attrs={'class':'form-control' }),
+					'bio': forms.Textarea(attrs={'class':'form-control' }),
+				}
 
 
 

@@ -25,7 +25,7 @@ class Profile(models.Model):
 	title = models.CharField(max_length=30, blank = True)
 	linkedln_link = models.CharField(max_length=50, blank = True)
 	bio = models.TextField(max_length = 255, blank = True)
-	secret_link = models.CharField(max_length = 50, unique=True)
+	secret_link = models.CharField(max_length = 50, unique=True, blank = True)
 	photo = models.ImageField(blank =True)
 	is_admin = models.BooleanField(default=False)
 	is_team_member= models.BooleanField(default = False)
@@ -33,7 +33,7 @@ class Profile(models.Model):
 	is_blocked = models.BooleanField(default=False)
 
 	def __str__(self):
-		return "{}'s profile".format(user.get_username())
+		return "{}'s profile".format(self.user.get_username())
 
 
 """""""""""""""""""""""""""
