@@ -93,7 +93,7 @@ def logout_view(request):
 
 
 #View para editar perfil de cliente
-def profileclient_view(request):
+def profile_view(request):
 	if request.method == 'POST':	
 		if(request.user.profile.is_team_member):
 			euf = EditUserForm(request.POST,request.FILES , instance = request.user, prefix='edituser')
