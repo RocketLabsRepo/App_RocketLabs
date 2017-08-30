@@ -19,7 +19,7 @@
 		{% for object in group %}
 			<div class="w3-col l3 m6">
 				{% with object.screenshot_set.all|first as image %}
-				<img src="media/tech_mic.jpg" class="widthOHP" alt="{{ image.name }}">
+				<img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
 				{% endwith %}
 				<p class="w3-center">
 					{{ object.title }}

@@ -11,7 +11,8 @@ urlpatterns = [
 	url(r'^$', views.all_projects, name='all_completed_projects'),
 	url(r'^id$', views.project_details, name='project_details')
 ]
-
+"""
 urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
     ]
+"""
