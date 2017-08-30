@@ -38,7 +38,7 @@ class Project(models.Model):
 	finish_date = models.DateTimeField(blank = True, null=True, default=None)
 
 	def __str__(self):
-		return self.title
+		return self.title.encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -47,13 +47,17 @@ Screenshot Model
 """""""""""""""""""""""""""
 class Screenshot(models.Model):
 
+	class Meta:
+		ordering = ['date_uploaded']
+
 	project = models.ForeignKey(Project, null=True, default=None, blank=True, on_delete=models.CASCADE)
 
 	name = models.CharField(max_length=50)
 	img = models.ImageField( upload_to = screenshot_directory_path )
+	is_preview = models.BooleanField(default=False)
 	date_uploaded = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
-		return self.name
+		return "{} | {}".format(self.project.title , self.name).encode('utf-8', errors='replace')
 
 
