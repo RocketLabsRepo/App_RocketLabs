@@ -52,7 +52,7 @@ class AllProjectsPageTest(TestCase):
 
 	def test_all_projects_page_returns_correct_html(self):
 		response = self.client.get('/projects/') #implicit test_all_projects_url_resolves_to_all_projects_view
-		self.assertTemplateUsed(response, 'projects_app/projects.html')
+		self.assertTemplateUsed(response, 'projects_app/completed_projects.html')
 
 	def test_displays_all_completed_projects(self):
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')

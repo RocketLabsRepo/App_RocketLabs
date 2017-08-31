@@ -143,65 +143,29 @@
 
 <div class="w3-container padding128-16" id="work">
   <h3 class="w3-center">NUESTRO TRABAJO</h3>
-  <p class="w3-center w3-large">Proyectos realizados para clientes satisfechos</p>
+  <p class="w3-center w3-large">Últimos proyectos realizados para clientes satisfechos</p>
 
   <!-- CARGAR DINAMICAMENTE LOS TRABAJOS REALIZADOS -->
 
   <div class="w3-row-padding margintop64">
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_mic.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A microphone">
-      <p class="w3-center">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labo.
-        <br><a href="#">Ver detalles</a>
-      </p>
-    </div>
 
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_phone.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A phone">
-      <p class="w3-center">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labo.
-        <br><a href="#">Ver detalles</a>
-      </p>
-    </div>
+    {% for object in latests_projects %}
+      <div class="w3-col l3 m6">
+        {% with object.get_preview_screenshot as image %}
+        <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
+        {% endwith %}
+        <p class="w3-center">
+          {{ object.title }}
+          <br><a href="{{ object.id }}">Ver detalles</a>
+        </p>
+      </div>
+    {% empty %}
+      <br><br>
+      <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
+    {% endfor %}
 
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/foro_estudiantil.png' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="Forum-Estudiantil">
-      <p class="w3-center">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labo.
-        <br><a href="#">Ver detalles</a>
-      </p>
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_sound.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="Soundbox">
-      <p class="w3-center">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labo.
-        <br><a href="#">Ver detalles</a>
-      </p>
-    </div>
   </div>
 
-  <div class="w3-row-padding w3-section">
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tablet.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A tablet">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_camera.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A camera">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_typewriter.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A typewriter">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tableturner.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity link-hand widthOHP" alt="A tableturner">
-    </div>
-  </div>
   <br>
   <p class="w3-center">
     <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
