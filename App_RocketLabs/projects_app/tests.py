@@ -27,7 +27,16 @@ def complete_project(project):
 	project.is_complete = True
 	project.finish_date = datetime.now()
 	project.save()
+	return project
 
+def create_screenshot(project , name):
+	image = open('core_app/static/core_app/img/foro_estudiantil.png')
+	screenshot = Screenshot()
+	screenshot.name = name
+	screenshot.project = project
+	screenshot.img = SimpleUploadedFile(image.name, image.read())
+	screenshot.save()
+	return screenshot
 
 
 """""""""""""""""""""""""""
@@ -101,12 +110,8 @@ class ProjectModelTest(TestCase):
 	def test_can_return_preview_screenshot(self):
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
 		project = create_project(user ,'This is a Project')
-		screenshot = Screenshot()
-		screenshot.name = "A test Screenshot"
-		screenshot.project = project
 
-		image = open('core_app/static/core_app/img/foro_estudiantil.png')
-		screenshot.img = SimpleUploadedFile(image.name, image.read())
+		screenshot = create_screenshot(project , "A test Screenshot")
 		screenshot.is_preview = True
 		screenshot.save()
 
@@ -125,13 +130,7 @@ class ScreenshotModelTest(TestCase):
 
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
 		project = create_project(user ,'This is a Project')
-		screenshot = Screenshot()
-		screenshot.name = "A test Screenshot"
-		screenshot.project = project
-
-		image = open('core_app/static/core_app/img/foro_estudiantil.png')
-		screenshot.img = SimpleUploadedFile(image.name, image.read())
-		screenshot.save()
+		screenshot = create_screenshot(project , "A test Screenshot")
 
 		self.assertEqual(Screenshot.objects.count(), 1)
 
@@ -140,6 +139,19 @@ class ScreenshotModelTest(TestCase):
 
 		project_with_screen_saved = Project.objects.get(screenshot__pk=screenshot.id)
 		self.assertEqual(project , project_with_screen_saved)
-	########
+	######## refactorizar a partir de aca
 		first_screenshot_of_project = project_with_screen_saved.screenshot_set.first()
 		self.assertEqual("A test Screenshot" , first_screenshot_of_project.name)
+
+	def test_mark_as_only_preview_method(self):
+		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+		project = create_project(user ,'This is a Project')
+		screenshot1 = create_screenshot(project , "A test Screenshot")
+		screenshot2 = create_screenshot(project , "A second test Screenshot")
+
+		screenshot1.mark_as_only_preview()
+		screenshot2.mark_as_only_preview()
+		project_screens = project.screenshot_set.filter(is_preview=True)
+
+		self.assertEqual(project_screens.count() , 1)
+		self.assertEqual(project_screens[0].name , "A second test Screenshot")

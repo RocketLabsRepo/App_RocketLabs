@@ -63,4 +63,10 @@ class Screenshot(models.Model):
 	def __str__(self):
 		return "{} | {}".format(self.project.title , self.name).encode('utf-8', errors='replace')
 
-
+	def mark_as_only_preview(self):
+		screens = Screenshot.objects.filter(project=self.project)
+		for screen in screens:
+			screen.is_preview = False
+			screen.save()
+		self.is_preview = True
+		self.save()
