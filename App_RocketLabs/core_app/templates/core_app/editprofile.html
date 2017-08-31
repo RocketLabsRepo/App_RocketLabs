@@ -1,5 +1,5 @@
 {% extends 'core_app/base.html' %}
-{% load static %}
+{% load staticfiles %}
 
 {% block title %}Perfil{% endblock %}
 
@@ -9,13 +9,13 @@
 	<h1> Editando perfil : {{ user.username }} </h1>
 	<h1> Código único : {{ user.profile.secret_link }} </h1>
 	{% if request.user.profile.is_team_member%}
-		<img src="{{user.profile.photo}}" height="100%" width="100%" alt = "Sin imagen de perfil">
+		<img src="{{ user.profile.photo.url}}" alt = "Sin imagen de perfil">
 	{% endif %}
 	
 	<div class="container perfil-container">
 		<div class="jumbotron">
 			
-			<form method="POST">
+			<form enctype ="multipart/form-data" method="POST">
         		{% csrf_token %}
         		<div class="row">
         			

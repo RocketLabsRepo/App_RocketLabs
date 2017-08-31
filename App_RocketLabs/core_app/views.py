@@ -96,7 +96,7 @@ def logout_view(request):
 def profile_view(request):
 	if request.method == 'POST':	
 		if(request.user.profile.is_team_member):
-			euf = EditUserForm(request.POST,request.FILES , instance = request.user, prefix='edituser')
+			euf = EditUserForm(request.POST, instance = request.user, prefix='edituser')
 			etmf = EditTeamMemberForm(request.POST,request.FILES , instance = request.user.profile, prefix='editmember')
 			if etmf.is_valid() * euf.is_valid():
 				etmf.save()
@@ -113,7 +113,7 @@ def profile_view(request):
 		euf = EditUserForm(instance = request.user ,prefix='edituser')
 		if(request.user.profile.is_team_member):
 			etmf = EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
-			return render(request, 'core_app/editclientprofile.html', {'editteammemberform':etmf, 'edituserform':euf})
+			return render(request, 'core_app/editprofile.html', {'editteammemberform':etmf, 'edituserform':euf})
 		else:	
 			ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
-			return render(request, 'core_app/editclientprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
+			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
