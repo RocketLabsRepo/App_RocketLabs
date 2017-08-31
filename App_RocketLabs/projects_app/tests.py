@@ -29,6 +29,7 @@ def create_project(user,  ptitle):
 def complete_project(project):
 	project.is_complete = True
 	project.finish_date = datetime.now()
+	project.done_percentage = 100
 	project.save()
 	return project
 
@@ -75,11 +76,35 @@ class AllProjectsPageTest(TestCase):
 		self.assertEqual(Project.objects.count() , 0)
 		self.assertIn("Lo sentimos, actualmente no tenemos proyectos disponibles." , response.content.decode('utf-8') , "No hay mensaje sin proyectos.")
 
-class DetailsProjectsPageTest(TestCase):
+class CompletedProjectsDetailsPageTest(TestCase):
 
-	def test_project_details_page_returns_correct_html(self):
-		response = self.client.get('/projects/id') #implicit test_project_details_url_resolves_to_project_details_view
-		self.assertTemplateUsed(response, 'projects_app/project_details.html')
+	def test_completed_project_details_page_returns_correct_html(self):
+		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+		project1 = create_project(user,'Project One')
+		screenshot = create_screenshot(project1 , "A test Screenshot")
+
+		response = self.client.get('/projects/{}'.format( project1.id ) )
+		#implicit test_project_details_url_resolves_to_project_details_view
+
+		self.assertTemplateUsed(response, 'projects_app/completed_project_details.html')
+
+	def test_shows_not_completed_message_for_uncompleted_project(self):
+		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+		project1 = create_project(user,'Project One')
+		screenshot = create_screenshot(project1 , "A test Screenshot")
+
+		response = self.client.get('/projects/{}'.format( project1.id ) )
+
+		self.assertEqual(Project.objects.count() , 1)
+		self.assertIn("Actualmente este proyecto no ha sido completado y sus detalles no estan disponibles públicamente." ,
+					  response.content.decode('utf-8') ,
+					  "No hay mensaje de proyecto sin completar."
+					 )
+
+	def test_shows_404_for_nonexistent_project(self):
+		response = self.client.get('/projects/100000')
+
+		self.assertEqual(response.status_code, 404)
 
 
 """""""""""""""""""""""""""
@@ -119,8 +144,23 @@ class ProjectModelTest(TestCase):
 		self.assertEqual(saved_preview.name , "A test Screenshot")
 		self.assertTrue(saved_preview.is_preview)
 
+	def test_can_return_clients_string(self):
+		client1 = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+		client2 = User.objects.create_user('paul', 'mccartney@thebeatles.com', 'paulpassword')
+		client1.profile.company_name = "Beatles.Inc"
+		client2.profile.company_name = "Ilustr S.A."
+		client1.profile.save()
+		client2.profile.save()
+		project1 = create_project(client1 ,'This is a Project')
+		project1.owner_profiles.add(client2.profile)
+		project2 = create_project(client2 ,'This is another Project')
 
-	
+		joined_clients = project1.get_clients_string()
+
+		self.assertEqual(Profile.objects.filter(project__id=project1.id).count() , 2)
+		self.assertEqual(project2.get_clients_string(), "Ilustr S.A.")
+		self.assertEqual(joined_clients , "Beatles.Inc, Ilustr S.A.")
+
 class ScreenshotModelTest(TestCase):
 
 	@override_settings(MEDIA_ROOT=tempfile.gettempdir())

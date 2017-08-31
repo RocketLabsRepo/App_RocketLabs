@@ -27,7 +27,6 @@ class Project(models.Model):
 	title = models.CharField(max_length=100)
 	description = models.TextField(max_length=255, blank=True, default='')
 	str_duration = models.CharField(max_length=50, blank = True,default='')
-	estimated_duration = models.CharField(max_length=50, blank=True,default='')
 	done_percentage = models.SmallIntegerField(default=0)
 	current_stage = models.CharField(max_length=50, blank =True,default='')
 	is_complete = models.BooleanField(default = False)
@@ -42,6 +41,14 @@ class Project(models.Model):
 
 	def get_preview_screenshot(self):
 		return self.screenshot_set.get(is_preview=True)
+
+	def get_clients_string(self):
+		profiles = self.owner_profiles.all()
+		client_string = profiles.first().company_name
+		if profiles.count() > 1:
+			for profile in profiles[1:]:
+				client_string += ", {}".format(profile.company_name)
+		return client_string
 
 
 """""""""""""""""""""""""""
