@@ -156,7 +156,7 @@
         {% endwith %}
         <p class="w3-center">
           {{ object.title }}
-          <br><a href="{{ object.id }}">Ver detalles</a>
+          <br><a href="{% url 'projects_app:completed_project_details' object.id %}">Ver detalles</a>
         </p>
       </div>
     {% empty %}

@@ -78,6 +78,7 @@ class AllProjectsPageTest(TestCase):
 
 class CompletedProjectsDetailsPageTest(TestCase):
 
+	@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 	def test_completed_project_details_page_returns_correct_html(self):
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
 		project1 = create_project(user,'Project One')
@@ -88,6 +89,7 @@ class CompletedProjectsDetailsPageTest(TestCase):
 
 		self.assertTemplateUsed(response, 'projects_app/completed_project_details.html')
 
+	@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 	def test_shows_not_completed_message_for_uncompleted_project(self):
 		user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
 		project1 = create_project(user,'Project One')
