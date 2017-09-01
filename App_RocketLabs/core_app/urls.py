@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='Logout'),
     url(r'^profile/$', views.profile_view, name='Edit_Profile'),
     url(r'^team/$', views.allteammember_view, name='All_Team_Members'),
+    url(r'^team/([0-9]+)/$', views.detailsteammember_view, name='Details_Team_Member'),
 ]
 
 # URL para servir las imagenes de forma local durante debug.

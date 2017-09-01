@@ -122,3 +122,7 @@ def profile_view(request):
 def allteammember_view(request):
 	atm = Profile.objects.filter(is_team_member = True).all()
 	return render (request, 'core_app/team.html', {'teammember': atm} )
+
+def detailsteammember_view (request, teammember_pk):
+	tm = get_object_or_404(Profile, pk = teammember_pk)
+	return render(request, 'core_app/teammemberdetail.html', {'teammember': tm})
