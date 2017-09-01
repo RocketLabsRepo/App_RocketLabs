@@ -117,3 +117,8 @@ def profile_view(request):
 		else:	
 			ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
 			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
+
+
+def allteammember_view(request):
+	atm = Profile.objects.filter(is_team_member = True).all()
+	return render (request, 'core_app/team.html', {'teammember': atm} )

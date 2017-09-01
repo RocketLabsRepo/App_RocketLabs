@@ -1,0 +1,28 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="w3-container padding128-16" id="team">
+	<h3 class="w3-center">EL EQUIPO</h3>
+ 	<p class="w3-center w3-large">Las caras de nuestra compañia</p>
+ 	
+	 	<div class="w3-row-padding w3-grayscale margintop64">
+		    {% for member in teammember %}
+			    <div class="w3-col l3 m6 w3-margin-bottom">
+			      <div class="w3-card-2">
+			        <img src="{{ member.photo.url}}" alt="foto" class="widthOHP">
+
+			        <div class="w3-container">
+			          <h3>{{ member.user.first_name}} {{ member.user.last_name }}</h3>
+			          <p class="w3-opacity">{{ member.title }}</p>
+			          <p>{{ member.bio }}</p>
+			          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-info"></i> Ver detalles completos</button></p>
+			        </div>
+			      </div>
+			    </div>
+			{% endfor %}
+		</div>
+</div>
+
+
+{% endblock %}
