@@ -1,0 +1,23 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="w3-container w3-black padding128-16">
+  <h1>Perfil de: {{ teammember.user.first_name}} {{ teammember.user.last_name }}</h1>
+</div>
+<div class="w3-container">
+ 	<div class="w3-row-padding w3-grayscale margintop64">		    
+	    <div class="w3-col l3 m6 w3-margin-bottom">
+	      <div class="w3-card-2">
+	        <img src="{{ teammember.photo.url}}" alt="foto" class="widthOHP">
+	        <div class="w3-container">
+	          <p class="w3-opacity">{{ teammember.title }}</p>
+	          <a href = "{{ teammember.linkedln_link}}"><p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-linkedin"></i> </button></p></a>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="w3-col l9 m6 w3-margin-bottom">
+	    	<p>{{ teammember.bio }}</p>
+	    </div>
+	</div>
+</div>
+{% endblock %}

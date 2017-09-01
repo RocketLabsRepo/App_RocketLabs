@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm
+from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm
 from .models import Profile
 import uuid
 
@@ -93,15 +93,36 @@ def logout_view(request):
 
 
 #View para editar perfil de cliente
-def profileclient_view(request):
-	if request.method == 'POST':
-		ecpf = EditClientProfileForm(request.POST, prefix='editprofile')
-		euf = EditUserForm(request.POST, prefix='edituser')
-		if ecpf.is_valid() * euf.is_valid():
-			ecpf.save()
-			euf.save()			
-		return HttpResponseRedirect('/')		
+def profile_view(request):
+	if request.method == 'POST':	
+		if(request.user.profile.is_team_member):
+			euf = EditUserForm(request.POST, instance = request.user, prefix='edituser')
+			etmf = EditTeamMemberForm(request.POST,request.FILES , instance = request.user.profile, prefix='editmember')
+			if etmf.is_valid() * euf.is_valid():
+				etmf.save()
+				euf.save()			
+			return HttpResponseRedirect('/')
+		else:
+			euf = EditUserForm(request.POST, instance = request.user, prefix='edituser')
+			ecpf = EditClientProfileForm(request.POST, instance = request.user.profile, prefix='editprofile')
+			if ecpf.is_valid() * euf.is_valid():
+				ecpf.save()
+				euf.save()			
+			return HttpResponseRedirect('/')		
 	else:
-		ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')
 		euf = EditUserForm(instance = request.user ,prefix='edituser')
-		return render(request, 'core_app/editclientprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
+		if(request.user.profile.is_team_member):
+			etmf = EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
+			return render(request, 'core_app/editprofile.html', {'editteammemberform':etmf, 'edituserform':euf})
+		else:	
+			ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
+			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
+
+
+def allteammember_view(request):
+	atm = Profile.objects.filter(is_team_member = True).all()
+	return render (request, 'core_app/team.html', {'teammember': atm} )
+
+def detailsteammember_view (request, teammember_pk):
+	tm = get_object_or_404(Profile, pk = teammember_pk)
+	return render(request, 'core_app/teammemberdetail.html', {'teammember': tm})

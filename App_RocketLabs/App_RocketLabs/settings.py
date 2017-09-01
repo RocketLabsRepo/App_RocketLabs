@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from __future__ import unicode_literals
 
 import os
+import os.path
 from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -127,3 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+# Configuracion de la carpeta de media en la que se guardaran los archivos subidos por los usuarios
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
+MEDIA_URL = '/media/'
