@@ -10,6 +10,11 @@ from django.db.models.signals import post_save
 #from projects_app.models import Project
 
 
+def skill_logo_directory_path(instance, filename):
+    # El screenshot será subido a MEDIA_ROOT/project/<id>/<filename>
+    return 'skill_logos/{0}/{1}'.format(instance.name, filename)
+
+
 # Create your models here.
 
 
@@ -45,7 +50,6 @@ class Request(models.Model):
 	#project_id = models.ForeignKey(Project, blank = True, default = None)
 	client_user = models.ForeignKey(User, blank = True, default = None)
 	
-
 	requester_name = models.CharField(max_length=30)
 	telephone_number = models.DecimalField(max_digits=13, decimal_places=0, blank = True)
 	requester_mail = models.EmailField()
@@ -65,10 +69,9 @@ Skill Model
 class Skill(models.Model):
 
 	users = models.ManyToManyField(User, through='knows')
-
-	name = models.CharField(max_length=50)
-	skill_logo = models.ImageField()
-	about = models.TextField(max_length=255)
+	name = models.CharField(max_length=50, unique = True)
+	skill_logo = models.ImageField( upload_to = skill_logo_directory_path )
+	about = models.TextField(max_length=255, blank=True, default='')
 
 	def __str__(self):
 		return self.name
@@ -80,10 +83,23 @@ knows Model -Es la tabla intermedia de la relacion many2many entre Skill y User
 """""""""""""""""""""""""""
 class knows(models.Model):
 
-	user = models.ForeignKey(User)
-	skill = models.ForeignKey(Skill)
+	EXP = (('Junior Developer', 'Junior Developer'),
+				 ('Semi-Senior Developer', 'Semi-Senior Developer'),
+				 ('Senior Developer', 'Senior Developer')
+		  )
 
-	exp_level = models.CharField(max_length=30)
+	user = models.ForeignKey(User, limit_choices_to={'profile__is_team_member': True})
+	skill = models.ForeignKey(Skill)
+	exp_level = models.CharField(max_length=30, choices=EXP, default='Junior Developer')
+
+	class Meta:
+
+		unique_together = (("user", "skill"),)
+
+	def __str__(self):
+		return "{} knows {}".format(self.user,self.skill).encode('utf-8', errors='replace')
+
+
 
 #esta seccion de codigo nos permite crear un objeto Profile
 #por cada objeto User creado en el sistema automaticamente.
