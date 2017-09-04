@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'core_app',
     'bundles_app',
     'projects_app',
+    'social_django', 
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'social_django.middleware.SocialAuthExceptionMiddleware', # Redes sociales
 ]
 
 ROOT_URLCONF = 'App_RocketLabs.urls'
@@ -68,12 +71,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect', # <--
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'App_RocketLabs.wsgi.application'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 # Database
@@ -135,3 +147,12 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
 MEDIA_URL = '/media/'
+
+
+#Redes sociales
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
