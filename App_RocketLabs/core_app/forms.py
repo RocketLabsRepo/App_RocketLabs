@@ -7,7 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.forms.models import inlineformset_factory
-from .models import Profile
+
+from core_app.models import Profile
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
 
