@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
+from .views import cod_generator
 
 # imports de modelos de otras apps.
 #from bundles_app.models import Bundle
@@ -87,10 +88,22 @@ class knows(models.Model):
 
 #esta seccion de codigo nos permite crear un objeto Profile
 #por cada objeto User creado en el sistema automaticamente.
+
+def cod_generator(string_length=25):
+    """Returns a random string of length string_length."""
+    random = str(uuid.uuid4()) # Convert UUID format to a Python string.
+    random = random.upper() # Make all characters uppercase.
+    random = random.replace("-","") # Remove the UUID '-'.
+    cod = random[0:string_length] 
+    while Profile.objects.filter(secret_link=cod).exists():
+    	cod = random[0:string_length] 
+    return cod # Return the random string.
+    
 def create_profile(sender, **kwargs):
 	user = kwargs["instance"]
 	if kwargs["created"]:
 		user_profile = Profile(user=user)
+		user_profile.secret_link = cod_generator(25)
 		user_profile.save()
 		
 post_save.connect(create_profile, sender=User)
