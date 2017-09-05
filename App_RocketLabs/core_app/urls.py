@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^team/$', views.allteammember_view, name='All_Team_Members'),
     url(r'^team/([0-9]+)/$', views.detailsteammember_view, name='Details_Team_Member'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url('', include('django.contrib.auth.urls', namespace='auth')),
 ]
 
 # URL para servir las imagenes de forma local durante debug.

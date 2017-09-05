@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
-#from .views import cod_generator
+#from .views import cod_generator	
+import uuid
 
 # imports de modelos de otras apps.
 #from bundles_app.models import Bundle

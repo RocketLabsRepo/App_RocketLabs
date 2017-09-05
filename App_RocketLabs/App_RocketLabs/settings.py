@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'App_RocketLabs.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -156,3 +157,5 @@ LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')

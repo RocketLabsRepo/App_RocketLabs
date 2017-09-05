@@ -8,21 +8,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm
-import uuid
-
-
-# ########################################################Funciones adicionales########################################################################
-#def cod_generator(string_length=25):
- #   """Returns a random string of length string_length."""
-  #  random = str(uuid.uuid4()) # Convert UUID format to a Python string.
-   # random = random.upper() # Make all characters uppercase.
-    #random = random.replace("-","") # Remove the UUID '-'.
-    #cod = random[0:string_length] 
-    #while Profile.objects.filter(secret_link=cod).exists():
-    #	cod = random[0:string_length] 
-    #return cod # Return the random string.
-##########################################################################################################################################################
-
 
 # Create your views here.
 
@@ -36,11 +21,6 @@ def register_view(request):
 		ruf = RegisterUserForm(request.POST)
 		if ruf.is_valid():
 			user = ruf.save()
-			#Generación del código único
-			#unique_code = cod_generator(25)
-			#user_profile = user.profile
-			#user_profile.secret_link = unique_code
-			#user_profile.save()
 
 			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
 			# al email indicado con sus credenciales.
