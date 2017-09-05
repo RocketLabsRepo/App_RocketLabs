@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
+#from .views import cod_generator	
+import uuid
 
 # imports de modelos de otras apps.
 #from bundles_app.models import Bundle
@@ -30,15 +32,16 @@ class Profile(models.Model):
 	title = models.CharField(max_length=30, blank = True)
 	linkedln_link = models.CharField(max_length=50, blank = True)
 	bio = models.TextField(max_length = 255, blank = True)
-	secret_link = models.CharField(max_length = 50, blank=True)
-	photo = models.ImageField(blank = True)
+	secret_link = models.CharField(max_length = 50, unique=True, blank = True)
+	photo = models.ImageField(blank =True, upload_to = "photo_profile", default = "../media/photo_profile/default-user.png")
 	is_admin = models.BooleanField(default=False)
 	is_team_member= models.BooleanField(default = False)
 	failed_logins = models.SmallIntegerField(default=0)
 	is_blocked = models.BooleanField(default=False)
 
 	def __str__(self):
-		return "{}'s profile.".format(self.user.get_username())
+
+		return "{}'s profile".format(self.user.get_username())
 
 
 """""""""""""""""""""""""""
@@ -103,10 +106,25 @@ class knows(models.Model):
 
 #esta seccion de codigo nos permite crear un objeto Profile
 #por cada objeto User creado en el sistema automaticamente.
+
+
+    
 def create_profile(sender, **kwargs):
+
+	def cod_generator(string_length):
+		"""Returns a random string of length string_length."""
+		random = str(uuid.uuid4()) # Convert UUID format to a Python string.
+		random = random.upper() # Make all characters uppercase.
+		random = random.replace("-","") # Remove the UUID '-'.
+		cod = random[0:string_length] 
+		while Profile.objects.filter(secret_link=cod).exists():
+			cod = random[0:string_length] 
+		return cod # Return the random string.
+
 	user = kwargs["instance"]
 	if kwargs["created"]:
 		user_profile = Profile(user=user)
+		user_profile.secret_link = cod_generator(25)
 		user_profile.save()
 		
 post_save.connect(create_profile, sender=User)

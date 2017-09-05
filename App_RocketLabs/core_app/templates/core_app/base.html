@@ -13,7 +13,6 @@
     <!-- Link no local para la hoja de estilos de la W3Schools
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     -->
-
     <link rel="stylesheet" href="{% static 'core_app/css/w3.css'%}">
     <link rel="stylesheet" href="{% static 'core_app/css/familyraleway.css'%}">
     <link rel="stylesheet" href="{% static 'core_app/css/font-awesome.min.css'%}">
@@ -31,7 +30,12 @@
           <a href="{% url 'core_app:home' %}#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> TRABAJOS</a>
           <a href="{% url 'core_app:home' %}#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRECIOS</a>
           <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACTO</a>
-          <a href="#login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESAR</a>
+        {% if user.is_authenticated %}
+          <a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
+          <a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
+        {% else %}
+          <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
+        {% endif %}
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -48,7 +52,12 @@
       <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
       <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>
       <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button"> CONTACTO</a>
-      <a href="#login" onclick="w3_close()" class="w3-bar-item w3-button"> INGRESAR</a>
+    {% if user.is_authenticated %}
+      <a href="#" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
+      <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
+    {% else %}
+      <a href="/login" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
+    {% endif %}
     </nav>
 
     <!-- Acá termina la barra de navegación y comienza el contenido  -->

@@ -8,3 +8,4 @@ from core_app.models import Profile, Skill, knows
 admin.site.register(Profile)
 admin.site.register(Skill)
 admin.site.register(knows)
+
