@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 """
 Django settings for App_RocketLabs project.
 
@@ -9,8 +11,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-# -*- coding: utf-8 necessary for django string usage -*-
-from __future__ import unicode_literals
+
 
 import os
 import os.path
@@ -157,6 +158,5 @@ LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')
-
+#SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
+#SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')
