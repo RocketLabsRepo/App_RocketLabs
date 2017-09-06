@@ -31,10 +31,10 @@
           <a href="{% url 'core_app:home' %}#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRECIOS</a>
           <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACTO</a>
         {% if user.is_authenticated %}
-          <a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
-          <a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
+          <a href="{% url 'core_app:edit_profile' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
+          <a href="{% url 'core_app:logout' %}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
         {% else %}
-          <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
+          <a href="{% url 'core_app:login' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
         {% endif %}
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -48,15 +48,15 @@
     <!-- Sidebar on small screens when clicking the menu icon -->
     <nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
       <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar ×</a>
-      <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">EQUIPO</a>
-      <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
-      <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>
-      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button"> CONTACTO</a>
+      <a href="{% url 'core_app:home' %}#team" onclick="w3_close()" class="w3-bar-item w3-button">EQUIPO</a>
+      <a href="{% url 'core_app:home' %}#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
+      <a href="{% url 'core_app:home' %}#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>
+      <a href="{% url 'core_app:home' %}#contact" onclick="w3_close()" class="w3-bar-item w3-button"> CONTACTO</a>
     {% if user.is_authenticated %}
-      <a href="#" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
-      <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
+      <a href="{% url 'core_app:edit_profile' %}" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
+      <a href="{% url 'core_app:logout' %}" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
     {% else %}
-      <a href="/login" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
+      <a href="{% url 'core_app:login' %}" onclick="w3_close()"  class="w3-bar-item w3-button"><i class="fa fa-user"></i> INGRESA</a>
     {% endif %}
     </nav>
 

@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm
 
 from projects_app.models import Project
-from core_app.models import Skill
+from core_app.models import Profile, Skill
 # Create your views here.
 
 # Helper function: Yields a generator with objects in l grouped in groups of n.
