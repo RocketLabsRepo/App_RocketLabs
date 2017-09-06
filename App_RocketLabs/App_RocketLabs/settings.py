@@ -152,11 +152,11 @@ MEDIA_URL = '/media/'
 
 # Configuracion para iniciar sesión desde Redes sociales
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'core_app:Login'
+LOGOUT_URL = 'core_app:Logout'
+LOGIN_REDIRECT_URL = 'core_app:home'
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
-#SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
-#SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')

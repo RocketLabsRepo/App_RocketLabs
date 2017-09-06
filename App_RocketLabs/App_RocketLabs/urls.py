@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^', include('core_app.urls')),
     url(r'^projects/', include('projects_app.urls')),
     url(r'^', include('bundles_app.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
 
 urlpatterns += [
