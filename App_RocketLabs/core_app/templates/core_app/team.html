@@ -9,7 +9,11 @@
 	    {% for member in teammember %}
 		    <div class="w3-col l3 m6 w3-margin-bottom">
 		      <div class="w3-card-2">
+		      	{% if member.photo %}
 		        <img src="{{ member.photo.url}}" alt="foto" class="widthOHP">
+		        {% else %}
+		        <p>NO hay imágen disponible</p>
+		        {% endif %}
 		        <div class="w3-container">
 		          <h3>{{ member.user.first_name}} {{ member.user.last_name }}</h3>
 		          <p class="w3-opacity">{{ member.title }}</p>

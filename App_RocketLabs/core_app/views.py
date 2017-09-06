@@ -11,6 +11,7 @@ from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileF
 
 from projects_app.models import Project
 from core_app.models import Skill, Profile
+
 # Create your views here.
 
 # Helper function: Yields a generator with objects in l grouped in groups of n.

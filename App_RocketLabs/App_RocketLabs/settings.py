@@ -152,8 +152,8 @@ MEDIA_URL = '/media/'
 
 # Configuracion para iniciar sesión desde Redes sociales
 
-LOGIN_URL = 'core_app:Login'
-LOGOUT_URL = 'core_app:Logout'
+LOGIN_URL = 'core_app:login'
+LOGOUT_URL = 'core_app:logout'
 LOGIN_REDIRECT_URL = 'core_app:home'
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
