@@ -3,11 +3,10 @@
 
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.forms.models import inlineformset_factory
-
 from core_app.models import Profile
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
@@ -164,3 +163,15 @@ class EditUserForm(forms.ModelForm):
 					'email_name': forms.TextInput(attrs={'class':'form-control' }),
 				}
 
+
+#Formulario para cambiar la contraseña.
+class ChangePassForm(PasswordChangeForm):
+	def __init__(self, *args, **kwargs):
+		super(ChangePassForm, self).__init__(*args, **kwargs)
+		self.fields['old_password'].label = "Contraseña actual"
+		self.fields['new_password1'].label = "Nueva contraseña"
+		self.fields['new_password2'].label = "Confirmar contraseña"
+
+		self.fields['old_password'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
