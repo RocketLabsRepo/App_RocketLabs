@@ -117,12 +117,21 @@ def profile_view(request):
 			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
 
 
+
 def allteammember_view(request):
-	atm = Profile.objects.filter(is_team_member = True).all()
-	return render (request, 'core_app/team.html', {'teammember': atm} )
+	"""
+	Esta view le pasa a la template todos los objetos User
+	que sean teammembers y esten activos en el sistema.
+	"""
+	atm = User.objects.filter(profile__is_team_member = True, is_active=True)
+	return render(request, 'core_app/team.html', {'teammember': atm} )
 
 def detailsteammember_view (request, teammember_pk):
-	tm = get_object_or_404(Profile, pk = teammember_pk)
+	"""
+	Esta view le pasa a la template el objeto User indicado con sus habilidades
+	y si no es teammember, no esta activo o no existe se retorna un error 404.
+	"""
+	tm = get_object_or_404(User, is_active=True, profile__is_team_member = True ,pk = teammember_pk)
 	return render(request, 'core_app/teammemberdetail.html', {'teammember': tm})
 
 

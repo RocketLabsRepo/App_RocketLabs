@@ -1,27 +1,37 @@
 {% extends 'core_app/base.html' %}
 {% load static %}
+
+{% block title %}Perfil de nuestro empleado: {{ teammember.get_full_name }}{% endblock %}
+
 {% block content %}
-<div class="w3-container w3-black padding128-16">
-  <h1>Perfil de: {{ teammember.user.first_name}} {{ teammember.user.last_name }}</h1>
+<div class="w3-container w3-black padding128-16" id="home">
+  <h1>Perfil de: {{ teammember.get_full_name }} </h1>
 </div>
 <div class="w3-container">
- 	<div class="w3-row-padding w3-grayscale margintop64">		    
-	    <div class="w3-col l3 m6 w3-margin-bottom">
-	      <div class="w3-card-2">
-				{% if teammember.photo %}
-				<img src="{{ teammember.photo.url}}" alt="foto" class="widthOHP">
+	<div class="w3-row-padding w3-grayscale margintop64">		    
+		<div class="w3-col l3 m6 w3-margin-bottom">
+			<div class="w3-card-2">
+				{% if teammember.profile.photo %}
+				<img src="{{ teammember.profile.photo.url}}" alt="Avatar de {{ teammember.get_full_name }}" class="widthOHP">
 				{% else %}
-				<p>NO hay imágen disponible</p>
+				<p class="w3-center">No hay imágen disponible.</p>
 				{% endif %}
-	        <div class="w3-container">
-	          <p class="w3-opacity">{{ teammember.title }}</p>
-	          <a href = "{{ teammember.linkedln_link}}"><p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-linkedin"></i> </button></p></a>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="w3-col l9 m6 w3-margin-bottom">
-	    	<p>{{ teammember.bio }}</p>
-	    </div>
+				<div class="w3-container">
+					<p class="w3-opacity">{{ teammember.profile.title }}</p>
+
+					<form action="{{ teammember.profile.linkedln_link}}">
+						<p><button type="submit" class="w3-button w3-light-grey w3-block"><i class="fa fa-linkedin-square"></i> Mi LinkedIn </button></p>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+		<div class="w3-col l9 m6 w3-margin-bottom">
+			<p>{{ teammember.profile.bio }}</p>
+		</div>
 	</div>
+	<p class="w3-center">
+    	<a href="{% url 'core_app:all_team_members' %}" class="w3-button"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
+  	</p>
 </div>
 {% endblock %}
