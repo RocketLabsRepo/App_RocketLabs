@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm
+from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm
 
 from projects_app.models import Project
 from core_app.models import Skill, Profile
@@ -138,37 +138,37 @@ def detailsteammember_view (request, teammember_pk):
 def changepassword_view(request):
 	if request.user.has_usable_password():
 		PasswordForm = ChangePassForm
-	#else:
-		#PasswordForm = DefinirPassForm
-
-	if request.method == 'POST':
-		form = PasswordForm(request.user, request.POST)
-		if form.is_valid():
-			form.save()
-			update_session_auth_hash(request, form.user)
-			"""
-				#Envio de email con las nuevas credenciales al correo electrónico del usuario
-			user = User.objects.get(pk=request.user.id)
-			user_profile = Perfil.objects.get(user = user)
-			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
-			
-			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
-			msg_html = render_to_string('registration/user_pwdreset_email.html', context)
-			
-			send_mail(
-					'Cambio de Contraseña - Foro-Estudiantil!', #titulo
-					msg_plain,									#mensaje txt
-					'foroestudiantil2@gmail.com',				#email de envio
-					[user.email],								#destinatario
-					html_message=msg_html,						#mensaje en html
-					)
-			"""
-				# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
-			user = User.objects.get(pk=request.user.id)
-			user_profile = Profile.objects.get(user = user)
-			user_profile.is_blocked = False
-			user_profile.save()
-			return HttpResponseRedirect('/')
+	else:
+		PasswordForm = DefinePassForm
+	
+	form = PasswordForm(request.user, request.POST)
+	
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		update_session_auth_hash(request, form.user)
+		"""
+			#Envio de email con las nuevas credenciales al correo electrónico del usuario
+		user = User.objects.get(pk=request.user.id)
+		user_profile = Perfil.objects.get(user = user)
+		context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
+		
+		msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
+		msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+		
+		send_mail(
+				'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+				msg_plain,									#mensaje txt
+				'foroestudiantil2@gmail.com',				#email de envio
+				[user.email],								#destinatario
+				html_message=msg_html,						#mensaje en html
+				)
+		"""
+			# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+		user = User.objects.get(pk=request.user.id)
+		user_profile = Profile.objects.get(user = user)
+		user_profile.is_blocked = False
+		user_profile.save()
+		return HttpResponseRedirect('/')
 	else:
 		form = PasswordForm(request.user)
 		return render(request, 'core_app/changepassword.html',{'form': form})

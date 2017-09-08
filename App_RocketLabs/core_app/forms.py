@@ -174,4 +174,22 @@ class ChangePassForm(PasswordChangeForm):
 
 		self.fields['old_password'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})		
+	"""
+	Este codigo no lanza el mensaje.
+	def clean(self): 
+		password1 = self.cleaned_data.get('new_password1')
+		password2 = self.cleaned_data.get('new_password2')
+		if password1 != password2:
+			raise forms.ValidationError(_("Las nuevas contraseñas no coinciden"), code = "new_password")
+	"""
+
+# Formulario para definir la contraseña de una cuenta por primera vez.
+class DefinePassForm(AdminPasswordChangeForm):
+	def __init__(self, *args, **kwargs):
+		super(DefinePassForm, self).__init__(*args, **kwargs)
+		
+		self.fields['password1'].label = "Contraseña"
+		self.fields['password2'].label = "Confirmar contraseña"
+		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})	
