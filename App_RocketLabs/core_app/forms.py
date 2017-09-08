@@ -176,10 +176,12 @@ class ChangePassForm(PasswordChangeForm):
 		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})		
 
+	#Este codigo no lanza el mensaje
 	def clean_old_password(self):
 		password = self.cleaned_data['old_password']
 		if not self.user.check_password(password):
 			raise forms.ValidationError('Contraseña invalida')
+		return password
 
 	#Este codigo no lanza el mensaje.
 	def clean_new_password2(self): 
