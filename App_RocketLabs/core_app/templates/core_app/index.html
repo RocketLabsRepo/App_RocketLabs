@@ -116,7 +116,7 @@
       </div>
     </div>
   </div>
-  <p class="fadeInOnScroll" id="teambut"><a href="/team" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a></p>
+  <p class="w3-center" id="teambut"><a href="/team" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a></p>
 </div>
 
 <!-- Promo Section "Statistics" -->
@@ -286,26 +286,25 @@
     </div>
     
      <div class="w3-col m7">
-      <form class="w3-container w3-card-4 w3-padding-16 w3-white">
-        <div class="w3-section">      
-          <label>Nombre de contacto:</label>
-          <input class="w3-input" type="text" name="Name" required>
-        </div>
-        <div class="w3-section">      
-          <label>Correo Electrónico:</label>
-          <input class="w3-input" type="text" name="Email" required>
-        </div>
-        <div class="w3-section">      
-          <label>Mensaje:</label>
-          <!--
-          <input class="w3-input" type="text" name="Message" required>
-        -->
-          <textarea class="w3-input" placeholder="Máximo 400 caracteres."></textarea>
-        </div> 
+      <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'core_app:contact_submit' %}">
+        {% csrf_token %}
 
-        <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"> Enviar </i></button>
+        {% for field in contact_f %}
+          <div class="w3-section">
+              {{ field.label_tag }}<br>
+              {% if field.errors %}
+                  <div class="form-errors">
+                  {% for error in field.errors %}
+                      <p>{{ error }}</p>
+                  {% endfor %}
+                  </div>
+              {% endif %}
+              {{ field }}
+          </div>
+        {% endfor %}
       
-      </form>
+        <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"></i> Enviar</button>
+    
     </div>
 
   </div>

@@ -41,7 +41,7 @@ class Profile(models.Model):
 
 	def __str__(self):
 
-		return "{}'s profile".format(self.user.get_username())
+		return "{}'s profile".format(self.user.get_username()).encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -49,20 +49,16 @@ Request Model
 
 """""""""""""""""""""""""""
 class Request(models.Model):
-
-	#project_id = models.ForeignKey(Project, blank = True, default = None)
-	client_user = models.ForeignKey(User, blank = True, default = None)
 	
 	requester_name = models.CharField(max_length=30)
-	telephone_number = models.DecimalField(max_digits=13, decimal_places=0, blank = True)
+	telephone_number = models.CharField(max_length=15)
 	requester_mail = models.EmailField()
 	subject = models.CharField(max_length=100)
 	message = models.TextField(max_length=500)
 	sent_date = models.DateTimeField(auto_now_add = True)
-	
 
 	def __str__(self):
-		return self.requester_mail
+		return self.subject.encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -77,7 +73,7 @@ class Skill(models.Model):
 	about = models.TextField(max_length=255, blank=True, default='')
 
 	def __str__(self):
-		return self.name
+		return self.name.encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -105,10 +101,7 @@ class knows(models.Model):
 
 
 #esta seccion de codigo nos permite crear un objeto Profile
-#por cada objeto User creado en el sistema automaticamente.
-
-
-    
+#por cada objeto User creado en el sistema automaticamente.    
 def create_profile(sender, **kwargs):
 
 	def cod_generator(string_length):

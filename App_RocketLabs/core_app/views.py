@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm
 
-from projects_app.models import Project
+from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm
 from core_app.models import Skill, Profile
+from projects_app.models import Project
 
 # Create your views here.
 
@@ -30,6 +30,10 @@ def home(request):
 	# Le pasaremos todas las habilidades manejadas por la empresa.
 	skills = grouped(Skill.objects.all() , 4)
 	context['skill_list'] = skills
+
+	#Le pasamos el formulario de contacto
+	contact_f = ContactForm()
+	context['contact_f'] = contact_f
 
 	return render(request,'core_app/index.html', context)
 
@@ -172,3 +176,6 @@ def changepassword_view(request):
 	else:
 		form = PasswordForm(request.user)
 		return render(request, 'core_app/changepassword.html',{'form': form})
+
+def contact_submit(request):
+	return redirect('/')

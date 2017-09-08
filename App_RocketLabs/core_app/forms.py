@@ -1,5 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from django import forms
 from django.contrib.auth import authenticate
@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm,
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.forms.models import inlineformset_factory
-from core_app.models import Profile
+from core_app.models import Profile, Request
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
 
@@ -200,4 +200,25 @@ class DefinePassForm(AdminPasswordChangeForm):
 		self.fields['password1'].label = "Contraseña"
 		self.fields['password2'].label = "Confirmar contraseña"
 		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})	
+		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+
+class ContactForm(forms.ModelForm):
+
+	class Meta:
+		model = Request
+
+		fields = ['requester_name', 'requester_mail', 'telephone_number', 'subject', 'message']
+
+		labels = {	'requester_name':_('Nombre de contacto'),
+					'requester_mail':_('Correo Electrónico'),
+					'telephone_number':_('Teléfono'),
+					'subject':_('Asunto'),
+					'message':_('Mensaje'),
+				}
+		
+		widgets = {	'requester_name': forms.TextInput(attrs={'class':'w3-input' }),
+					'requester_mail': forms.EmailInput(attrs={'class':'w3-input' }),
+					'telephone_number': forms.TextInput(attrs={'class':'w3-input','pattern':'\d{7,15}','placeholder':'Solo números.' }),
+					'subject': forms.TextInput(attrs={'class':'w3-input' }),
+					'message': forms.Textarea(attrs={'class':'w3-input', 'rows':'5', 'placeholder':'Máximo 500 caracteres.' }),
+				}

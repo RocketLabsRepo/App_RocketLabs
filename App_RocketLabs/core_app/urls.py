@@ -6,12 +6,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.static import serve
 from . import views
-from django.contrib.auth import views as auth_views
-from django.conf.urls import include
 
 app_name = 'core_app'
 urlpatterns = [
-
 	url(r'^$', views.home, name='home'),
 	url(r'^register/$', views.register_view, name = "register"),
 	url(r'^login/$', views.login_view, name = "login"),
@@ -20,6 +17,7 @@ urlpatterns = [
     url(r'^team/$', views.allteammember_view, name='all_team_members'),
     url(r'^team/([0-9]+)/$', views.detailsteammember_view, name='details_team_member'),
     url(r'^changepassword/$', views.changepassword_view, name = "changepass"),
+    url(r'^contact/submit$', views.contact_submit, name = "contact_submit"),
 ]
 
 # URL para servir las imagenes de forma local durante debug.
