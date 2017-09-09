@@ -218,7 +218,6 @@ def restorepassword_view(request, pkuser):
 				)
 		"""
 		# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
-		user = User.objects.get(pk=pkuser)
 		user_profile = Profile.objects.get(user = user)
 		user_profile.is_blocked = False
 		user_profile.save()
