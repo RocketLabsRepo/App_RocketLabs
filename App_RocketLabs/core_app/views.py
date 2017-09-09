@@ -8,7 +8,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
-from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm, RecoverPassForm
+#from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm, RecoverPassForm
+import core_app.forms as core_forms
 from core_app.models import Skill, Profile
 from projects_app.models import Project
 
@@ -32,7 +33,7 @@ def home(request):
 	context['skill_list'] = skills
 
 	#Le pasamos el formulario de contacto
-	contact_f = ContactForm()
+	contact_f = core_forms.ContactForm()
 	context['contact_f'] = contact_f
 
 	return render(request,'core_app/index.html', context)
@@ -41,7 +42,7 @@ def home(request):
 # View para desplegar el formulario de registro de usuarios y atender las peticiones de registro
 def register_view(request):
 	if request.method == 'POST':
-		ruf = RegisterUserForm(request.POST)
+		ruf = core_forms.RegisterUserForm(request.POST)
 		if ruf.is_valid():
 			user = ruf.save()
 
@@ -67,7 +68,7 @@ def register_view(request):
 		else:
 			return render(request,'core_app/register.html', {'registeruserform':ruf, }) #'loginf': loginf (Futuro segundo parametro)
 	else:
-		ruf = RegisterUserForm()
+		ruf = core_forms.RegisterUserForm()
 			#Si un usuario con sesión iniciada llega a esta página, se le cerrará la sesión.
 		if request.user.is_authenticated:
 			logout(request)
@@ -78,7 +79,7 @@ def register_view(request):
 # View para autenticar usuarios e iniciar sesión
 def login_view(request):
 	
-	form = LoginForm(request.POST or None)
+	form = core_forms.LoginForm(request.POST or None)
 
 	if request.POST and form.is_valid():
 		user = form.login(request)
@@ -98,26 +99,26 @@ def logout_view(request):
 def profile_view(request):
 	if request.method == 'POST':	
 		if(request.user.profile.is_team_member):
-			euf = EditUserForm(request.POST, instance = request.user, prefix='edituser')
-			etmf = EditTeamMemberForm(request.POST,request.FILES , instance = request.user.profile, prefix='editmember')
+			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
+			etmf = core_forms.EditTeamMemberForm(request.POST,request.FILES , instance = request.user.profile, prefix='editmember')
 			if etmf.is_valid() * euf.is_valid():
 				etmf.save()
 				euf.save()			
 			return HttpResponseRedirect('/')
 		else:
-			euf = EditUserForm(request.POST, instance = request.user, prefix='edituser')
-			ecpf = EditClientProfileForm(request.POST, instance = request.user.profile, prefix='editprofile')
+			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
+			ecpf = core_forms.EditClientProfileForm(request.POST, instance = request.user.profile, prefix='editprofile')
 			if ecpf.is_valid() * euf.is_valid():
 				ecpf.save()
 				euf.save()			
 			return HttpResponseRedirect('/')		
 	else:
-		euf = EditUserForm(instance = request.user ,prefix='edituser')
+		euf = core_forms.EditUserForm(instance = request.user ,prefix='edituser')
 		if(request.user.profile.is_team_member):
-			etmf = EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
+			etmf = core_forms.EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
 			return render(request, 'core_app/editprofile.html', {'editteammemberform':etmf, 'edituserform':euf})
 		else:	
-			ecpf = EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
+			ecpf = core_forms.EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
 			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
 
 
@@ -141,9 +142,9 @@ def detailsteammember_view (request, teammember_pk):
 
 def changepassword_view(request):
 	if request.user.has_usable_password():
-		PasswordForm = ChangePassForm
+		PasswordForm = core_forms.ChangePassForm
 	else:
-		PasswordForm = DefinePassForm
+		PasswordForm = core_forms.DefinePassForm
 	
 	form = PasswordForm(request.user, request.POST)
 	
@@ -178,7 +179,7 @@ def changepassword_view(request):
 		return render(request, 'core_app/changepassword.html',{'form': form})
 
 def contact_submit(request):
-	contact_f = ContactForm(request.POST or None)
+	contact_f = core_forms.ContactForm(request.POST or None)
 	if request.method == 'POST' and contact_f.is_valid():
 		contact_f.save()
 		"""
@@ -190,7 +191,7 @@ def contact_submit(request):
 	return redirect('/')
 
 def recoverpassword_view(request):
-	form = RecoverPassForm(request.POST or None)
+	form = core_forms.RecoverPassForm(request.POST or None)
 	if request.method == 'POST' and form.is_valid():
 		if User.objects.filter(username = form.cleaned_data['user']).exists():
 			user = User.objects.get(username = form.cleaned_data['user'])
@@ -199,11 +200,11 @@ def recoverpassword_view(request):
 				link = "/restorepass/" + str(user.id)
 				return HttpResponseRedirect(link)
 	else:
-		form = RecoverPassForm()
+		form = core_forms.RecoverPassForm()
 		return render (request, 'core_app/recoverpass.html', { 'form' : form })
 
 def restorepassword_view(request, pkuser):
-	PasswordForm = DefinePassForm
+	PasswordForm = core_forms.DefinePassForm
 	user = User.objects.get(pk=pkuser)
 	form = PasswordForm(user , request.POST)	
 	if request.method == 'POST' and form.is_valid():
