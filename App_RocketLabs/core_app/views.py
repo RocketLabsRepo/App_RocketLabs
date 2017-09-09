@@ -178,6 +178,15 @@ def changepassword_view(request):
 		return render(request, 'core_app/changepassword.html',{'form': form})
 
 def contact_submit(request):
+	contact_f = ContactForm(request.POST or None)
+	if request.method == 'POST' and contact_f.is_valid():
+		contact_f.save()
+		"""
+		Aqui deberiamos enviar 2 correos, uno al que realizo el contacto
+		y otro a nuestro propio correo de contacto de la empresa.
+
+		"""
+		return redirect('/#contact')
 	return redirect('/')
 
 def recoverpassword_view(request):
