@@ -185,8 +185,44 @@ def recoverpassword_view(request):
 	if request.method == 'POST' and form.is_valid():
 		if User.objects.filter(username = form.cleaned_data['user']).exists():
 			user = User.objects.get(username = form.cleaned_data['user'])
-			print(form.cleaned_data['user'])
-			return HttpResponseRedirect('/')
+			if(user.profile.secret_link == form.cleaned_data['secret_link'] ):	
+				print(form.cleaned_data['user'])
+				link = "/restorepass/" + str(user.id)
+				return HttpResponseRedirect(link)
 	else:
 		form = RecoverPassForm()
 		return render (request, 'core_app/recoverpass.html', { 'form' : form })
+
+def restorepassword_view(request, pkuser):
+	PasswordForm = DefinePassForm
+	user = User.objects.get(pk=pkuser)
+	form = PasswordForm(user , request.POST)	
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		update_session_auth_hash(request, form.user)
+		"""
+			#Envio de email con las nuevas credenciales al correo electrónico del usuario
+		user = User.objects.get(pk=request.user.id)
+		user_profile = Perfil.objects.get(user = user)
+		context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
+		
+		msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
+		msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+		
+		send_mail(
+				'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+				msg_plain,									#mensaje txt
+				'foroestudiantil2@gmail.com',				#email de envio
+				[user.email],								#destinatario
+				html_message=msg_html,						#mensaje en html
+				)
+		"""
+		# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+		user = User.objects.get(pk=pkuser)
+		user_profile = Profile.objects.get(user = user)
+		user_profile.is_blocked = False
+		user_profile.save()
+		return HttpResponseRedirect('/')
+	else:
+		form = PasswordForm(pkuser)
+		return render(request, 'core_app/changepassword.html',{'form': form})
