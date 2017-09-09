@@ -222,3 +222,23 @@ class ContactForm(forms.ModelForm):
 					'subject': forms.TextInput(attrs={'class':'w3-input' }),
 					'message': forms.Textarea(attrs={'class':'w3-input', 'rows':'5', 'placeholder':'Máximo 500 caracteres.' }),
 				}
+
+
+#Formulario para recuperar contraseña
+class RecoverPassForm(forms.Form):
+
+	def __init__(self, *args, **kwargs):
+		super(RecoverPassForm, self).__init__(*args, **kwargs)
+		self.fields['user'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['secret_link'].widget = forms.TextInput(attrs={'class':'form-control'})
+		
+
+	user = forms.CharField(label="Usuario", max_length=64, required=True, error_messages=my_default_errors)
+	secret_link = forms.CharField(label="Codigo unico", max_length = 25, required=True, error_messages=my_default_errors) 
+
+	def clean_user(self):
+		user = self.cleaned_data.get('user')
+		if User.objects.filter(username = user).exists():
+			return user
+		else:
+			raise forms.ValidationError(_("El usuario no existe"), code ="User_Dont_Exist")

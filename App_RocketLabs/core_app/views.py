@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
-from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm
+from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm, RecoverPassForm
 from core_app.models import Skill, Profile
 from projects_app.models import Project
 
@@ -179,3 +179,14 @@ def changepassword_view(request):
 
 def contact_submit(request):
 	return redirect('/')
+
+def recoverpassword_view(request):
+	form = RecoverPassForm(request.POST or None)
+	if request.method == 'POST' and form.is_valid():
+		if User.objects.filter(username = form.cleaned_data['user']).exists():
+			user = User.objects.get(username = form.cleaned_data['user'])
+			print(form.cleaned_data['user'])
+			return HttpResponseRedirect('/')
+	else:
+		form = RecoverPassForm()
+		return render (request, 'core_app/recoverpass.html', { 'form' : form })
