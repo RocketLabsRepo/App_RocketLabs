@@ -14,7 +14,7 @@
     <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
     <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
  </div>
-  <div class="w3-display-bottomleft w3-text-grey w3-large" id="padding24-48">
+  <div class="w3-display-bottomleft w3-text-grey w3-large padding24-48">
     <a href=""><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
     <!--<a href=""><i class="fa fa-instagram w3-hover-opacity"></i></a>
     <a href=""><i class="fa fa-snapchat w3-hover-opacity"></i></a>
@@ -71,7 +71,7 @@
 <div class="w3-container padding128-16" id="team">
   <h3 class="w3-center">EL EQUIPO</h3>
   <p class="w3-center w3-large">Las caras de nuestra compañia</p>
-  <div class="w3-row-padding w3-grayscale margintop64">
+  <div class="w3-row-padding w3-grayscale-min margintop64">
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
         <img src="{% static 'core_app/img/team4.jpg' %}" alt="Rabindranath" class="widthOHP">
@@ -149,29 +149,29 @@
 
   <!-- CARGAR DINAMICAMENTE LOS TRABAJOS REALIZADOS -->
 
-  <div class="w3-row-padding margintop64">
+    <div class="w3-row-padding margintop64">
 
     {% for object in latests_projects %}
-      <div class="w3-col l3 m6">
+        <div class="w3-col l3 m6 w3-center w3-margin-bottom">
         {% with object.get_preview_screenshot as image %}
-        <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
+            <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
         {% endwith %}
-        <p class="w3-center">
-          {{ object.title }}
-          <br><a href="{% url 'projects_app:completed_project_details' object.id %}">Ver detalles</a>
-        </p>
-      </div>
+            <p class="project-title-height">{{ object.title }}</p>
+            <a class="w3-large" href="{% url 'projects_app:completed_project_details' object.id %}">
+                Ver detalles
+            </a>
+        </div>
     {% empty %}
-      <br><br>
-      <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
+        <br><br>
+        <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
     {% endfor %}
 
-  </div>
+    </div>
 
-  <br>
-  <p class="w3-center">
-    <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
-  </p>
+    <br>
+    <p class="w3-center">
+        <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
+    </p>
 </div>
 
 <!-- Modal for full size images on click-->
@@ -195,8 +195,8 @@
 
     {% for skill in group %}
         <div class="w3-col l3 m6 w3-content w3-center">
-        <img src="{{ skill.skill_logo.url }}" class="skills-logo" alt="{{ skill.name }}">
-        <p>{{ skill.name }}</p>
+            <img src="{{ skill.skill_logo.url }}" class="skills-logo" alt="{{ skill.name }}">
+            <p>{{ skill.name }}</p>
         </div>
     {% endfor %}
 

@@ -63,10 +63,15 @@ body, html {
 }
 
 .skills-logo{
-	max-width: 200px;
+	max-width: 240px;
 }
-#padding24-48{
+
+.padding24-48{
 	padding: 24px 48px;
+}
+
+.project-title-height{
+	min-height: 85px;
 }
 
 .padding48{

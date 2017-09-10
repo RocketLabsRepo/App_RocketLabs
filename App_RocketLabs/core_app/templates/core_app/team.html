@@ -1,17 +1,18 @@
 {% extends 'core_app/base.html' %}
 {% load static %}
 
-{% block title %}Todo el equipo{% endblock %}
+{% block title %}Todo los integrantes de RocketLabs{% endblock %}
 
 {% block content %}
-<div class="w3-container padding128-16" id="home">
+<div class="w3-container padding96-16" id="home">
 	<h3 class="w3-center" >EL EQUIPO</h3>
-	<p class="w3-center w3-large">Todos nuestros integrantes.</p>	
-	<div class="w3-row-padding w3-grayscale margintop64">
+	<p class="w3-center w3-large">Todos nuestros integrantes.</p>
+		
+	<div class="w3-row-padding w3-grayscale-min margintop64">
 	{% for member in teammember %}
 
 		<div class="w3-col l3 m6 w3-margin-bottom">
-			<div class="w3-card-2">
+			<div class="w3-card-4">
 
 			{% if member.profile.photo %}
 				<img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP">
