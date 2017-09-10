@@ -66,14 +66,14 @@ def register_view(request):
 			
 			return HttpResponseRedirect('/login')
 		else:
-			return render(request,'core_app/register.html', {'registeruserform':ruf, }) #'loginf': loginf (Futuro segundo parametro)
+			return render(request,'core_app/register.html', {'registeruserform':ruf, })
 	else:
 		ruf = core_forms.RegisterUserForm()
 			#Si un usuario con sesión iniciada llega a esta página, se le cerrará la sesión.
 		if request.user.is_authenticated:
 			logout(request)
 
-		return render(request, 'core_app/register.html', {'registeruserform':ruf,}) #'loginf': loginf (Futuro segundo parametro)
+		return render(request, 'core_app/register.html', {'registeruserform':ruf,})
 
 
 # View para autenticar usuarios e iniciar sesión

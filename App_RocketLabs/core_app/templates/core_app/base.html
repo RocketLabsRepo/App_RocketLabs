@@ -26,15 +26,50 @@
         <a href="{% url 'core_app:home' %}" class="w3-bar-item w3-button w3-wide">Rocket Labs</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
-          <a href="{% url 'core_app:home' %}#team" class="w3-bar-item w3-button"><i class="fa fa-group"></i> EQUIPO</a>
-          <a href="{% url 'core_app:home' %}#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> TRABAJOS</a>
-          <a href="{% url 'core_app:home' %}#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRECIOS</a>
-          <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACTO</a>
+          <a href="{% url 'core_app:home' %}#team" class="w3-bar-item w3-button">
+            <i class="w3-xlarge fa fa-group w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="w3-large fa fa-group"></i> EQUIPO
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#work" class="w3-bar-item w3-button">
+            <i class="fa fa-th w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-th w3-large"></i> TRABAJOS
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#pricing" class=" w3-bar-item w3-button">
+            <i class="fa fa-usd w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-usd w3-large"></i> PRECIOS
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button">
+            <i class="fa fa-envelope w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-envelope w3-large"></i> CONTACTO
+            </span>
+          </a>
         {% if user.is_authenticated %}
-          <a href="{% url 'core_app:edit_profile' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{ user.username }}</a>  
-          <a href="{% url 'core_app:logout' %}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> SALIR</a>
+          <a href="{% url 'core_app:edit_profile' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-user w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-user w3-large"></i> {{ user.username }}
+            </span>
+          </a>
+          <a href="{% url 'core_app:logout' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-sign-out w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-sign-out w3-large"></i> SALIR
+            </span>
+          </a>
         {% else %}
-          <a href="{% url 'core_app:login' %}" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i> INGRESAR</a>
+          <a href="{% url 'core_app:login' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-sign-in w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-sign-in w3-large"></i> INGRESAR
+            </span>
+          </a>
         {% endif %}
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -47,7 +82,7 @@
 
     <!-- Sidebar on small screens when clicking the menu icon -->
     <nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
-      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar X</a>
+      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar <span class="w3-xlarge">&times;</span></a>
       <a href="{% url 'core_app:home' %}#team" onclick="w3_close()" class="w3-bar-item w3-button">EQUIPO</a>
       <a href="{% url 'core_app:home' %}#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
       <a href="{% url 'core_app:home' %}#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>
