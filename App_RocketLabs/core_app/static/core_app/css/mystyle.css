@@ -55,6 +55,10 @@ body, html {
 	padding:  128px 16px;
 }
 
+.padding96-16{
+	padding: 96px 16px;
+}
+
 #image700x394{
 	width : 700px;
 	height: 394px;
@@ -80,3 +84,14 @@ body, html {
 	width: 75%;
 }
 
+.hidden-column{
+	min-height: 1px;
+}
+
+.bot-margin-10{
+	margin-bottom: 10px;
+}
+
+.box-height-350{
+	min-height: 350px;
+}
