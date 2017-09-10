@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="w3-container w3-light-grey padding128-16" id="home">
+<div class="w3-container w3-light-grey padding96-16" id="home">
 	<div class="w3-row-padding">
 		{% if not project %}
 			<h1 class="w3-center">
@@ -16,6 +16,12 @@
 			</h3>
 		{% else %}
 			<h2 class="w3-center">{{ project.title }}</h2>
+			<br>
+			<div class="w3-col m6 w3-margin-bottom">
+				{% with project.get_preview_screenshot as image %}
+				<img class="w3-image w3-round" src="{{ image.img.url }}" alt="{{ image.name }}" id="image700x394">
+				{% endwith %}
+			</div>
 			<div class="w3-col m6 ">
 				
 				<p><strong>Descripción:</strong> {{ project.description }}</p>
@@ -26,29 +32,25 @@
 					<p class="w3-center"><a href="{{ project.demo_link }}" target="_blank" class="w3-button w3-black"><i class="fa fa-external-link"> </i> Ver proyecto en acción!</a></p>
 				{% endif %}	
 			</div>
-			<div class="w3-col m6">
-				{% with project.get_preview_screenshot as image %}
-				<img class="w3-image w3-round-large" src="{{ image.img.url }}" alt="{{ image.name }}" id="image700x394">
-				{% endwith %}
-			</div>
 		{% endif %}	
 	</div><br>
 	<p class="w3-center">
-    	<a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button"><i class="fa fa-arrow-left"> </i> Volver a todos los proyectos</a>
+		<a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-xlarge"><i class="fa fa-arrow-left"> </i> Volver a todos los proyectos</a>
   	</p>
 </div>
-<div class="w3-container padding128-16" >
+<div class="w3-container padding48-16" >
 	<h3 class="w3-center">Otros proyectos que te pueden interesar.</h3>
 		<div class="w3-row-padding margintop64">
 		{% for object in latests %}
-			<div class="w3-col l3 m6">
+			<div class="w3-col l3 m6 w3-center w3-margin-bottom">
 				{% with object.get_preview_screenshot as image %}
 				<img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
 				{% endwith %}
-				<p class="w3-center">
-					{{ object.title }}
-					<br><a href="{% url 'projects_app:completed_project_details' object.id %}">Ver detalles</a>
-				</p>
+				<p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
+				<p class="project-title-height w3-hide-small">{{ object.title }}</p>
+	            <a class="w3-large" href="{% url 'projects_app:completed_project_details' object.id %}">
+	                Ver detalles
+	            </a>
 			</div>
 		{% empty %}
 			<br><br>

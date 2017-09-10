@@ -11,7 +11,7 @@
 	<div class="w3-row-padding w3-grayscale-min margintop64">
 	{% for member in teammember %}
 
-		<div class="w3-col l3 m6 w3-margin-bottom">
+		<div class="w3-col l4 m6 w3-margin-bottom">
 			<div class="w3-card-4">
 
 			{% if member.profile.photo %}
@@ -25,7 +25,7 @@
 					<p class="w3-justify">{{ member.profile.bio }}</p>
 
 					<form action="{% url 'core_app:details_team_member' member.id %}">
-						<p><button type="submit "class="w3-button w3-light-grey w3-block"><i class="fa fa-info-circle"></i> Ver detalles completos</button></p>
+						<p><button type="submit "class="w3-button w3-btn w3-light-grey w3-block"><i class="fa fa-info-circle"></i> Ver detalles completos</button></p>
 					</form>
 		
 				</div>

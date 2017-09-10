@@ -118,6 +118,7 @@
       </div>
     </div>
   </div>
+  <br>
   <p class="w3-center" id="teambut"><a href="/team" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a></p>
 </div>
 
@@ -156,7 +157,8 @@
         {% with object.get_preview_screenshot as image %}
             <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
         {% endwith %}
-            <p class="project-title-height">{{ object.title }}</p>
+            <p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
+            <p class="project-title-height w3-hide-small">{{ object.title }}</p>
             <a class="w3-large" href="{% url 'projects_app:completed_project_details' object.id %}">
                 Ver detalles
             </a>
@@ -167,7 +169,6 @@
     {% endfor %}
 
     </div>
-
     <br>
     <p class="w3-center">
         <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>

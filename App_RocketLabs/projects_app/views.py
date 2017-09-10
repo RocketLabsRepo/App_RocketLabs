@@ -11,7 +11,7 @@ def grouped(l, n):
 # Create your views here.
 
 def all_projects(request):
-	context = {'project_list': grouped(Project.objects.filter(is_complete = True).order_by('-finish_date'), 4) }
+	context = {'project_list': grouped(Project.objects.filter(is_complete = True).order_by('finish_date'), 4) }
 	return render(request,'projects_app/completed_projects.html', context)
 
 def completed_project_details(request, project_pk):
