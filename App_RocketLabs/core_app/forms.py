@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.forms.models import inlineformset_factory
 from core_app.models import Profile, Request
+
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
 
@@ -16,15 +17,15 @@ class RegisterUserForm(UserCreationForm):
 		self.fields['username'].label = "Nombre de Usuario"
 		self.fields['password1'].label = "Contraseña"
 		self.fields['password2'].label = "Confirmar contraseña"
-		self.fields['username'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['last_name'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['first_name'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
+		self.fields['username'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['last_name'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['first_name'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['email'].widget = forms.EmailInput(attrs={'class':'w3-input w3-border input-font', 'placeholder':'ejemplo@email.com'})
 	
-	first_name = forms.CharField(label="Nombre",max_length=30, help_text="Opcional", required = False)
-	last_name = forms.CharField(label="Apellido",max_length=30, help_text="Opcional", required = False)
+	first_name = forms.CharField(label="Nombre",max_length=30) #, help_text="Opcional", required = False
+	last_name = forms.CharField(label="Apellido",max_length=30) #, help_text="Opcional", required = False
 	email = forms.EmailField(label="Correo Electrónico", max_length=254, required=True)
 
 	class Meta:
@@ -69,8 +70,8 @@ class LoginForm(forms.Form):
 
 	def __init__(self, *args, **kwargs):
 		super(LoginForm, self).__init__(*args, **kwargs)
-		self.fields['usernameLogin'].widget = forms.TextInput(attrs={'class':'w3-input'})
-		self.fields['passwordLogin'].widget = forms.PasswordInput(attrs={'class':'w3-input'})
+		self.fields['usernameLogin'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['passwordLogin'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
 		
 
 	usernameLogin = forms.CharField(label="Usuario", max_length=64, required=True, error_messages=my_default_errors)
@@ -216,11 +217,11 @@ class ContactForm(forms.ModelForm):
 					'message':_('Mensaje'),
 				}
 		
-		widgets = {	'requester_name': forms.TextInput(attrs={'class':'w3-input' }),
-					'requester_mail': forms.EmailInput(attrs={'class':'w3-input' }),
-					'telephone_number': forms.TextInput(attrs={'class':'w3-input','pattern':'\d{7,15}','placeholder':'Solo números.' }),
-					'subject': forms.TextInput(attrs={'class':'w3-input' }),
-					'message': forms.Textarea(attrs={'class':'w3-input', 'rows':'5', 'placeholder':'Máximo 500 caracteres.' }),
+		widgets = {	'requester_name': forms.TextInput(attrs={'class':'w3-input input-font' }),
+					'requester_mail': forms.EmailInput(attrs={'class':'w3-input input-font' }),
+					'telephone_number': forms.TextInput(attrs={'class':'w3-input input-font','pattern':'\d{7,15}','placeholder':'Solo números.' }),
+					'subject': forms.TextInput(attrs={'class':'w3-input input-font' }),
+					'message': forms.Textarea(attrs={'class':'w3-input input-font', 'rows':'5', 'placeholder':'Máximo 500 caracteres.' }),
 				}
 
 

@@ -17,6 +17,11 @@ body, html {
     line-height: 1.8;
 }
 
+.input-font{
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
 /* Full height image header */
 .bgimg-1{
 	background-image: url("../img/rocket.jpg");
