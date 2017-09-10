@@ -4,19 +4,21 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
 <!-- Header with full-height image -->
-<header class="bgimg-1 parallax w3-display-container w3-grayscale-min" id="home">
-  <div class="w3-display-left w3-text-white" id="padding48">
-    <span class="w3-jumbo w3-hide-small">Comienza algo que trascienda.</span><br>
-    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Comienza algo que trascienda.</span><br>
-    <span class="w3-large">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
+
+<header class="bgimg-1 parallax w3-display-container" id="home">
+  <div class="w3-display-left w3-text-white padding48">
+    <span class="w3-jumbo header-text w3-hide-small">Comienza algo que trascienda.</span><br>
+    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Comienza algo que trascienda.</span><br>
+    <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
     <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
-  </div> 
+ </div>
   <div class="w3-display-bottomleft w3-text-grey w3-large" id="padding24-48">
     <a href=""><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-    <a href=""><i class="fa fa-instagram w3-hover-opacity"></i></a>
+    <!--<a href=""><i class="fa fa-instagram w3-hover-opacity"></i></a>
     <a href=""><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-    <a href=""><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
+    <a href=""><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>-->
     <a href=""><i class="fa fa-twitter w3-hover-opacity"></i></a>
     <a href=""><i class="fa fa-linkedin w3-hover-opacity"></i></a>
   </div>
@@ -27,23 +29,23 @@
 <div class="w3-container padding128-16" id="about">
   <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑIA</h3>
   <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y habilidades</p>
-  <div class="w3-row-padding w3-center margintop64">
-    <div class="w3-quarter fadeInOnScroll">
+  <div class="w3-row-padding w3-margin-bottom w3-center margintop64">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
       <p class="w3-large">Alta calidad</p>
       <p>Nos esforzamos para que nuestros proyectos sean lo mejor del mercado.</p>
     </div>
-    <div class="w3-quarter fadeInOnScroll">
+    <div class="w3-col m6 l3 w3-margin-bottom fadeInOnScroll">
       <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Pasión</p>
       <p>Amamos lo que hacemos, es un gran plus para ofrecerles un trabajo hecho con mucha dedicación.</p>
     </div>
-    <div class="w3-quarter fadeInOnScroll">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Diseño</p>
       <p>Les ofrecemos los mejores diseños que tienen una gran atractivo y muchas interacciones.</p>
     </div>
-    <div class="w3-quarter fadeInOnScroll">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Soporte</p>
       <p>Nuestras aplicaciones tienen soporte para todo lo que necesites.</p>
@@ -183,30 +185,27 @@
 
 <!-- Seccion de tecnologías manejadas  -->
 <div class="w3-container w3-light-grey w3-padding-64">
-  <div class="w3-row-padding">
     <h2 class="w3-center">Tecnologías Dominadas</h2>
-    {% for group in skill_list %}
-      {% if forloop.first %}
-      <div class="w3-row-padding margintop64">
-      {% else %}
-      <div class="w3-row-padding w3-section">
-      {% endif %}
+{% for group in skill_list %}
+    {% if forloop.first %}
+    <div class="w3-row-padding w3-margin-bottom margintop64">
+    {% else %}
+    <div class="w3-row-padding w3-margin-bottom w3-section">
+    {% endif %}
 
-      {% for skill in group %}
-        <div class="w3-col l3 m6">
-          <img src="{{ skill.skill_logo.url }}" class="widthOHP" alt="{{ skill.name }}">
-          <p class="w3-center">{{ skill.name }}</p>
+    {% for skill in group %}
+        <div class="w3-col l3 m6 w3-content w3-center">
+        <img src="{{ skill.skill_logo.url }}" class="skills-logo" alt="{{ skill.name }}">
+        <p>{{ skill.name }}</p>
         </div>
-      {% endfor %}
+    {% endfor %}
 
-      </div>
-    {% empty %}
+    </div>
+{% empty %}
     <br><br>
     <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos habilidades disponibles.</p>
 
-    {% endfor %}
-    
-  </div>
+{% endfor %}
 </div>
 
 <!-- Pricing Section -->
@@ -271,42 +270,44 @@
 
 <!-- Contact Section -->
 
-<div class="w3-container w3-light-grey padding128-16 bgimg-2" id="contact">
-  <h3 class="w3-center">CONTÁCTANOS</h3>
-  <p class="w3-center w3-large">Envianos un Mensaje</p>
-  <div class="w3-row-padding margintop64">
-    <div class="w3-col m5 w3-margin-bottom">
-      <h4>Ubícanos</h4>
-      <p>El infinito es nuestro límite</p>
-      <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Caracas, VE</p>
-      <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Santiago de Chile, CL</p>
-      <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +58 4125957873</p>
-      <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +56 9 67654739</p>
-      <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i> rocketlabs.customers@gmail.com </p>
-    </div>
-    
-     <div class="w3-col m7">
-      <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'core_app:contact_submit' %}">
+<div class="w3-container w3-light-grey padding128-16 bgimg-2 parallax" id="contact">
+
+  <div class ="w3-container w3-round-large contact-holder">
+    <h3 class="w3-center">CONTÁCTANOS</h3>
+    <div class="w3-row-padding margintop64">
+      <div class="w3-col m5 w3-margin-bottom">
+        <h4>Ubícanos</h4>
+        <p>El infinito es nuestro límite</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Caracas, VE</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Santiago de Chile, CL</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +58 4125957873</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +56 9 67654739</p>
+        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i> rocketlabs.customers@gmail.com </p>
+      </div>
+
+       <div class="w3-col m7 w3-margin-bottom">
+        <h4>Envianos un Mensaje</h4>
+        <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'core_app:contact_submit' %}">
         {% csrf_token %}
 
         {% for field in contact_f %}
-          <div class="w3-section">
-              {{ field.label_tag }}<br>
-              {% if field.errors %}
-                  <div class="form-errors">
-                  {% for error in field.errors %}
-                      <p>{{ error }}</p>
-                  {% endfor %}
-                  </div>
-              {% endif %}
-              {{ field }}
-          </div>
+            <div class="w3-section">
+                {{ field.label_tag }}<br>
+                {% if field.errors %}
+                    <div class="form-errors">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {{ field }}
+            </div>
         {% endfor %}
-      
-        <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"></i> Enviar</button>
-    
-    </div>
 
+            <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"></i> Enviar</button>
+      </div>
+    </div>
   </div>
+
 </div>
 {% endblock %}

@@ -28,6 +28,16 @@ body, html {
 	min-height: 100%;
 }
 
+.bgimg-2{
+	background-image: url("../img/mailbox2.jpg");
+	min-height: 100%;
+}
+
+.contact-holder{
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.75);
+}
+
 /* Empleamos estas reglas para lograr efecto parallax */
 .parallax{
 	background-attachment: fixed;
@@ -48,11 +58,18 @@ body, html {
 	opacity:0;
 }
 
+.header-text{
+	text-shadow: 2px 2px #222;
+}
+
+.skills-logo{
+	max-width: 200px;
+}
 #padding24-48{
 	padding: 24px 48px;
 }
 
-#padding48{
+.padding48{
 	padding: 48px;
 }
 
