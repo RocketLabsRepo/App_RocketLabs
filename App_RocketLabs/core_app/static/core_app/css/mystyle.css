@@ -74,6 +74,16 @@ body, html {
 	min-height: 85px;
 }
 
+.tm-bio-height{
+	height: 72px;
+	line-height: 160%
+}
+
+.tm-title-height{
+	height: 40px;
+	line-height: 130%
+}
+
 .padding48{
 	padding: 48px;
 }

@@ -31,7 +31,7 @@ class Profile(models.Model):
 	company_name = models.CharField(max_length = 70, blank = True)
 	title = models.CharField(max_length=100, blank = True)
 	linkedln_link = models.CharField(max_length=50, blank = True)
-	bio = models.TextField(max_length = 255, blank = True)
+	bio = models.TextField(max_length = 150, blank = True)
 	secret_link = models.CharField(max_length = 50, blank = True)
 	photo = models.ImageField(blank =True, upload_to = "photo_profile", default = "../media/photo_profile/default-user.png")
 	is_admin = models.BooleanField(default=False)

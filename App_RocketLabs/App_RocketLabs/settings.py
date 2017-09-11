@@ -150,7 +150,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
 MEDIA_URL = '/media/'
 
-# Configuracion para iniciar sesión desde Redes sociales
+# Configuracion para el inicio de sesión desde Redes sociales
+# Facebook y Google+
 
 LOGIN_URL = 'core_app:login'
 LOGOUT_URL = 'core_app:logout'
@@ -160,6 +161,9 @@ SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')
+
+# Configuración para el envio de correos desde nuestra plataforma
+# Desde un correo gmail.com
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
