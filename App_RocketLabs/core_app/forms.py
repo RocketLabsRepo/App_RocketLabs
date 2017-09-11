@@ -243,3 +243,16 @@ class RecoverPassForm(forms.Form):
 			return user
 		else:
 			raise forms.ValidationError(_("El usuario no existe"), code ="User_Dont_Exist")
+
+
+#Formulario para enviar codigounico
+class RecoverSecretLinkForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+
+		fields = ['email']
+
+		labels = { 'email':_('Correo Electrónico'),}
+
+		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input input-font' }),}

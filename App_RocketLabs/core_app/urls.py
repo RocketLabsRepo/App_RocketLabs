@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^contact/submit$', views.contact_submit, name = "contact_submit"),
     url(r'^recoverpassword/$', views.recoverpassword_view, name = "recover_pass"),
     url(r'^restorepass/([0-9]+)/$', views.restorepassword_view, name='restore_pass'),
+    url(r'^recoversecretlink/$', views.recoversecretlink_view, name = "recover_secret_link"),
 ]
 
 # URL para servir las imagenes de forma local durante debug.

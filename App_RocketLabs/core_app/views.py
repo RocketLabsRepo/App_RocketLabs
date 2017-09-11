@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-
+from django.core.mail import send_mail
+from decouple import config
 #from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm, RecoverPassForm
 import core_app.forms as core_forms
 from core_app.models import Skill, Profile
@@ -235,3 +236,22 @@ def restorepassword_view(request, pkuser):
 	else:
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
+
+def recoversecretlink_view(request):
+	form = core_forms.RecoverSecretLinkForm(request.POST or None)
+	if request.method == 'POST' and form.is_valid():
+		if User.objects.filter(email = form.cleaned_data['email']).exists():
+			user = User.objects.get(email=form.cleaned_data['email'])
+			send_mail(
+   		 			'Recuperacion de codigo unico',
+				    """Hola,
+Hemos recibido tu solicitud de recuperación de codigo unico. 
+Aqui lo tienes:""" + str(user.profile.secret_link) ,
+					config('HOST_USER'),
+				    [user.email],
+				    fail_silently=False,
+					)
+			return HttpResponseRedirect('/login')
+	else:
+		form = core_forms.RecoverSecretLinkForm()
+		return render(request, 'core_app/recoversecretlink.html',{'form': form})
