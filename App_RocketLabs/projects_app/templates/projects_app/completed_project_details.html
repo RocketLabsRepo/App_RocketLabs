@@ -19,18 +19,19 @@
 			<br>
 			<div class="w3-col m6 w3-margin-bottom">
 				{% with project.get_preview_screenshot as image %}
-				<img class="w3-image w3-round" src="{{ image.img.url }}" alt="{{ image.name }}" id="image700x394">
+					<img class="w3-image w3-round w3-border w3-padding" src="{{ image.img.url }}" alt="{{ image.name }}" id="image700x394">
 				{% endwith %}
 			</div>
 			<div class="w3-col m6 ">
-				
-				<p><strong>Descripción:</strong> {{ project.description }}</p>
-				<p><strong>Cliente(s):</strong> {{ project.get_clients_string }}</p>
-				<p><strong>Tiempo de elaboración:</strong> {{ project.str_duration }}</p>
-				<p><strong>Testimonio:</strong> {{ project.owner_comment }}</p>
-				{% if project.demo_link %}
-					<p class="w3-center"><a href="{{ project.demo_link }}" target="_blank" class="w3-button w3-black"><i class="fa fa-external-link"> </i> Ver proyecto en acción!</a></p>
-				{% endif %}	
+				<div class="w3-container">
+					<p><strong>Descripción:</strong> {{ project.description }}</p>
+					<p><strong>Cliente(s):</strong> {{ project.get_clients_string }}</p>
+					<p><strong>Tiempo de elaboración:</strong> {{ project.str_duration }}</p>
+					<p><strong>Testimonio:</strong> {{ project.owner_comment }}</p>
+					{% if project.demo_link %}
+						<p class="w3-center"><a href="{{ project.demo_link }}" target="_blank" class="w3-button w3-black"><i class="fa fa-external-link"> </i> Ver proyecto en acción!</a></p>
+					{% endif %}
+				</div>
 			</div>
 		{% endif %}	
 	</div><br>

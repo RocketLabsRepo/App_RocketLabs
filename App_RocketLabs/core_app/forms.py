@@ -32,7 +32,7 @@ class RegisterUserForm(UserCreationForm):
 		model = User
 		fields = ('first_name','last_name','email','username','password1','password2',)
 
-#Verifica que el nombre de usuario sea único
+	#Verifica que el nombre de usuario sea único
 	def clean_username(self):
 		username = self.cleaned_data["username"]
 
@@ -41,14 +41,14 @@ class RegisterUserForm(UserCreationForm):
 		
 		return username 
 
-#Verifica que el email es único
+	#Verifica que el email es único
 	def clean_email(self):
 		data = self.cleaned_data['email']
 		if User.objects.filter(email=data).exists():
 			raise forms.ValidationError(_("Dirección de correo ya esta en uso, escoga otra."),code="invalid")
 		return data
 
-#Verifica que las contraseñas coincidan
+	#Verifica que las contraseñas coincidan
 	def clean_password2(self):
 		password1 = self.cleaned_data.get('password1')
 		password2 = self.cleaned_data.get('password2')

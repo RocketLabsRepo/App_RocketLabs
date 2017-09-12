@@ -10,6 +10,7 @@
 	<p class="w3-center w3-large">Proyectos realizados para clientes satisfechos</p>
 
 	{% for group in project_list %}
+		<!-- Por cada grupo de N proyectos crearemos una nueva fila/row-->
 		{% if forloop.first %}
 		<div class="w3-row-padding margintop64">
 		{% else %}

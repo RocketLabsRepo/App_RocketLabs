@@ -44,6 +44,8 @@ body, html {
 	background-color: rgba(255,255,255,0.75);
 }
 
+
+
 /* Empleamos estas reglas para lograr efecto parallax */
 .parallax{
 	background-attachment: fixed;
@@ -97,6 +99,14 @@ p.skill-name{
 
 .padding48{
 	padding: 48px;
+}
+
+.form-errors{
+	color: red;
+}
+
+div.form-group{
+	margin: 10px 0 10px 0;
 }
 
 .padding128-16{
