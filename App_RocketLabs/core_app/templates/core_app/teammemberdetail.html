@@ -37,17 +37,18 @@
 				<p class="w3-justify">{{ teammember.profile.bio }}</p>
 				<h3 class="w3-center">Mis habilidades</h3>
 				<div class="w3-container w3-light-grey w3-padding-16">
-				{% for group in skill_list %}
+				{% for group in known_skills %}
 				    {% if forloop.first %}
 				    <div class="w3-row-padding w3-margin-bottom w3-margin-top">
 				    {% else %}
 				    <div class="w3-row-padding w3-margin-bottom w3-section">
 				    {% endif %}
 
-				    {% for skill in group %}
+				    {% for known_skill in group %}
 				        <div class="w3-col l3 m6 w3-content w3-center">
-				            <img src="{{ skill.skill_logo.url }}" class="widthOHP" alt="{{ skill.name }}">
-				            <p>{{ skill.name }}</p>
+				            <img src="{{ known_skill.skill.skill_logo.url }}" class="widthOHP" alt="{{ known_skill.skill.name }}">
+				            <p class="skill-name">{{ known_skill.skill.name }}</p>
+				            <p class="w3-opacity skill-name">{{ known_skill.exp_level }}</p>
 				        </div>
 				    {% endfor %}
 

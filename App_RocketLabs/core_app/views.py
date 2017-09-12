@@ -9,14 +9,16 @@ from django.shortcuts import render, render_to_response, redirect, get_object_or
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.core.mail import send_mail
 from decouple import config
-#from core_app.forms import RegisterUserForm, LoginForm, EditUserForm, EditClientProfileForm, EditTeamMemberForm, ChangePassForm, DefinePassForm, ContactForm, RecoverPassForm
-import core_app.forms as core_forms
-from core_app.models import Skill, Profile
-from projects_app.models import Project
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.views import View
+
 from .tokens import unlock_account_token
 from django.views import View
+from core_app.models import Skill, Profile
+from projects_app.models import Project
+import core_app.forms as core_forms
+
 # Create your views here.
 
 # Helper function: Yields a generator with objects in l grouped in groups of n.
@@ -27,18 +29,23 @@ def grouped(l, n):
 
 def home(request):
 	context = {}
-	# Le pasaremos los ultimos 4 proyectos completados al contexto.
-	latests_4 = Project.objects.filter(is_complete = True).order_by('-finish_date')
-	latests_4 = latests_4[:4]
-	context['latests_projects'] = latests_4
 
-	# Le pasaremos todas las habilidades manejadas por la empresa.
+	# Añadir 4 miembros mas viejos del equipo al contexto.
+	four_team_members = User.objects.filter(profile__is_team_member=True, is_active=True).order_by('date_joined')
+	four_team_members = four_team_members[:4]
+	context['team_members'] = four_team_members
+	# Añadir los ultimos 4 proyectos completados al contexto.
+	latests_4projects = Project.objects.filter(is_complete = True).order_by('-finish_date')
+	latests_4projects = latests_4projects[:4]
+	context['latests_projects'] = latests_4projects
+
+	# Añadir todas las habilidades manejadas por la empresa al contexto.
 	skills = grouped(Skill.objects.all() , 4)
 	context['skill_list'] = skills
 
-	#Le pasamos el formulario de contacto
-	contact_f = core_forms.ContactForm()
-	context['contact_f'] = contact_f
+	# Añadir el formulario de contacto al contexto.
+	contact_form = core_forms.ContactForm()
+	context['contact_f'] = contact_form
 
 	return render(request,'core_app/index.html', context)
 
@@ -144,7 +151,7 @@ def detailsteammember_view (request, teammember_pk):
 	context = {}
 	tm = get_object_or_404(User, is_active=True, profile__is_team_member = True ,pk = teammember_pk)
 	context['teammember'] = tm
-	context['skill_list'] = grouped(tm.skill_set.all() , 4)
+	context['known_skills'] = grouped(tm.knows_set.all() , 4)
 
 	return render(request, 'core_app/teammemberdetail.html', context)
 

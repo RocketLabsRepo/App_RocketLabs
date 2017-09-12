@@ -26,11 +26,17 @@ body, html {
 .bgimg-1{
 	background-image: url("../img/rocket.jpg");
 	min-height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .bgimg-2{
 	background-image: url("../img/mailbox2.jpg");
 	min-height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .contact-holder{
@@ -64,6 +70,11 @@ body, html {
 
 .skills-logo{
 	max-width: 240px;
+}
+
+p.skill-name{
+	margin-top: 0;
+	margin-bottom: 5px;
 }
 
 .padding24-48{
@@ -112,6 +123,8 @@ body, html {
 .widthOHP{
 	width : 100%;
 }
+
+
 
 #widthNP{
 	width: 90%;
