@@ -271,6 +271,28 @@ Aqui lo tienes:""" + str(user.profile.secret_link) ,
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/recoversecretlink.html',{'form': form})
 
+def unlockuser_view(request):
+	form = core_forms.RecoverSecretLinkForm(request.POST or None)
+	if request.method == 'POST' and form.is_valid():
+		if User.objects.filter(email = form.cleaned_data['email']).exists():
+			user = User.objects.get(email= form.cleaned_data['email'])
+			token = unlock_account_token.make_token(user)
+			send_mail(
+   		 			'Desbloquear Cuenta',
+				    """Hola,
+Hemos recibido tu solicitud para desbloquear cuenta. 
+Aqui lo tienes:""" + str(token) ,
+					config('HOST_USER'),
+				    [user.email],
+				    fail_silently=False,
+					)
+			return HttpResponseRedirect('/login')
+	else:
+		form = core_forms.RecoverSecretLinkForm()
+		return render(request, 'core_app/unlockaccount.html',{'form': form})
+
+
+
 
 class unlockaccount_view(View):
 
@@ -288,4 +310,4 @@ class unlockaccount_view(View):
 			return render(request,'core_app:restore_pass', {"form" : form })
         else:
             # invalid link
-            return render(request, 'registration/invalid.html')
+            return render(request, 'core_app/index.html')

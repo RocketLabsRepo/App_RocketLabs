@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^recoverpassword/$', views.recoverpassword_view, name = "recover_pass"),
     url(r'^restorepass/([0-9]+)/$', views.restorepassword_view, name='restore_pass'),
     url(r'^recoversecretlink/$', views.recoversecretlink_view, name = "recover_secret_link"),
+    url(r'^unlockaccount/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                views.unlockaccount_view.as_view(), name='unlock_account'),
+    url(r'^unlockaccount/$', views.unlockuser_view, name = "unlockaccount_getemail"),
 ]
 
 # URL para servir las imagenes de forma local durante debug.

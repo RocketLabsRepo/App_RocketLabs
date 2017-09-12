@@ -255,4 +255,4 @@ class RecoverSecretLinkForm(forms.ModelForm):
 
 		labels = { 'email':_('Correo Electrónico'),}
 
-		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input input-font' }),}
+		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
