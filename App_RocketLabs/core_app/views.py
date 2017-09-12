@@ -135,10 +135,15 @@ def allteammember_view(request):
 def detailsteammember_view (request, teammember_pk):
 	"""
 	Esta view le pasa a la template el objeto User indicado con sus habilidades
-	y si no es teammember, no esta activo o no existe se retorna un error 404.
+	estas agrupadas en grupos de 4 y si el User no es teammember, no esta activo
+	o no existe se retorna un error 404.
 	"""
+	context = {}
 	tm = get_object_or_404(User, is_active=True, profile__is_team_member = True ,pk = teammember_pk)
-	return render(request, 'core_app/teammemberdetail.html', {'teammember': tm})
+	context['teammember'] = tm
+	context['skill_list'] = grouped(tm.skill_set.all() , 4)
+
+	return render(request, 'core_app/teammemberdetail.html', context)
 
 
 def changepassword_view(request):
