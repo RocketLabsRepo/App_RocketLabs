@@ -24,7 +24,9 @@ urlpatterns = [
     url(r'^unlockaccount/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                 views.unlockaccount_view.as_view(), name='unlock_account'),
     url(r'^unlockaccount/$', views.unlockuser_view, name = "unlockaccount_getemail"),
+    url(r'^unlockaccountconfirm/$', views.unlockaccountconfirm_view, name = "unlockaccount_confirm"),
 ]
+
 
 # URL para servir las imagenes de forma local durante debug.
 

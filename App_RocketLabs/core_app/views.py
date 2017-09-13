@@ -10,9 +10,9 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.core.mail import send_mail
 from decouple import config
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
-
+from django.utils.encoding import force_bytes
 from .tokens import unlock_account_token
 from django.views import View
 from core_app.models import Skill, Profile
@@ -271,26 +271,39 @@ Aqui lo tienes:""" + str(user.profile.secret_link) ,
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/recoversecretlink.html',{'form': form})
 
+#3 view para desbloquear usuario
+#1. Para tomar email, generar token y enviarlo al email (Verificando si esta bloqueado el usuario o no)
+#2. Se le notifica siempre al usuario que se le ha enviado el email
+#3. Se hace el desbloqueo de usuario y se le direcciona para que establezca su nueva contraseña
+
 def unlockuser_view(request):
 	form = core_forms.RecoverSecretLinkForm(request.POST or None)
 	if request.method == 'POST' and form.is_valid():
 		if User.objects.filter(email = form.cleaned_data['email']).exists():
 			user = User.objects.get(email= form.cleaned_data['email'])
-			token = unlock_account_token.make_token(user)
-			send_mail(
-   		 			'Desbloquear Cuenta',
-				    """Hola,
-Hemos recibido tu solicitud para desbloquear cuenta. 
-Aqui lo tienes:""" + str(token) ,
-					config('HOST_USER'),
-				    [user.email],
-				    fail_silently=False,
-					)
-			return HttpResponseRedirect('/login')
+			if(user.profile.is_blocked):
+				token = unlock_account_token.make_token(user)
+				uid = urlsafe_base64_encode(force_bytes(user.pk))
+				send_mail(
+	   		 			'Desbloquear Cuenta',
+					    """Hola,
+	Hemos recibido tu solicitud para desbloquear cuenta. 
+	Aqui lo tienes:""" + str(token) + " ID " + str(user.id)+ " UIDB64 "+ str(uid),
+						config('HOST_USER'),
+					    [user.email],
+					    fail_silently=False,
+						)
+				return HttpResponseRedirect('/unlockaccountconfirm/')
+			else:
+				return HttpResponseRedirect('/unlockaccountconfirm/')
+		else:
+			return HttpResponseRedirect('/unlockaccountconfirm/')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/unlockaccount.html',{'form': form})
 
+def unlockaccountconfirm_view(request):
+	return render(request,'core_app/unlockaccount_confirm.html')
 
 
 
@@ -303,11 +316,9 @@ class unlockaccount_view(View):
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
 
-        if user is not None and account_unlock_token.check_token(user, token):            
+        if user is not None and unlock_account_token.check_token(user, token):            
 			user.profile.is_blocked = False
-			login(request, user)
-			form = core_app.DefinePassForm(request.user)
-			return render(request,'core_app:restore_pass', {"form" : form })
+			return HttpResponseRedirect('/restorepass/'+str(user.id))
         else:
             # invalid link
             return render(request, 'core_app/index.html')
