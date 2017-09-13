@@ -60,10 +60,15 @@
 								{{ client_form.company_name.label_tag }}
 								{{ client_form.company_name }}
 							</div>
+							<div class="form-group">
+								<label>Correo Electrónico:</label>
+								<p>{{ user.email }}</p>
+							</div>
 						</fieldset>
 
-						<a href="{% url 'core_app:changepass' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Cambiar Contraseña </a>
 						<a href="#" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-at"> </i> Cambiar Correo Electrónico </a>
+						<a href="{% url 'core_app:changepass' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Cambiar Contraseña </a>
+						
 
 					</div>
 				</div>
@@ -77,8 +82,7 @@
 					<div class="w3-container w3-padding">
 						<!--
 						Si el usuario es miembro del equipo este podrá editar su bio
-						y su link de linkedIn, en cambio si es un cliente solo podrá
-						ver sus proyectos.
+						y su link de linkedIn...
 						-->
 					{% if request.user.profile.is_team_member %}
 						<div class="form-group">
@@ -90,9 +94,17 @@
 							{{ member_form.linkedln_link }}
 						</div>
 					{% else %}
+						<!--
+						...en cambio si es un cliente solo podrá
+						ver sus proyectos.
+						-->
 						<div class="w3-container w3-light-grey w3-padding-16">
 							<h3 class="w3-center">Mis proyectos.</h3>
+							{% for project in project_list %}
+								<p>{{ forloop.counter }}. {{ project.title }}</p>
+							{% empty %}
 							<p class="w3-center"> Lo sentimos, no hay proyectos disponibles</p>
+							{% endfor %}
 						</div>
 					{% endif %}
 					</div>

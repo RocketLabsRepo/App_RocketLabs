@@ -129,17 +129,17 @@ def profile_view(request):
 		context['user_form'] = user_form
 
 		if(request.user.profile.is_team_member):
-		# Si el usuario es un miembro del equipo:
+		# Si el usuario es un miembro del equipo: 
 			member_profile_form = core_forms.EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
 			context['member_form'] = member_profile_form
-			#{'editteammemberform':etmf, 'edituserform':euf}
 			return render(request, 'core_app/editprofile.html', context )
 		else:
 		# Si el usuario es un cliente:
 			client_profile_form = core_forms.EditClientProfileForm(instance = request.user.profile,prefix='editprofile')
 			context['client_form'] = client_profile_form
-			#{'editclientprofileform':ecpf, 'edituserform':euf}
-			return render(request, 'core_app/editprofile.html', context )#Editar direccion HTML
+			projects = request.user.profile.project_set.all()
+			context['project_list'] = projects
+			return render(request, 'core_app/editprofile.html', context )
 
 
 
@@ -161,7 +161,6 @@ def detailsteammember_view (request, teammember_pk):
 	tm = get_object_or_404(User, is_active=True, profile__is_team_member = True ,pk = teammember_pk)
 	context['teammember'] = tm
 	context['known_skills'] = grouped(tm.knows_set.all() , 4)
-
 	return render(request, 'core_app/teammemberdetail.html', context)
 
 
