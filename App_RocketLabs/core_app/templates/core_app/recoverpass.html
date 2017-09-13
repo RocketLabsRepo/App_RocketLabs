@@ -4,45 +4,44 @@
 {% block title %}Recuperar contraseña{% endblock %}
 
 {% block content %}
-</br></br></br>
-<h1> Recuperar Contraseña </h1>
 
-  
-<div class="container main-container">
-    <div class="col-md-10 col-md-offset-1">
-        <form method="post">
-            {% csrf_token %} 
-            <fieldset>
-                <legend>Recuperar contraseña</legend>
+<div class="w3-container w3-light-grey padding96-16" id="home">
+    <div class="w3-row-padding">
+        <h2 class="w3-center">Recuperar Contraseña</h2>
+        <div class="w3-col m3 hidden-column"></div>
+        <div class="w3-col s12 m6">
+            <div class="w3-container w3-card-4 w3-padding-16 w3-white">
+                <form method="POST">
+                       {% csrf_token %}
+                <fieldset>
                 {% for field in form %}
                     <div class="form-group">
                         {{ field.label_tag }}<br>
-                            {% if field.errors %}
-                                <div class="form-errors">
-                                {% for error in field.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                                </div>
-                            {% endif %}
+                        {% if field.errors %}
+                            <div class="form-errors">
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
                         {{ field }}
                     </div>
                 {% endfor %}
-            </fieldset>                
-            {% if form.non_field_errors %}
-                <ul class='form-errors'>
-                    {% for error in form.non_field_errors %}
+                </fieldset>
+                {% if registeruserform.non_field_errors %}
+                    <ul class='form-errors'>
+                    {% for error in registeruserform.non_field_errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
-                </ul>
-            {% endif %}
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <p><button type= "submit" class="w3-button w3-black"><i class="fa fa-lock"> </i> Confirmar datos</button></p>
-                </div>
+                    </ul>
+                {% endif %}
+                    <p class="w3-center w3-margin-top">
+                        <button type= "submit" class="w3-button w3-block w3-black"><i class="fa fa-check w3-large"> </i> Confirmar</button>
+                    </p>
+                </form>
+                <a class="w3-padding" href="{% url 'core_app:recover_secret_link' %}"> No tengo código único</a>
             </div>
-            <br>
-            <a href="{% url 'core_app:recover_secret_link' %}"> No tengo código único</a>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

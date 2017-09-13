@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _ #usado para personalizar
 from django.forms.models import inlineformset_factory
 from core_app.models import Profile, Request
 
+
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
 
@@ -54,9 +55,9 @@ class RegisterUserForm(UserCreationForm):
 		password2 = self.cleaned_data.get('password2')
 
 		if not password2:
-			raise forms.ValidationError("¡Debes repetir tu contraseña!")
+			raise forms.ValidationError(_("¡Debes repetir tu contraseña!"))
 		if password1 != password2:
-			raise forms.ValidationError("¡Las contraseñas nos son iguales!")
+			raise forms.ValidationError(_("Las contraseñas nos son iguales."))
 		return password2
 
 
@@ -99,13 +100,13 @@ class LoginForm(forms.Form):
 						
 					profile.save()
 					print (profile.is_blocked)
-				raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
+				raise forms.ValidationError(_("Usuario o contraseña inválida. Por favor intente de nuevo."), code='invalido')
 			else:
 				profile.failed_logins = 0
 				profile.save()
 			return self.cleaned_data
 		else:
-			raise forms.ValidationError(_("Informacion invalida. Por favor intente de nuevo."), code='invalido')
+			raise forms.ValidationError(_("Usuario o contraseña inválida. Por favor intente de nuevo."), code='invalido')
 
 
 	def login(self, request):
@@ -164,7 +165,6 @@ class EditUserForm(forms.ModelForm):
 					'email_name': forms.TextInput(attrs={'class':'form-control' }),
 				}
 
-
 #Formulario para cambiar la contraseña.
 class ChangePassForm(PasswordChangeForm):
 	def __init__(self, *args, **kwargs):
@@ -173,25 +173,25 @@ class ChangePassForm(PasswordChangeForm):
 		self.fields['new_password1'].label = "Nueva contraseña"
 		self.fields['new_password2'].label = "Confirmar contraseña"
 
-		self.fields['old_password'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})		
+		self.fields['old_password'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
 
 	#Este codigo no lanza el mensaje
 	def clean_old_password(self):
 		password = self.cleaned_data['old_password']
 		if not self.user.check_password(password):
-			raise forms.ValidationError('Contraseña invalida')
+			print ("La Contraseña es invalida: Old Password")
+			raise forms.ValidationError(_("La contraseña es incorrecta."),code='invalid_password')
 		return password
 
 	#Este codigo no lanza el mensaje.
-	def clean_new_password2(self): 
+	def clean_new_password2(self):
 		password1 = self.cleaned_data.get('new_password1')
 		password2 = self.cleaned_data.get('new_password2')
 		if password1 != password2:
-			raise forms.ValidationError(_("Las nuevas contraseñas no coinciden"), code = "new_password")
+			raise forms.ValidationError(_("Las nuevas contraseñas no coinciden."), code = "new_password")
 		return password2
-
 
 # Formulario para definir la contraseña de una cuenta por primera vez.
 class DefinePassForm(AdminPasswordChangeForm):
@@ -200,8 +200,8 @@ class DefinePassForm(AdminPasswordChangeForm):
 		
 		self.fields['password1'].label = "Contraseña"
 		self.fields['password2'].label = "Confirmar contraseña"
-		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
-		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
 
 class ContactForm(forms.ModelForm):
 
@@ -230,12 +230,12 @@ class RecoverPassForm(forms.Form):
 
 	def __init__(self, *args, **kwargs):
 		super(RecoverPassForm, self).__init__(*args, **kwargs)
-		self.fields['user'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['secret_link'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['user'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
+		self.fields['secret_link'].widget = forms.TextInput(attrs={'class':'w3-input w3-border input-font'})
 		
 
-	user = forms.CharField(label="Usuario", max_length=64, required=True, error_messages=my_default_errors)
-	secret_link = forms.CharField(label="Codigo unico", max_length = 25, required=True, error_messages=my_default_errors) 
+	user = forms.CharField(label="Nombre de usuario", max_length=64, required=True, error_messages=my_default_errors)
+	secret_link = forms.CharField(label="Código único", max_length = 25, required=True, error_messages=my_default_errors)
 
 	def clean_user(self):
 		user = self.cleaned_data.get('user')
@@ -255,4 +255,4 @@ class RecoverSecretLinkForm(forms.ModelForm):
 
 		labels = { 'email':_('Correo Electrónico'),}
 
-		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input input-font' }),}
+		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
