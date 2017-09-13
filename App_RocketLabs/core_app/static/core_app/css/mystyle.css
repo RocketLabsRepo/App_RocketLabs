@@ -32,7 +32,7 @@ body, html {
 }
 
 .bgimg-2{
-	background-image: url("../img/mailbox2.jpg");
+	background-image: url("../img/satellite.jpg");
 	min-height: 100%;
 	background-position: center;
     background-repeat: no-repeat;
@@ -121,7 +121,7 @@ div.form-group{
 	padding: 32px 16px;
 }
 
-#image700x394{
+.image700x394{
 	width : 700px;
 	height: 394px;
 }

@@ -122,28 +122,22 @@ class EditClientProfileForm(forms.ModelForm):
 		model = Profile	
 		
 		fields = ['company_name']
-		
-		labels = { 'company_name': _('Nombre de la empresa'),				   
-				}
-		widgets = {'company_name': forms.TextInput(attrs={'class':'form-control' }),
-			}
+		labels = { 'company_name': _('Nombre de mi empresa'),}
+		widgets = {'company_name': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
 
 class EditTeamMemberForm(forms.ModelForm):
 	
 	class Meta:
 		model = Profile
 		
-		fields = ['title', 'linkedln_link', 'photo', 'bio']
-			
-		labels = { 'title': _('Titulo'),	
-					'linkedln_link': _('Perfil Linkedin'),	
+		fields = ['linkedln_link', 'photo', 'bio']
+		labels = { 	'linkedln_link': _('Perfil Linkedin'),
 					'photo': _('Foto'),
-					'bio': _('Biografia'),					   
-					}
-		widgets = {'title': forms.TextInput(attrs={'class':'form-control' }),
-					'linkedln': forms.TextInput(attrs={'class':'form-control' }),
-					'photo': forms.FileInput(attrs={'class':'form-control' }),
-					'bio': forms.Textarea(attrs={'class':'form-control' }),
+					'bio': _('Acerca de mi'),
+				}
+		widgets = {	'linkedln_link': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),
+					'photo': forms.FileInput(attrs={'class':'w3-input w3-border input-font' }),
+					'bio': forms.Textarea(attrs={'class':'w3-input w3-border input-font', 'rows':'5', 'style':'resize:none' }),
 				}
 
 
@@ -153,16 +147,14 @@ class EditUserForm(forms.ModelForm):
 	class Meta:
 		model = User
 
-		fields = ['first_name', 'last_name', 'email']
+		fields = ['first_name', 'last_name']
 
 		labels = {'first_name':_('Nombre'),
 					'last_name':_('Apellido'),
-					'email':_('Correo Electronico'),
 				}
-		
-		widgets = {'first_name': forms.TextInput(attrs={'class':'form-control' }),
-					'last_name': forms.TextInput(attrs={'class':'form-control' }),
-					'email_name': forms.TextInput(attrs={'class':'form-control' }),
+
+		widgets = {'first_name': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),
+					'last_name': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),
 				}
 
 #Formulario para cambiar la contraseña.

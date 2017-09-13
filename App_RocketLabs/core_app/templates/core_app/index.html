@@ -9,8 +9,8 @@
 
 <header class="bgimg-1 parallax w3-display-container" id="home">
   <div class="w3-display-left w3-text-white padding48">
-    <span class="w3-jumbo header-text w3-hide-small">Comienza algo que trascienda.</span><br>
-    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Comienza algo que trascienda.</span><br>
+    <span class="w3-jumbo header-text w3-hide-small">¡Déjanos ayudarte a despegar!</span><br>
+    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Déjanos ayudarte a despegar.</span><br> <!-- Comienza algo que trascienda. -->
     <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
     <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
   </div>
@@ -23,7 +23,7 @@
 
 <!-- About Section -->
 <div class="w3-container padding128-16" id="about">
-  <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑIA</h3>
+  <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑÍA</h3>
   <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y habilidades</p>
   <div class="w3-row-padding w3-margin-bottom w3-center margintop64">
     <div class="w3-col m6 l3 fadeInOnScroll">
@@ -52,13 +52,13 @@
 <!-- Promo Section - "We know design" -->
 <div class="w3-container w3-light-grey padding128-16">
   <div class="w3-row-padding">
-    <div class="w3-col m6 ">
+    <div class="w3-col m6 w3-margin-bottom">
       <h3 class="fadeInOnScroll">Sabemos diseñar.</h3>
       <p class="fadeInOnScroll">Nos hemos capacitado para ofrecerte los mejores diseños.<br>Y seguimos en constante actualización para satisfacer las necesidades de nuestros clientes.</p>
-      <p class="fadeInOnScroll"><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a></p>
+      <p class="fadeInOnScroll"><a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="{% static 'core_app/img/phone_buildings.jpg' %}" alt="Buildings" id="image700x394">
+      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/space-window.png' %}" alt="Buildings" >
     </div>
   </div>
 </div>

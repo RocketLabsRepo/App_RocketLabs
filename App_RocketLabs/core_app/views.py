@@ -96,41 +96,50 @@ def login_view(request):
 		user = form.login(request)
 		if user:
 			login(request, user)
-			return redirect('/')
+			return redirect('core_app:home')
 	return render(request, 'core_app/login.html', {'loginf': form })
 
 
 # View para cerrar la sesión de usuarios
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect('/')
+	return redirect('core_app:home')
 
 
 #View para editar perfil de cliente
 def profile_view(request):
+	context={}
 	if request.method == 'POST':	
 		if(request.user.profile.is_team_member):
 			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
 			etmf = core_forms.EditTeamMemberForm(request.POST,request.FILES , instance = request.user.profile, prefix='editmember')
 			if etmf.is_valid() * euf.is_valid():
 				etmf.save()
-				euf.save()			
-			return HttpResponseRedirect('/')
+				euf.save()
+			return redirect('core_app:edit_profile')
 		else:
 			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
 			ecpf = core_forms.EditClientProfileForm(request.POST, instance = request.user.profile, prefix='editprofile')
 			if ecpf.is_valid() * euf.is_valid():
 				ecpf.save()
-				euf.save()			
-			return HttpResponseRedirect('/')		
+				euf.save()
+			return redirect('core_app:edit_profile')
 	else:
-		euf = core_forms.EditUserForm(instance = request.user ,prefix='edituser')
+		user_form = core_forms.EditUserForm(instance = request.user ,prefix='edituser')
+		context['user_form'] = user_form
+
 		if(request.user.profile.is_team_member):
-			etmf = core_forms.EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
-			return render(request, 'core_app/editprofile.html', {'editteammemberform':etmf, 'edituserform':euf})
-		else:	
-			ecpf = core_forms.EditClientProfileForm(instance = request.user.profile,prefix='editprofile')		
-			return render(request, 'core_app/editprofile.html', {'editclientprofileform':ecpf, 'edituserform':euf})#Editar direccion HTML
+		# Si el usuario es un miembro del equipo:
+			member_profile_form = core_forms.EditTeamMemberForm(instance = request.user.profile, prefix = 'editmember')
+			context['member_form'] = member_profile_form
+			#{'editteammemberform':etmf, 'edituserform':euf}
+			return render(request, 'core_app/editprofile.html', context )
+		else:
+		# Si el usuario es un cliente:
+			client_profile_form = core_forms.EditClientProfileForm(instance = request.user.profile,prefix='editprofile')
+			context['client_form'] = client_profile_form
+			#{'editclientprofileform':ecpf, 'edituserform':euf}
+			return render(request, 'core_app/editprofile.html', context )#Editar direccion HTML
 
 
 
@@ -206,7 +215,7 @@ def contact_submit(request):
 
 		"""
 		return redirect('/#contact')
-	return redirect('/')
+	return redirect('core_app:home')
 
 def recoverpassword_view(request):
 	form = core_forms.RecoverPassForm(request.POST or None)
@@ -249,7 +258,7 @@ def restorepassword_view(request, pkuser):
 		user_profile = Profile.objects.get(user = user)
 		user_profile.is_blocked = False
 		user_profile.save()
-		return HttpResponseRedirect('/')
+		return redirect('core_app:home')
 	else:
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
@@ -268,7 +277,7 @@ Aqui lo tienes:""" + str(user.profile.secret_link) ,
 				    [user.email],
 				    fail_silently=False,
 					)
-			return HttpResponseRedirect('/login')
+			return redirect('core_app:login')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/recoversecretlink.html',{'form': form})
@@ -295,11 +304,11 @@ def unlockuser_view(request):
 					    [user.email],
 					    fail_silently=False,
 						)
-				return HttpResponseRedirect('/unlockaccountconfirm/')
+				return redirect('core_app:unlockaccount_confirm')
 			else:
-				return HttpResponseRedirect('/unlockaccountconfirm/')
+				return redirect('core_app:unlockaccount_confirm')
 		else:
-			return HttpResponseRedirect('/unlockaccountconfirm/')
+			return redirect('core_app:unlockaccount_confirm')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/unlockaccount.html',{'form': form})

@@ -1,14 +1,112 @@
 {% extends 'core_app/base.html' %}
 {% load staticfiles %}
 
-{% block title %}Mi Perfil{% endblock %}
+{% block title %}Mi panel de control{% endblock %}
 
 {% block content %}
+<div class="w3-container w3-light-grey padding96-16" id="home">
+	<form enctype ="multipart/form-data" method="POST">
+		{% csrf_token %}
+		<div class="w3-row-padding">
+			<h2 class="w3-center"> Panel de Control </h2>
+			<div class="w3-col l4 m6 w3-grayscale-min  w3-margin-bottom">
+				<div class="w3-card-4 w3-white">
+					<!--
+						Si el usuario es miembro del equipo se despliega su imagen
+						y además se despliega la opción para subir su propia imagen.
+						-->
+				{% if request.user.profile.is_team_member %}
+					<div class="w3-container">
+						<fieldset>
+							<legend>Foto</legend>
+							{% if user.profile.photo %}
+							<img src="{{ user.profile.photo.url }}" class="widthOHP" alt = "Avatar de {{ user.get_full_name }}">
+							{% else %}
+							<p class="w3-center">No hay imágen disponible.</p>
+							{% endif %}
+							{{ member_form.photo }}
+							{% if member_form.photo.errors %}
+							<div class="form-errors">
+							{% for error in member_form.photo.errors %}
+							    <p>{{ error }}</p>
+							{% endfor %}
+							</div>
+		                    {% endif %}
+						</fieldset>
+					</div>
+				{% endif %}
+					<!--
+						Luego el usuario puede cambiar su nombre, apellido,
+						contraseña y correo electronico. (Si es cliente tambien
+						podrá alterar su nombre de empresa)
+						-->
+					<div class="w3-container w3-padding-16">
+						<fieldset>
+							<legend>Datos Personales</legend>
+							{% for field in user_form %}
+		                    <div class="form-group">
+		                        {{ field.label_tag }}<br>
+		                        {% if field.errors %}
+		                            <div class="form-errors">
+		                            {% for error in field.errors %}
+		                                <p>{{ error }}</p>
+		                            {% endfor %}
+		                            </div>
+							        {% endif %}
+							        {{ field }}
+							    </div>
+								{% endfor %}
+							<div class="form-group">
+								{{ client_form.company_name.label_tag }}
+								{{ client_form.company_name }}
+							</div>
+						</fieldset>
+
+						<a href="{% url 'core_app:changepass' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Cambiar Contraseña </a>
+						<a href="#" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-at"> </i> Cambiar Correo Electrónico </a>
+
+					</div>
+				</div>
+				<p class="w3-center">
+					<button type= "submit" class="w3-button w3-black w3-large"><i class="fa fa-check"> </i> Confirmar cambios</button>
+				</p>
+			</div>
+
+			<div class="w3-col l8 m6 ">
+				<div class="w3-card-4 w3-white">
+					<div class="w3-container w3-padding">
+						<!--
+						Si el usuario es miembro del equipo este podrá editar su bio
+						y su link de linkedIn, en cambio si es un cliente solo podrá
+						ver sus proyectos.
+						-->
+					{% if request.user.profile.is_team_member %}
+						<div class="form-group">
+							{{ member_form.bio.label_tag }}
+							{{ member_form.bio }}
+						</div>
+						<div class="form-group">
+							{{ member_form.linkedln_link.label_tag }}
+							{{ member_form.linkedln_link }}
+						</div>
+					{% else %}
+						<div class="w3-container w3-light-grey w3-padding-16">
+							<h3 class="w3-center">Mis proyectos.</h3>
+							<p class="w3-center"> Lo sentimos, no hay proyectos disponibles</p>
+						</div>
+					{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!--
 </br></br></br>
 <h1> Editando perfil : {{ user.username }} </h1>
 <h1> Código único : {{ user.profile.secret_link }} </h1>
 {% if request.user.profile.is_team_member%}
-	<img src="{{ user.profile.photo.url}}" alt = "Sin imagen de perfil">
+	<img src="{{ user.profile.photo.url }}" alt = "Sin imagen de perfil">
 {% endif %}
 
 <div class="container perfil-container">
@@ -19,7 +117,7 @@
 				<div class="col-md-5 ">
 					<fieldset>
 						<legend>Datos Usuario</legend>
-						{% for field in edituserform %}
+						{% for field in user_form %}
 	                    <div class="form-group">
 	                        {{ field.label_tag }}<br>
 	                        {% if field.errors %}
@@ -38,7 +136,7 @@
 		    		<div class="col-md-5 col-md-offset-1">
 		    			<fieldset>
 							<legend>Datos Perfil</legend>
-							{% for field in editteammemberform %}
+							{% for field in member_form %}
 								<div class="form-group">
 		                        {{ field.label_tag }}<br>
 		                        	{% if field.errors %}
@@ -57,7 +155,7 @@
 		    		<div class="col-md-5 col-md-offset-1">
 		    			<fieldset>
 							<legend>Datos Perfil</legend>
-							{% for field in editclientprofileform %}
+							{% for field in client_form %}
 								<div class="form-group">
 		                        {{ field.label_tag }}<br>
 		                        	{% if field.errors %}
@@ -85,5 +183,6 @@
 	        </div>	        
 		</form>
 	</div>
-</div>
+</div> 
+-->
 {% endblock %}
