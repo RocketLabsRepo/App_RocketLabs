@@ -288,7 +288,7 @@ def unlockuser_view(request):
 	   		 			'Desbloquear Cuenta',
 					    """Hola,
 	Hemos recibido tu solicitud para desbloquear cuenta. 
-	Aqui lo tienes:""" + str(token) + " ID " + str(user.id)+ " UIDB64 "+ str(uid),
+	Aqui lo tienes: http://localhost:8000/unlockaccount/""" + str(uid) + "/" + str(token),
 						config('HOST_USER'),
 					    [user.email],
 					    fail_silently=False,
