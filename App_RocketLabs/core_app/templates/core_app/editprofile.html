@@ -15,6 +15,7 @@
 						Si el usuario es miembro del equipo se despliega su imagen
 						y además se despliega la opción para subir su propia imagen.
 						-->
+
 				{% if request.user.profile.is_team_member %}
 					<div class="w3-container">
 						<fieldset>
@@ -63,7 +64,7 @@
 						</fieldset>
 
 						<a href="{% url 'core_app:changepass' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Cambiar Contraseña </a>
-						<a href="#" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-at"> </i> Cambiar Correo Electrónico </a>
+						<a href="{% url 'core_app:change_email' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-at"> </i> Cambiar Correo Electrónico </a>
 
 					</div>
 				</div>
@@ -97,6 +98,13 @@
 					{% endif %}
 					</div>
 				</div>
+				{% if messages %}
+  					<ul class="messages">
+	    				{% for message in messages %}
+	      					<li class="{{ message.tags }}">{{ message }}</li>
+	    				{% endfor %}
+ 					</ul>
+				{% endif %}
 			</div>
 		</div>
 	</form>

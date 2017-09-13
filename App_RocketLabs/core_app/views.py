@@ -18,6 +18,7 @@ from django.views import View
 from core_app.models import Skill, Profile
 from projects_app.models import Project
 import core_app.forms as core_forms
+from django.contrib import messages
 
 # Create your views here.
 
@@ -116,6 +117,7 @@ def profile_view(request):
 			if etmf.is_valid() * euf.is_valid():
 				etmf.save()
 				euf.save()
+				messages.success(request, 'Sus cambios en en el perfil han sido guardados con exito.') 
 			return redirect('core_app:edit_profile')
 		else:
 			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
@@ -123,6 +125,7 @@ def profile_view(request):
 			if ecpf.is_valid() * euf.is_valid():
 				ecpf.save()
 				euf.save()
+				messages.success(request, 'Sus cambios en en el perfil han sido guardados con exito.') 
 			return redirect('core_app:edit_profile')
 	else:
 		user_form = core_forms.EditUserForm(instance = request.user ,prefix='edituser')
@@ -333,3 +336,24 @@ class unlockaccount_view(View):
         else:
             # invalid link
             return render(request, 'core_app/index.html')
+
+
+###############################################################################################################################################
+#ChangeEmail
+def changeemail_view(request):
+	form = core_forms.RecoverSecretLinkForm(request.POST or None,instance = request.user, prefix = 'editemail')
+	if request.method == 'POST' :
+		if form.is_valid():
+			if User.objects.filter(email = form.cleaned_data['email']).exists():
+				messages.error(request, 'Este correo ya está en uso')
+				return redirect('core_app:change_email')
+			else:
+				form.save()
+				messages.success(request, 'Se ha cambiado el correo con éxito')
+				return redirect('core_app:edit_profile')
+		else:
+			messages.error(request, 'Falto el "@" en la dirección indicada')
+			return redirect('core_app:change_email')
+	else:
+		form = core_forms.RecoverSecretLinkForm(instance = request.user, prefix = 'editemail')
+		return render (request, 'core_app/editemail.html', { 'form' : form })
