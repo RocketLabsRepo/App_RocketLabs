@@ -223,9 +223,9 @@ def recoverpassword_view(request):
 
 def restorepassword_view(request, pkuser):
 	PasswordForm = core_forms.DefinePassForm
-	user = User.objects.get(pk=pkuser)
-	form = PasswordForm(user , request.POST)	
+	user = User.objects.get(pk=pkuser)		
 	if request.method == 'POST' and form.is_valid():
+		form = PasswordForm(user , request.POST)
 		form.save()
 		update_session_auth_hash(request, form.user)
 		"""

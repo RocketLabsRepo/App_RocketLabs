@@ -38,7 +38,7 @@ class RegisterUserForm(UserCreationForm):
 		username = self.cleaned_data["username"]
 
 		if User.objects.filter(username=username).exists():
-			raise forms.ValidationError( _("Este nombre de usuario ya esta en uso, escoga otro."),code='duplicate_username')
+			raise forms.ValidationError( _("Este nombre de usuario ya esta en uso, escoja otro."),code='duplicate_username')
 		
 		return username 
 
@@ -46,7 +46,7 @@ class RegisterUserForm(UserCreationForm):
 	def clean_email(self):
 		data = self.cleaned_data['email']
 		if User.objects.filter(email=data).exists():
-			raise forms.ValidationError(_("Dirección de correo ya esta en uso, escoga otra."),code="invalid")
+			raise forms.ValidationError(_("Dirección de correo ya esta en uso, escoja otra."),code="invalid")
 		return data
 
 	#Verifica que las contraseñas coincidan
@@ -202,6 +202,14 @@ class DefinePassForm(AdminPasswordChangeForm):
 		self.fields['password2'].label = "Confirmar contraseña"
 		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
 		self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'w3-input w3-border input-font'})
+
+	def clean_password2(self):
+		password1 = self.cleaned_data.get('password1')
+		password2 = self.cleaned_data.get('password2')
+		if password1 != password2:
+			raise forms.ValidationError(_("Las nuevas contraseñas no coinciden."), code = "new_password")
+		return password2
+
 
 class ContactForm(forms.ModelForm):
 
