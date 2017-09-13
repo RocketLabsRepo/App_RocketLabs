@@ -8,9 +8,6 @@
 <div class="w3-container w3-light-grey padding96-16" id="home">
 	<div class="w3-row-padding">
 		<div class="w3-col l4 m6 w3-grayscale-min  w3-margin-bottom">
-			<p class="w3-center">
-				<a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-block w3-large"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
-			</p>
 			<div class="w3-card-4 w3-white">
 				{% if teammember.profile.photo %}
 				<img src="{{ teammember.profile.photo.url}}" alt="Avatar de {{ teammember.get_full_name }}" class="widthOHP">
@@ -30,6 +27,10 @@
 					</form>
 				</div>
 			</div>
+			<p class="w3-center">
+				<a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-block w3-large w3-dark-gray"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
+			</p>
+
 		</div>
 		<div class="w3-col l8 m6 ">
 			<div class="w3-card-2 w3-white w3-container w3-padding-16">

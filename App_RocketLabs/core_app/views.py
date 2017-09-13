@@ -138,7 +138,10 @@ def profile_view(request):
 			client_profile_form = core_forms.EditClientProfileForm(instance = request.user.profile,prefix='editprofile')
 			context['client_form'] = client_profile_form
 			projects = request.user.profile.project_set.all()
-			context['project_list'] = projects
+			completed = projects.filter(is_complete=True)
+			in_progress = projects.filter(is_complete=False)
+			context['completed_projects'] = completed
+			context['in_progress_projects'] = in_progress
 			return render(request, 'core_app/editprofile.html', context )
 
 

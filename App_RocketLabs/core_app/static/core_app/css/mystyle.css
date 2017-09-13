@@ -44,7 +44,10 @@ body, html {
 	background-color: rgba(255,255,255,0.75);
 }
 
-
+.min-chevron-size{
+	min-height: 18px;
+	min-width: 18px;
+}
 
 /* Empleamos estas reglas para lograr efecto parallax */
 .parallax{
@@ -79,12 +82,21 @@ p.skill-name{
 	margin-bottom: 5px;
 }
 
+p.project-title{
+	padding: 0px;
+	margin: 8px 0;
+}
+
 .padding24-48{
 	padding: 24px 48px;
 }
 
 .project-title-height{
 	min-height: 85px;
+}
+
+.project-details{
+	display: none;
 }
 
 .tm-bio-height{
@@ -150,10 +162,6 @@ div.form-group{
 
 .hidden-column{
 	min-height: 1px;
-}
-
-.width-30: {
-	width: 30px;
 }
 
 .box-height-350{
