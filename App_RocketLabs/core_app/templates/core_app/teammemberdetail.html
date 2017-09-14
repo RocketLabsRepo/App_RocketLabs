@@ -20,15 +20,13 @@
 					<!--
 					<p>Miembro desde: {{ teammember.date_joined.day }} de {{ teammember.date_joined.month }}, {{ teammember.date_joined.year }}</p>
 					-->
-					<form action="{{ teammember.profile.linkedln_link}}">
-						<p>
-							<button type="submit" class="w3-button w3-light-grey w3-block"><i class="fa fa-linkedin-square"></i> Mi LinkedIn </button>
-						</p>
-					</form>
+
+					<a href="{{ teammember.profile.linkedln_link}}" target="_blank" class="w3-button w3-btn w3-large w3-light-gray w3-block  w3-margin-bottom">Mi Linked<i class="fa fa-linkedin-square w3-xlarge w3-text-blue"></i></a>
+
 				</div>
 			</div>
 			<p class="w3-center">
-				<a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-block w3-large w3-dark-gray"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
+				<a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-block w3-large w3-blue-gray"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
 			</p>
 
 		</div>
@@ -48,7 +46,7 @@
 				    {% for known_skill in group %}
 				        <div class="w3-col l3 m6 w3-content w3-center">
 				            <img src="{{ known_skill.skill.skill_logo.url }}" class="widthOHP" alt="{{ known_skill.skill.name }}">
-				            <p class="skill-name">{{ known_skill.skill.name }}</p>
+				            <p class="skill-name"><b>{{ known_skill.skill.name }}</b></p>
 				            <p class="w3-opacity skill-name">{{ known_skill.exp_level }}</p>
 				        </div>
 				    {% endfor %}
