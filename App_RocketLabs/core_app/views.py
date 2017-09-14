@@ -203,6 +203,7 @@ def changepassword_view(request):
 			user_profile = Profile.objects.get(user = user)
 			user_profile.is_blocked = False
 			user_profile.save()
+			messages.success(request, 'Se ha cambiado su contraseña con éxito')
 			return redirect('core_app:edit_profile')
 		else:
 			return render(request, 'core_app/changepassword.html',{'form': form})
@@ -343,19 +344,17 @@ class unlockaccount_view(View):
 ###############################################################################################################################################
 #ChangeEmail
 def changeemail_view(request):
-	form = core_forms.RecoverSecretLinkForm(request.POST or None,instance = request.user, prefix = 'editemail')
+
 	if request.method == 'POST' :
+		form = core_forms.ChangeEmailForm(request.POST or None)
 		if form.is_valid():
-			if User.objects.filter(email = form.cleaned_data['email']).exists():
-				messages.error(request, 'Este correo ya está en uso')
-				return redirect('core_app:change_email')
-			else:
-				form.save()
-				messages.success(request, 'Se ha cambiado el correo con éxito')
-				return redirect('core_app:edit_profile')
+			user = User.objects.get(pk=request.user.id)
+			user.email = form.cleaned_data['email']
+			user.save()
+			messages.success(request, 'Se ha cambiado el correo con éxito')
+			return redirect('core_app:edit_profile')
 		else:
-			messages.error(request, 'Falto el "@" en la dirección indicada')
-			return redirect('core_app:change_email')
+			return render (request, 'core_app/editemail.html', { 'form' : form })
 	else:
-		form = core_forms.RecoverSecretLinkForm(instance = request.user, prefix = 'editemail')
+		form = core_forms.ChangeEmailForm()
 		return render (request, 'core_app/editemail.html', { 'form' : form })

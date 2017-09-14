@@ -256,3 +256,31 @@ class RecoverSecretLinkForm(forms.ModelForm):
 		labels = { 'email':_('Correo Electrónico'),}
 
 		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
+
+# Formulario para cambiar el email
+class ChangeEmailForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+
+		fields = ['email']
+
+		labels = { 'email':_('Correo Electrónico'),}
+
+		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
+
+	email_confirm = forms.EmailField(label="Repetir correo",widget=forms.EmailInput(attrs={'class':'w3-input w3-border input-font'}))
+
+	def clean_email(self):
+		email = self.cleaned_data['email']
+		# Si el email ya esta en uso, levantamos un error.
+		if User.objects.filter(email=email).exists():
+			raise forms.ValidationError(_("Dirección de correo ya esta en uso, escoja otra."),code="invalid")
+		return email
+
+	def clean_email_confirm(self):
+		email1 = self.cleaned_data.get('email')
+		email2 = self.cleaned_data.get('email_confirm')
+		if email1 != email2:
+			raise forms.ValidationError(_("Los correos electrónicos no coinciden."), code = "no_match")
+		return email2
