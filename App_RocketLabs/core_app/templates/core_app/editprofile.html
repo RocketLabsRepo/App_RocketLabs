@@ -9,6 +9,9 @@
 		{% csrf_token %}
 		<div class="w3-row-padding">
 			<h2 class="w3-center"> Panel de Control </h2>
+
+			{% include 'interface/messages.html' %}
+
 			<div class="w3-col l4 m6 w3-grayscale-min  w3-margin-bottom">
 				<div class="w3-card-4 w3-white">
 					<!--
@@ -156,13 +159,6 @@
 					{% endif %}
 					</div>
 				</div>
-				{% if messages %}
-  					<ul class="messages">
-	    				{% for message in messages %}
-	      					<li class="{{ message.tags }}">{{ message }}</li>
-	    				{% endfor %}
- 					</ul>
-				{% endif %}
 			</div>
 		</div>
 	</form>

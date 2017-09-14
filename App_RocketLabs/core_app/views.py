@@ -117,7 +117,7 @@ def profile_view(request):
 			if etmf.is_valid() * euf.is_valid():
 				etmf.save()
 				euf.save()
-				messages.success(request, 'Sus cambios en en el perfil han sido guardados con exito.') 
+				messages.success(request, 'Sus cambios al perfil han sido guardados con éxito.')
 			return redirect('core_app:edit_profile')
 		else:
 			euf = core_forms.EditUserForm(request.POST, instance = request.user, prefix='edituser')
@@ -125,7 +125,7 @@ def profile_view(request):
 			if ecpf.is_valid() * euf.is_valid():
 				ecpf.save()
 				euf.save()
-				messages.success(request, 'Sus cambios en en el perfil han sido guardados con exito.') 
+				messages.success(request, 'Sus cambios al perfil han sido guardados con éxito.')
 			return redirect('core_app:edit_profile')
 	else:
 		user_form = core_forms.EditUserForm(instance = request.user ,prefix='edituser')

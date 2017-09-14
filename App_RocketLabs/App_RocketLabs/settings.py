@@ -17,7 +17,19 @@ import os
 import os.path
 from decouple import config
 from django.contrib.messages import constants as message_constants
+
 MESSAGE_LEVEL = message_constants.DEBUG
+
+# Messages class tags. Definen el color de los diferentes tipos de mensajes.
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'w3-light-gray w3-border-black w3-text-dark-gray',
+    message_constants.INFO: 'w3-pale-blue w3-border-blue w3-text-blue',
+    message_constants.SUCCESS: 'w3-pale-green w3-border-green w3-text-green ',
+    message_constants.WARNING: 'w3-sand w3-border-orange w3-text-orange',
+    message_constants.ERROR: 'w3-pale-red w3-border-red w3-text-red',
+}
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
