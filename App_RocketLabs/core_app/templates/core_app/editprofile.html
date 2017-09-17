@@ -104,7 +104,7 @@
 							<hr><h4>Proyectos en Progreso</h4>
 							<div class="w3-container">
 							{% for project in in_progress_projects %}
-								<div class="w3-border w3-card-2 w3-white">
+								<div class="w3-border w3-card-2 w3-white w3-margin-bottom">
 									<div class="w3-container">
 										<p class="w3-large project-title">
 											<button type='button' class="w3-button w3-circle toggle-project-details w3-light-gray"><i class="fa fa-chevron-right min-chevron-size"></i></button> {{ project.title }}
@@ -113,21 +113,34 @@
 										<!-- A partir de acá se extiende con jQuery -->
 										<div class="project-details w3-container">
 											<label>Etapa actual:</label>
-											<p class="w3-large project-title">Wharever</p>
+											<p class="w3-large project-title">{{ project.current_stage }}</p>
 											<label>Progreso:</label>
+											{% if project.done_percentage > 10 %}
 											<div class="w3-grey w3-margin-bottom">
 												<div class="w3-container w3-blue-gray w3-center" style="width:{{ project.done_percentage }}%">{{ project.done_percentage }}%</div>
 											</div>
+											<!-- Preferiblemente despues de 0% comenzar en 5% de proyecto hecho, si se aprueba -->
+											{% elif project.done_percentage > 4 %}
+											<div class="w3-grey w3-margin-bottom">
+												<div class="w3-blue-gray w3-center" style="width:{{ project.done_percentage }}%">{{ project.done_percentage }}%</div>
+											</div>
+											{% else %}
+											<div class="w3-grey w3-margin-bottom w3-center">
+												{{ project.done_percentage }}%
+											</div>
+											{% endif %}
 										</div>
 									</div>
 								</div>
-								<a class="w3-text-indigo" href="#"><em>Emitir un nuevo proyecto aquí</em></a>
 							{% empty %}
 								<p class="w3-text-gray">
-									No tienes ningun proyecto en progreso. Pero puedes <a class="w3-text-indigo" href="#"><em>Emitir un nuevo proyecto aquí</em></a>
+									No tienes ningun proyecto en progreso. Pero puedes <a class="w3-text-indigo" href="{% url 'projects_app:new_project' %}"><em>Emitir un nuevo proyecto aquí</em></a>
 
 								</p>
 							{% endfor %}
+						{% if in_progress_projects %}
+							<a class="w3-text-indigo" href="{% url 'projects_app:new_project' %}"><em>Emitir un nuevo proyecto aquí</em></a>
+						{% endif %}
 							</div>
 							<hr><h4>Proyectos Completos</h4>
 							<div class="w3-container">

@@ -5,5 +5,8 @@ from django.contrib import admin
 from projects_app.models import Screenshot, Project
 # Register your models here.
 
+class ProjectAdmin(admin.ModelAdmin):
+    readonly_fields = ('start_date',)
+
 admin.site.register(Screenshot)
-admin.site.register(Project)
+admin.site.register(Project, ProjectAdmin)

@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm,
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.forms.models import inlineformset_factory
+
 from core_app.models import Profile, Request
 
 
@@ -267,7 +268,7 @@ class ChangeEmailForm(forms.ModelForm):
 
 		labels = { 'email':_('Correo Electrónico'),}
 
-		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
+		widgets = {	'email': forms.EmailInput(attrs={'class':'w3-input w3-border input-font' }),}
 
 	email_confirm = forms.EmailField(label="Repetir correo",widget=forms.EmailInput(attrs={'class':'w3-input w3-border input-font'}))
 

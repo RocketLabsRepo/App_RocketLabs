@@ -25,10 +25,10 @@ class Project(models.Model):
 	bundle = models.ForeignKey('bundles_app.Bundle', blank= True, null=True, default=None) # Null, blank y default solo para probar mientras no hay bundles implementados.
 
 	title = models.CharField(max_length=100)
-	description = models.TextField(max_length=255, blank=True, default='')
+	description = models.TextField(max_length=500, default='')
 	str_duration = models.CharField(max_length=50, blank = True,default='')
 	done_percentage = models.SmallIntegerField(default=0)
-	current_stage = models.CharField(max_length=50, blank =True,default='')
+	current_stage = models.CharField(max_length=50, blank =True,default='Pre-aprobación.')
 	is_complete = models.BooleanField(default = False)
 	owner_comment = models.TextField(max_length = 500, blank =True, default='')
 	demo_link = models.CharField(max_length = 100, blank = True, default='')
