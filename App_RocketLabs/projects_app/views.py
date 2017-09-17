@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+
 from projects_app.models import Project
+
 # Helper function: Yields a generator with objects in l grouped in groups of n.
 def grouped(l, n):
     for i in xrange(0, len(l), n):
@@ -24,3 +27,7 @@ def completed_project_details(request, project_pk):
 	else:
 		context = {'project': None, 'latests':latests_4}
 	return render(request,'projects_app/completed_project_details.html',context)
+
+@login_required
+def new_project(request):
+	return render(request, 'projects_app/new_project.html')

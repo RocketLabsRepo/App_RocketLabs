@@ -1,24 +1,23 @@
 # -*- coding: utf-8 necessary for django string usage -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from decouple import config
 from django.core.mail import send_mail
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.core.mail import send_mail
-from decouple import config
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_text, force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode, is_safe_url
 from django.views import View
-from django.utils.encoding import force_bytes
-from .tokens import unlock_account_token
-from django.views import View
+from django.views.decorators.debug import sensitive_post_parameters
+
+import core_app.forms as core_forms
+from core_app.tokens import unlock_account_token
 from core_app.models import Skill, Profile
 from projects_app.models import Project
-import core_app.forms as core_forms
-from django.contrib import messages
 
 # Create your views here.
 
@@ -89,6 +88,7 @@ def register_view(request):
 
 
 # View para autenticar usuarios e iniciar sesión
+@sensitive_post_parameters()
 def login_view(request):
 	
 	form = core_forms.LoginForm(request.POST or None)
@@ -97,17 +97,27 @@ def login_view(request):
 		user = form.login(request)
 		if user:
 			login(request, user)
-			return redirect('core_app:home')
+			# Si existe alguna url en el parametro 'next' de la petición, nos aseguramos
+			# que sea segura y redireccionamos a ella, sino desplegamos el home.
+			next_url = request.GET.get('next')
+			next_url_is_safe = is_safe_url(
+				url=next_url,
+				allowed_hosts=request.get_host(),
+			)
+			return redirect(next_url) if next_url_is_safe else redirect('core_app:home')
+
 	return render(request, 'core_app/login.html', {'loginf': form })
 
 
 # View para cerrar la sesión de usuarios
+@login_required
 def logout_view(request):
 	logout(request)
 	return redirect('core_app:home')
 
 
 #View para editar perfil de cliente
+@login_required
 def profile_view(request):
 	context={}
 	if request.method == 'POST':	
@@ -170,6 +180,7 @@ def detailsteammember_view (request, teammember_pk):
 	return render(request, 'core_app/teammemberdetail.html', context)
 
 
+@login_required
 def changepassword_view(request):
 	if request.user.has_usable_password():
 		PasswordForm = core_forms.ChangePassForm
@@ -343,6 +354,7 @@ class unlockaccount_view(View):
 
 ###############################################################################################################################################
 #ChangeEmail
+@login_required
 def changeemail_view(request):
 
 	if request.method == 'POST' :

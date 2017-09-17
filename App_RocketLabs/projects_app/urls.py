@@ -9,7 +9,8 @@ from . import views
 app_name = 'projects_app'
 urlpatterns = [
 	url(r'^$', views.all_projects, name='all_completed_projects'),
-	url(r'^(?P<project_pk>\d+)$', views.completed_project_details, name='completed_project_details')
+	url(r'^(?P<project_pk>\d+)$', views.completed_project_details, name='completed_project_details'),
+	url(r'^new$', views.new_project, name='new_project'),
 ]
 """
 urlpatterns += [
