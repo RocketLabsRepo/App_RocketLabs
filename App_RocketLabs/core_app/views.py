@@ -179,7 +179,7 @@ def detailsteammember_view (request, teammember_pk):
 	context['known_skills'] = grouped(tm.knows_set.all() , 4)
 	return render(request, 'core_app/teammemberdetail.html', context)
 
-
+@sensitive_post_parameters()
 @login_required
 def changepassword_view(request):
 	if request.user.has_usable_password():
@@ -234,6 +234,7 @@ def contact_submit(request):
 		return redirect('/#contact')
 	return redirect('core_app:home')
 
+@sensitive_post_parameters()
 def recoverpassword_view(request):
 	form = core_forms.RecoverPassForm(request.POST or None)
 	if request.method == 'POST' and form.is_valid():
@@ -247,6 +248,7 @@ def recoverpassword_view(request):
 		form = core_forms.RecoverPassForm()
 		return render (request, 'core_app/recoverpass.html', { 'form' : form })
 
+@sensitive_post_parameters()
 def restorepassword_view(request, pkuser):
 	PasswordForm = core_forms.DefinePassForm
 	user = User.objects.get(pk=pkuser)		
@@ -280,6 +282,7 @@ def restorepassword_view(request, pkuser):
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
 
+@sensitive_post_parameters()
 def recoversecretlink_view(request):
 	form = core_forms.RecoverSecretLinkForm(request.POST or None)
 	if request.method == 'POST' and form.is_valid():
@@ -304,6 +307,7 @@ Aqui lo tienes:""" + str(user.profile.secret_link) ,
 #2. Se le notifica siempre al usuario que se le ha enviado el email
 #3. Se hace el desbloqueo de usuario y se le direcciona para que establezca su nueva contraseña
 
+@sensitive_post_parameters()
 def unlockuser_view(request):
 	form = core_forms.RecoverSecretLinkForm(request.POST or None)
 	if request.method == 'POST' and form.is_valid():
@@ -334,7 +338,7 @@ def unlockaccountconfirm_view(request):
 	return render(request,'core_app/unlockaccount_confirm.html')
 
 
-
+@sensitive_post_parameters()
 class unlockaccount_view(View):
 
     def get(self, request, uidb64, token):
@@ -354,6 +358,7 @@ class unlockaccount_view(View):
 
 ###############################################################################################################################################
 #ChangeEmail
+@sensitive_post_parameters()
 @login_required
 def changeemail_view(request):
 
@@ -363,7 +368,7 @@ def changeemail_view(request):
 			user = User.objects.get(pk=request.user.id)
 			user.email = form.cleaned_data['email']
 			user.save()
-			messages.success(request, 'Se ha cambiado el correo con éxito')
+			messages.success(request, 'Cambio del correo de su cuenta exitoso')
 			return redirect('core_app:edit_profile')
 		else:
 			return render (request, 'core_app/editemail.html', { 'form' : form })
