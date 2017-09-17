@@ -338,7 +338,7 @@ def unlockaccountconfirm_view(request):
 	return render(request,'core_app/unlockaccount_confirm.html')
 
 
-@sensitive_post_parameters()
+
 class unlockaccount_view(View):
 
     def get(self, request, uidb64, token):
