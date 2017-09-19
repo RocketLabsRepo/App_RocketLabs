@@ -5,5 +5,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    
+    url(r'^createservice/$', views.create_service_view, name = "create_service"),
 ]
