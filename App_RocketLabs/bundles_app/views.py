@@ -22,9 +22,18 @@ def create_service_view(request):
  		return render(request, 'bundles_app/createservice.html', {'form': form ,})
 
 
+
 def services_view(request):
 	"""
 	Esta view le pasa a la template todos los objetos Service.
 	"""
 	services = Service.objects.all()
 	return render(request, 'bundles_app/services.html', {'services': services} )
+
+
+def detailservice_view (request, service_pk):
+	"""
+	Esta view le pasa a la template el objeto Service indicado.
+	"""
+	service_detail = get_object_or_404(Service, pk = service_pk)
+	return render(request, 'bundles_app/servicedetail.html', {'service_detail': service_detail})

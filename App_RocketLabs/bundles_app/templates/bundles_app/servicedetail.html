@@ -1,0 +1,19 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Todo los servicios de RocketLabs{% endblock %}
+
+{% block content %}
+<div class="w3-container padding96-16" id="home">
+	<h2 class="w3-center" >Detalles de servicio</h2>
+	<p class="w3-center w3-large">{{service_detail.name}}</p>
+	<p class="w3-center w3-large">{{service_detail.about}}</p>
+	{% if service_detail.is_active %}	
+		<p class="w3-center w3-large">Actualmente ofrecemos este servicio</p>
+	{% else %}
+		<p class="w3-center w3-large">Este servicio no se encuentra disponible</p>
+	{% endif %}	
+</div>
+
+
+{% endblock %}
