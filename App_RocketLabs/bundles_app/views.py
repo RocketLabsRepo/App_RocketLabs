@@ -10,6 +10,8 @@ from django.shortcuts import render, render_to_response, redirect, get_object_or
 
 # Create your views here.
 
+
+#Vista para crear servicio
 def create_service_view(request):
 	form = bundle_forms.CreateServiceForm(request.POST or None)
 	if request.POST and form.is_valid():
@@ -18,3 +20,11 @@ def create_service_view(request):
  	else:
  		form = bundle_forms.CreateServiceForm()
  		return render(request, 'bundles_app/createservice.html', {'form': form ,})
+
+
+def services_view(request):
+	"""
+	Esta view le pasa a la template todos los objetos Service.
+	"""
+	services = Service.objects.all()
+	return render(request, 'bundles_app/services.html', {'services': services} )

@@ -6,4 +6,5 @@ from . import views
 
 urlpatterns = [
     url(r'^createservice/$', views.create_service_view, name = "create_service"),
+    url(r'^services/$', views.services_view, name = "all_services"),
 ]
