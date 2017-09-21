@@ -5,6 +5,13 @@
 
 {% block content %}
 <div class="w3-container padding96-16" id="home">
+	{% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+    {% endif %}
 	<h2 class="w3-center" >Detalles de servicio</h2>
 	<p class="w3-center w3-large">{{service_detail.name}}</p>
 	<p class="w3-center w3-large">{{service_detail.about}}</p>
@@ -13,6 +20,9 @@
 	{% else %}
 		<p class="w3-center w3-large">Este servicio no se encuentra disponible</p>
 	{% endif %}	
+	{% if request.user.is_staff %}
+		<a href="{% url 'bundles_app:edit_service' service_detail.id %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Editar Servicio </a>
+	{% endif %}
 </div>
 
 

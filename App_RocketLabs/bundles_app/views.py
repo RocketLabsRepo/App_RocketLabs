@@ -7,7 +7,7 @@ import bundles_app.forms as bundle_forms
 from  bundles_app.forms import CreateServiceForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
-
+from django.contrib import messages
 # Create your views here.
 
 
@@ -37,3 +37,19 @@ def detailservice_view (request, service_pk):
 	"""
 	service_detail = get_object_or_404(Service, pk = service_pk)
 	return render(request, 'bundles_app/servicedetail.html', {'service_detail': service_detail})
+
+
+def editservice_view(request, service_pk):
+	if request.method == 'POST':	
+		service = get_object_or_404(Service, pk = service_pk)
+		form = bundle_forms.CreateServiceForm(request.POST, instance = service, prefix='editservice')
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'Se han guardado los cambios en el servicio con exito')
+			return HttpResponseRedirect('/services/'+str(service.id))
+
+	else:
+		service = get_object_or_404(Service, pk = service_pk)
+		form = bundle_forms.CreateServiceForm(instance = service ,prefix='editservice')
+		return render(request, 'bundles_app/editservice.html', {'form':form} )
+
