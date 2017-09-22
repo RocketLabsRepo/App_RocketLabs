@@ -74,6 +74,8 @@ def create_custom_bundle_view(request):
 		if form.is_valid():
 			form.save()
 			bundle = Bundle.objects.get( title = form.cleaned_data['title'])
+			bundle.is_custom = True
+			bundle.save()
 			selected = request.POST.getlist('selected_services')
 			for select in selected:
 				service = Service.objects.get(pk = select)

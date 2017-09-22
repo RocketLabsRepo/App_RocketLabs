@@ -34,7 +34,7 @@ class Bundle(models.Model):
 	about = models.TextField(max_length=255)
 	bundle_extra_fee = models.DecimalField(max_digits=4, decimal_places = 2, blank = True, null = True)
 	bundle_total_fee = models.DecimalField(max_digits=4, decimal_places= 2, blank = True, null = True)
-	is_custom = models.BooleanField()
+	is_custom = models.BooleanField(default = False)
 	is_active = models.BooleanField(default = True)
 
 	def __str__(self):
