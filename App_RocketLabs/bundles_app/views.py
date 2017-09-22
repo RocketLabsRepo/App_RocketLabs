@@ -72,6 +72,7 @@ def create_custom_bundle_view(request):
 	if request.method == 'POST':
 		form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
 		if form.is_valid():
+			form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
 			form.save()
 			bundle = Bundle.objects.get( title = form.cleaned_data['title'])
 			bundle.is_custom = True
