@@ -10,10 +10,11 @@ import bundles_app.forms as bundle_forms
 
 # Create your views here.
 
-
-#Vista para crear servicio
 def service_create_view(request):
+	"""
+	Esta view es para crear algun servicio.
 
+	"""
 	if request.method == 'POST':
 		form = bundle_forms.CreateServiceForm(request.POST or None)
 		if form.is_valid():
@@ -46,6 +47,10 @@ def service_detail_view (request, service_pk):
 
 
 def service_edit_view(request, service_pk):
+	"""
+	Esta view es para editar algun servicio.
+
+	"""
 	if request.method == 'POST':	
 		service = get_object_or_404(Service, pk = service_pk)
 		form = bundle_forms.CreateServiceForm(request.POST, instance = service, prefix='editservice')
@@ -59,3 +64,24 @@ def service_edit_view(request, service_pk):
 		form = bundle_forms.CreateServiceForm(instance = service ,prefix='editservice')
 		return render(request, 'bundles_app/edit_service.html', {'form':form} )
 
+
+def create_custom_bundle_view(request):
+	"""
+	Esta view es para que el cliente elija los servicios que desea en su paquete
+	"""
+	if request.method == 'POST':
+		form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
+		if form.is_valid():
+			form.save()
+			bundle = Bundle.objects.get( title = form.cleaned_data['title'])
+			selected = request.POST.getlist('selected_services')
+			for select in selected:
+				service = Service.objects.get(pk = select)
+				bundle.services.add(service)
+			return HttpResponseRedirect('/')
+	else:
+		active_services = Service.objects.filter(is_active = True)
+		form = bundle_forms.CreateBundleForm(prefix='create_bundle')
+		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, 'form': form})
+
+ 
