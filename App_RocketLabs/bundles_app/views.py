@@ -95,4 +95,4 @@ def create_custom_bundle_view(request):
 
 		active_services = Service.objects.filter(is_active = True)
 		#form = bundle_forms.CreateBundleForm(prefix='create_bundle')
-		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, })
+		return render(request, 'bundles_app/create_custom_bundle.html',{'active_services': active_services, })
