@@ -83,7 +83,7 @@ def create_custom_bundle_view(request):
 			#form.save()
 		#bundle = Bundle.objects.get( title = form.cleaned_data['title'])
 		bundle = Bundle()
-		bundle.title = "Paquete personalizado de: " + str(request.user)
+		bundle.title = str(request.user)
 		bundle.is_custom = True
 		bundle.save()
 		selected = request.POST.getlist('selected_services')
