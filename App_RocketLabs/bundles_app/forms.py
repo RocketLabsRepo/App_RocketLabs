@@ -27,14 +27,18 @@ class CreateBundleForm(forms.ModelForm):
 	class Meta:
 		model = Bundle	
 		
-		fields = ['title', 'about']
+		fields = ['title', 'about','is_active', 'is_custom']
 		
 		labels = { 'title':_('Titulo del paquete'),
 					'about':_('Descripcion'),
+					'is_active':_('¿Está activo?'),
+					'is_custom':_('¿Es personalizado?'),
 				}
 		
 		widgets = {'title': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),
 					'about': forms.Textarea(attrs={'class':'w3-input w3-border input-font', 'rows':'5', 'style':'resize:none'}),
+					'is_Active': forms.CheckboxInput(attrs={}),
+					'is_custom': forms.CheckboxInput(attrs={}),
 					}
 
 

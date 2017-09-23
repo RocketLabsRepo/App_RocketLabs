@@ -38,8 +38,10 @@ class Bundle(models.Model):
 	is_active = models.BooleanField(default = True)
 
 	def __str__(self):
-
-		return "{}'s bundle".format(self.title).encode('utf-8', errors='replace')
+		if self.is_custom:
+			return "{}'s bundle".format(self.title).encode('utf-8', errors='replace')
+		else:
+			return self.title
 
 
 

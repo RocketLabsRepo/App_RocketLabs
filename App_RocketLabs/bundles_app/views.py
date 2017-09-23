@@ -96,3 +96,25 @@ def create_custom_bundle_view(request):
 		active_services = Service.objects.filter(is_active = True)
 		#form = bundle_forms.CreateBundleForm(prefix='create_bundle')
 		return render(request, 'bundles_app/create_custom_bundle.html',{'active_services': active_services, })
+
+
+@login_required
+def create_bundle_view(request):
+	"""
+	Esta view es para que el administrador cree un paquete basico
+	"""
+	if request.method == 'POST':
+		form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
+		if form.is_valid():
+			form.save()
+			bundle = Bundle.objects.get( title = form.cleaned_data['title'])
+			selected = request.POST.getlist('selected_services')
+			for select in selected:
+				service = Service.objects.get(pk = select)
+				bundle.services.add(service)
+			return HttpResponseRedirect('/')
+	else:
+
+		active_services = Service.objects.filter(is_active = True)
+		form = bundle_forms.CreateBundleForm(prefix='create_bundle')
+		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, 'form' : form})
