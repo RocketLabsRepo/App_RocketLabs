@@ -14,10 +14,9 @@ class CreateServiceForm(forms.ModelForm):
 		fields = ['name', 'about', 'is_active']
 		
 		labels = { 'name':_('Nombre del servicio'),
-					'about':_('Descripcion'),
-					'is_active':_('esta activo?'),}
+					'about':_('Descripción'),
+					'is_active':_('¿Esta activo?'),}
 		
 		widgets = {'name': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),
 					'about': forms.Textarea(attrs={'class':'w3-input w3-border input-font', 'rows':'5', 'style':'resize:none'}),
-					'is_active':forms.CheckboxInput(attrs={}),
 					}

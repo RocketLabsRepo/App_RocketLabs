@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 
@@ -12,12 +13,14 @@ import bundles_app.forms as bundle_forms
 
 
 #Vista para crear servicio
+@login_required
 def service_create_view(request):
 
 	if request.method == 'POST':
 		form = bundle_forms.CreateServiceForm(request.POST or None)
 		if form.is_valid():
 			form.save()
+			messages.success(request, 'Servicio creado con éxito!')
 			return redirect('bundles_app:create_service')
 		else:
 			return render(request, 'bundles_app/create_service.html', {'form': form })
@@ -44,7 +47,7 @@ def service_detail_view (request, service_pk):
 	service_detail = get_object_or_404(Service, pk = service_pk)
 	return render(request, 'bundles_app/service_detail.html', {'service_detail': service_detail})
 
-
+@login_required
 def service_edit_view(request, service_pk):
 	if request.method == 'POST':	
 		service = get_object_or_404(Service, pk = service_pk)
