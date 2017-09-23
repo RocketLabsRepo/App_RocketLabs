@@ -21,28 +21,6 @@
         		<p class="w3-center w3-large">Lo sentimos, actualmente no tenemos servicios disponibles.</p>
 
         	{% endfor %}
-        	<fieldset> 
-                {% for field in form %}
-                    <div class="form-group">
-                        {{ field.label_tag }}<br>
-                            {% if field.errors %}
-                                <div class="form-errors">
-                                {% for error in field.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                                </div>
-                            {% endif %}
-                        {{ field }}
-                    </div>
-                {% endfor %}
-            </fieldset>   
-            {% if form.non_field_errors %}
-                <ul class='form-errors'>
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
             <br>
             <p class="w3-center">
                 <button type= "submit" class="w3-button w3-block w3-black"><i class="fa fa-pencil"> </i> Crear paquete</button>

@@ -30,8 +30,8 @@ class Bundle(models.Model):
 	
 	services = models.ManyToManyField(Service)
 
-	title = models.CharField(max_length = 100, unique=True)
-	about = models.TextField(max_length=255)
+	title = models.CharField(max_length = 100)
+	about = models.TextField(max_length=255, blank = True, null = True)
 	bundle_extra_fee = models.DecimalField(max_digits=4, decimal_places = 2, blank = True, null = True)
 	bundle_total_fee = models.DecimalField(max_digits=4, decimal_places= 2, blank = True, null = True)
 	is_custom = models.BooleanField(default = False)

@@ -50,6 +50,7 @@ def service_detail_view (request, service_pk):
 	service_detail = get_object_or_404(Service, pk = service_pk)
 	return render(request, 'bundles_app/service_detail.html', {'service_detail': service_detail})
 
+
 @login_required
 def service_edit_view(request, service_pk):
 	"""
@@ -70,24 +71,28 @@ def service_edit_view(request, service_pk):
 		return render(request, 'bundles_app/edit_service.html', {'form':form} )
 
 
+@login_required
 def create_custom_bundle_view(request):
 	"""
 	Esta view es para que el cliente elija los servicios que desea en su paquete
 	"""
 	if request.method == 'POST':
-		form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
-		if form.is_valid():
-			form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
-			form.save()
-			bundle = Bundle.objects.get( title = form.cleaned_data['title'])
-			bundle.is_custom = True
-			bundle.save()
-			selected = request.POST.getlist('selected_services')
-			for select in selected:
-				service = Service.objects.get(pk = select)
-				bundle.services.add(service)
-			return HttpResponseRedirect('/')
+		#form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
+		#if form.is_valid():
+			#form = bundle_forms.CreateBundleForm(request.POST, prefix='create_bundle')
+			#form.save()
+		#bundle = Bundle.objects.get( title = form.cleaned_data['title'])
+		bundle = Bundle()
+		bundle.title = "Paquete personalizado de: " + str(request.user)
+		bundle.is_custom = True
+		bundle.save()
+		selected = request.POST.getlist('selected_services')
+		for select in selected:
+			service = Service.objects.get(pk = select)
+			bundle.services.add(service)
+		return HttpResponseRedirect('/')
 	else:
+
 		active_services = Service.objects.filter(is_active = True)
-		form = bundle_forms.CreateBundleForm(prefix='create_bundle')
-		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, 'form': form})
+		#form = bundle_forms.CreateBundleForm(prefix='create_bundle')
+		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, })
