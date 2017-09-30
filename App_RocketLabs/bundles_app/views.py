@@ -113,8 +113,6 @@ def create_bundle_view(request):
 				service = Service.objects.get(pk = select)
 				bundle.services.add(service)
 			return HttpResponseRedirect('/')
-	else:
-
-		active_services = Service.objects.filter(is_active = True)
-		form = bundle_forms.CreateBundleForm(prefix='create_bundle')
-		return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, 'form' : form})
+	active_services = Service.objects.filter(is_active = True)
+	form = bundle_forms.CreateBundleForm(prefix='create_bundle')
+	return render(request, 'bundles_app/create_bundle.html',{'active_services': active_services, 'form' : form})

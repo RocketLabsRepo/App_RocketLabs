@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^services/$', views.all_services_view, name = "all_services"),
     url(r'^services/([0-9]+)/$', views.service_detail_view, name = "detail_service"),
     url(r'^services/([0-9]+)/edit$', views.service_edit_view, name = "edit_service"),
-    url(r'^bundles/customcreate$', views.create_custom_bundle_view, name = "create_custom_bundle"),
-    url(r'^bundles/create$', views.create_bundle_view, name = "create_bundle"),
+    url(r'^bundles/client/new$', views.create_custom_bundle_view, name = "create_custom_bundle"),
+    url(r'^bundles/new$', views.create_bundle_view, name = "create_bundle"),
 ]

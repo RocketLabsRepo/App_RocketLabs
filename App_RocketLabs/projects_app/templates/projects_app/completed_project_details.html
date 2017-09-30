@@ -27,6 +27,7 @@
 				{% if project.description %}
 					<p><strong>Descripción:</strong> {{ project.description }}</p>
 				{% endif %}
+					<p><strong>Paquete de desarrollo:</strong> {{ project.bundle }}</p>
 					<p><strong>Cliente(s):</strong> {{ project.get_clients_string }}</p>
 					<p><strong>Tiempo de elaboración:</strong> {{ project.str_duration }}</p>
 				{% if project.owner_comment %}

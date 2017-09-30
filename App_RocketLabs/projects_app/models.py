@@ -22,7 +22,7 @@ Project Model
 class Project(models.Model):
 
 	owner_profiles = models.ManyToManyField('core_app.Profile', db_table ="projects_app_owner_profiles")
-	bundle = models.ForeignKey('bundles_app.Bundle', blank= True, null=True, default=None) # Null, blank y default solo para probar mientras no hay bundles implementados.
+	bundle = models.ForeignKey('bundles_app.Bundle', null=True, default=None) # Null, blank y default solo para probar mientras no hay bundles implementados.
 
 	title = models.CharField(max_length=100)
 	description = models.TextField(max_length=500, default='')

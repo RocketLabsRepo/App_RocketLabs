@@ -114,6 +114,8 @@
 										<div class="project-details w3-container">
 											<label>Etapa actual:</label>
 											<p class="w3-large project-title">{{ project.current_stage }}</p>
+											<label>Paquete de Desarrollo:</label>
+											<p class="w3-large project-title">{{ project.bundle }}</p>
 											<label>Progreso:</label>
 											{% if project.done_percentage > 10 %}
 											<div class="w3-grey w3-margin-bottom">
@@ -139,7 +141,9 @@
 								</p>
 							{% endfor %}
 						{% if in_progress_projects %}
-							<a class="w3-text-indigo" href="{% url 'projects_app:new_project' %}"><em>Emitir un nuevo proyecto aquí</em></a>
+						<p class="w3-center w3-large w3-grayscale-min">
+							<a class="w3-indigo w3-hover-blue w3-btn w3-button w3-center" href="{% url 'projects_app:new_project' %}"><i class="fa fa-plus-circle w3-xlarge"></i> Crear nuevo proyecto</a>
+						</p>
 						{% endif %}
 							</div>
 							<hr><h4>Proyectos Completos</h4>
