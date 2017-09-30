@@ -33,7 +33,7 @@ class Profile(models.Model):
 	linkedln_link = models.CharField(max_length=50, blank = True)
 	bio = models.TextField(max_length = 150, blank = True)
 	secret_link = models.CharField(max_length = 50, blank = True)
-	photo = models.ImageField(blank =True, upload_to = "photo_profile", default = "../media/photo_profile/default-user.png")
+	photo = models.ImageField(blank =True, upload_to = "photo_profile", default = "../media/photo_profile/default_user_3x2.png")
 	is_admin = models.BooleanField(default=False)
 	is_team_member= models.BooleanField(default = False)
 	failed_logins = models.SmallIntegerField(default=0)
