@@ -1,13 +1,11 @@
-adium-theme-ubuntu==0.3.4
 certifi==2017.7.27.1
 chardet==3.0.4
 Django==1.11.4
 idna==2.6
 oauthlib==2.0.2
 olefile==0.44
-pbr==3.1.1
 Pillow==4.2.1
-psycopg2==2.7.3
+psycopg2==2.7.1
 PyJWT==1.5.2
 python-decouple==3.1
 python-openid==2.2.5
@@ -18,10 +16,4 @@ selenium==3.5.0
 six==1.10.0
 social-auth-app-django==1.2.0
 social-auth-core==1.4.0
-stevedore==1.25.0
-unity-lens-photos==1.0
 urllib3==1.22
-virtualenv==15.1.0
-virtualenv-clone==0.2.6
-virtualenvwrapper==4.7.2
-
