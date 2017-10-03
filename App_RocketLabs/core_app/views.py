@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from decouple import config
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -56,24 +57,23 @@ def register_view(request):
 		ruf = core_forms.RegisterUserForm(request.POST)
 		if ruf.is_valid():
 			user = ruf.save()
-
 			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
 			# al email indicado con sus credenciales.
 			
-			"""
-			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1']}
 			
-			msg_plain = render_to_string('registration/user_register_email.txt', context)
-			msg_html = render_to_string('registration/user_register_email.html', context)
+			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1'], 'secret_link':user.profile.secret_link}
+			
+			msg_plain = render_to_string('core_app/mail/register_email.txt', context)
+			msg_html = render_to_string('core_app/mail/register_email.html', context)
 			
 			send_mail(
 					'Bienvenido a RocketLabs!', 	#titulo
 					msg_plain,							#mensaje txt
-					'RockectLabs@gmail.com',		#email de envio
+					config('HOST_USER'),		#email de envio
 					[user.email],						#destinatario
 					html_message=msg_html,				#mensaje en html
 					)
-			"""
+			
 			
 			return HttpResponseRedirect('/login')
 		else:
