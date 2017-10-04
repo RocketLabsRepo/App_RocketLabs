@@ -251,32 +251,31 @@ def recoverpassword_view(request):
 def restorepassword_view(request, pkuser):
 	PasswordForm = core_forms.DefinePassForm
 	user = User.objects.get(pk=pkuser)		
-	if request.method == 'POST' and form.is_valid():
-		form = PasswordForm(user , request.POST)
-		form.save()
-		update_session_auth_hash(request, form.user)
-		"""
+	if request.method == 'POST':
+		form = PasswordForm(user , request.POST) 
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)
+			
 			#Envio de email con las nuevas credenciales al correo electrónico del usuario
-		user = User.objects.get(pk=request.user.id)
-		user_profile = Perfil.objects.get(user = user)
-		context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
-		
-		msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
-		msg_html = render_to_string('registration/user_pwdreset_email.html', context)
-		
-		send_mail(
-				'Cambio de Contraseña - Foro-Estudiantil!', #titulo
-				msg_plain,									#mensaje txt
-				'foroestudiantil2@gmail.com',				#email de envio
-				[user.email],								#destinatario
-				html_message=msg_html,						#mensaje en html
-				)
-		"""
-		# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
-		user_profile = Profile.objects.get(user = user)
-		user_profile.is_blocked = False
-		user_profile.save()
-		return redirect('core_app:home')
+			context = {'username': user.username ,'password':form.cleaned_data['password1']}
+
+			msg_plain = render_to_string('core_app/mail/change_password_email.txt', context)
+			msg_html = render_to_string('core_app/mail/change_password_email.html', context)
+
+			send_mail(
+					'Cambio de Contraseña - Rocket Labs!', 		#titulo
+					msg_plain,									#mensaje txt
+					config('HOST_USER'),						#email de envio
+					[user.email],								#destinatario
+					html_message=msg_html,						#mensaje en html
+					)		
+			
+			# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+			user_profile = Profile.objects.get(user = user)
+			user_profile.is_blocked = False
+			user_profile.save()
+			return redirect('core_app:home')
 	else:
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
