@@ -67,9 +67,9 @@ def register_view(request):
 			msg_html = render_to_string('core_app/mail/register_email.html', context)
 			
 			send_mail(
-					'Bienvenido a RocketLabs!', 	#titulo
+					'Bienvenido a RocketLabs!', 		#titulo
 					msg_plain,							#mensaje txt
-					config('HOST_USER'),		#email de envio
+					config('HOST_USER'),				#email de envio
 					[user.email],						#destinatario
 					html_message=msg_html,				#mensaje en html
 					)
@@ -201,9 +201,9 @@ def changepassword_view(request):
 			msg_html = render_to_string('core_app/mail/change_password_email.html', context)
 
 			send_mail(
-					'Cambio de Contraseña - Rocket Labs!', #titulo
+					'Cambio de Contraseña - Rocket Labs!', 		#titulo
 					msg_plain,									#mensaje txt
-					config('HOST_USER'),				#email de envio
+					config('HOST_USER'),						#email de envio
 					[user.email],								#destinatario
 					html_message=msg_html,						#mensaje en html
 					)		
@@ -287,15 +287,18 @@ def recoversecretlink_view(request):
 	if request.method == 'POST' and form.is_valid():
 		if User.objects.filter(email = form.cleaned_data['email']).exists():
 			user = User.objects.get(email=form.cleaned_data['email'])
+			context = {'secret_link':user.profile.secret_link}
+
+			msg_plain = render_to_string('core_app/mail/recover_secret_link_email.txt', context)
+			msg_html = render_to_string('core_app/mail/recover_secret_link_email.html', context)
+
 			send_mail(
-   		 			'Recuperacion de codigo unico',
-				    """Hola,
-Hemos recibido tu solicitud de recuperación de codigo unico. 
-Aqui lo tienes:""" + str(user.profile.secret_link) ,
-					config('HOST_USER'),
-				    [user.email],
-				    fail_silently=False,
-					)
+					'Recuperación de código único - Rocket Labs!', 		#titulo
+					msg_plain,											#mensaje txt
+					config('HOST_USER'),								#email de envio
+					[user.email],										#destinatario
+					html_message=msg_html,								#mensaje en html
+					)		
 			return redirect('core_app:login')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
