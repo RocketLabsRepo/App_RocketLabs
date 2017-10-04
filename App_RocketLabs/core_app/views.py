@@ -299,8 +299,9 @@ def recoversecretlink_view(request):
 					config('HOST_USER'),								#email de envio
 					[user.email],										#destinatario
 					html_message=msg_html,								#mensaje en html
-					)		
-			return redirect('core_app:login')
+					)
+		messages.success(request, 'Se ha enviado al correo indicado el codigo unico') #En caso de que no exista se le envia tambien esta notificacion		
+		return redirect('core_app:login')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
 		return render(request, 'core_app/recoversecretlink.html',{'form': form})
