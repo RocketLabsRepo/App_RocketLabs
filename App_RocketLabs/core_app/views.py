@@ -192,24 +192,23 @@ def changepassword_view(request):
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)
-			"""
-				#Envio de email con las nuevas credenciales al correo electrónico del usuario
+			
+			#Envio de email con las nuevas credenciales al correo electrónico del usuario
 			user = User.objects.get(pk=request.user.id)
-			user_profile = Perfil.objects.get(user = user)
 			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
 
-			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
-			msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+			msg_plain = render_to_string('core_app/mail/change_password_email.txt', context)
+			msg_html = render_to_string('core_app/mail/change_password_email.html', context)
 
 			send_mail(
-					'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+					'Cambio de Contraseña - Rocket Labs!', #titulo
 					msg_plain,									#mensaje txt
-					'foroestudiantil2@gmail.com',				#email de envio
+					config('HOST_USER'),				#email de envio
 					[user.email],								#destinatario
 					html_message=msg_html,						#mensaje en html
-					)
-			"""
-				# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+					)		
+			
+			# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
 			user = User.objects.get(pk=request.user.id)
 			user_profile = Profile.objects.get(user = user)
 			user_profile.is_blocked = False
