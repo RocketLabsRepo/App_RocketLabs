@@ -271,11 +271,13 @@ def restorepassword_view(request, pkuser):
 					html_message=msg_html,						#mensaje en html
 					)		
 			
-			# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+			# Nos aseguramos siempre de desbloquear a un usuario despues de el cambio de contraseña
 			user_profile = Profile.objects.get(user = user)
 			user_profile.is_blocked = False
 			user_profile.save()
 			return redirect('core_app:home')
+		else:
+			return render(request, 'core_app/changepassword.html',{'form': form})
 	else:
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
@@ -317,18 +319,24 @@ def unlockuser_view(request):
 			if(user.profile.is_blocked):
 				token = unlock_account_token.make_token(user)
 				uid = urlsafe_base64_encode(force_bytes(user.pk))
+				
+				#Debemos cambiar el link cuando subamos la pagina al servidor
+				link = "http://localhost:8000/unlockaccount/" + str(uid) + "/" + str(token)
+				
+				#Enviamos el correo al usuario con el link para el cambio de contraseña
+				context = {'link':link}
+				msg_plain = render_to_string('core_app/mail/unlock_user_email.txt', context)
+				msg_html = render_to_string('core_app/mail/unlock_user_email.html', context)
+
 				send_mail(
-	   		 			'Desbloquear Cuenta',
-					    """Hola,
-	Hemos recibido tu solicitud para desbloquear cuenta. 
-	Aqui lo tienes: http://localhost:8000/unlockaccount/""" + str(uid) + "/" + str(token),
-						config('HOST_USER'),
-					    [user.email],
-					    fail_silently=False,
+						'Desbloqueo de cuenta - Rocket Labs!', 				#titulo
+						msg_plain,											#mensaje txt
+						config('HOST_USER'),								#email de envio
+						[user.email],										#destinatario
+						html_message=msg_html,								#mensaje en html
 						)
-				return redirect('core_app:unlockaccount_confirm')
-			else:
-				return redirect('core_app:unlockaccount_confirm')
+				
+			return redirect('core_app:unlockaccount_confirm')
 		else:
 			return redirect('core_app:unlockaccount_confirm')
 	else:
