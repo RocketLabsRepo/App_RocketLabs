@@ -224,7 +224,28 @@ def changepassword_view(request):
 def contact_submit(request):
 	contact_f = core_forms.ContactForm(request.POST or None)
 	if request.method == 'POST' and contact_f.is_valid():
-		contact_f.save()
+		contact_f.save()	
+		
+		context = {}
+		context['name'] = contact_f.cleaned_data['requester_name']
+		context['mail'] = contact_f.cleaned_data['requester_mail']
+		context['phone_number'] = contact_f.cleaned_data['telephone_number']
+		context['subject'] = contact_f.cleaned_data['subject']
+		context['message'] = contact_f.cleaned_data['message']
+
+
+		#Envio de mail para el usuario
+		msg_plain = render_to_string('core_app/mail/user_contact_email.txt', context)
+		msg_html = render_to_string('core_app/mail/user_contact_email.html', context)
+
+		send_mail(
+				'Solicitud de contacto - Rocket Labs!', 			#titulo
+				msg_plain,											#mensaje txt
+				config('HOST_USER'),								#email de envio
+				[contact_f.cleaned_data['requester_mail']],			#destinatario
+				html_message=msg_html,								#mensaje en html
+				)	
+		
 		"""
 		Aqui deberiamos enviar 2 correos, uno al que realizo el contacto
 		y otro a nuestro propio correo de contacto de la empresa.
