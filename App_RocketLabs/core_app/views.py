@@ -232,7 +232,7 @@ def contact_submit(request):
 		context['phone_number'] = contact_f.cleaned_data['telephone_number']
 		context['subject'] = contact_f.cleaned_data['subject']
 		context['message'] = contact_f.cleaned_data['message']
-
+		context['email_for'] = "user"
 
 		#Envio de mail para el usuario
 		msg_plain = render_to_string('core_app/mail/user_contact_email.txt', context)
@@ -244,7 +244,19 @@ def contact_submit(request):
 				config('HOST_USER'),								#email de envio
 				[contact_f.cleaned_data['requester_mail']],			#destinatario
 				html_message=msg_html,								#mensaje en html
-				)	
+				)
+
+		#Envio de mail para los admins
+		context['email_for'] = "admin"
+		msg_plain = render_to_string('core_app/mail/user_contact_email.txt', context)
+		msg_html = render_to_string('core_app/mail/user_contact_email.html', context)
+		send_mail(
+				'Solicitud de contacto - Rocket Labs!', 			#titulo
+				msg_plain,											#mensaje txt
+				config('HOST_USER'),								#email de envio
+				[config('HOST_USER')],								#destinatario
+				html_message=msg_html,								#mensaje en html
+				)		
 		
 		"""
 		Aqui deberiamos enviar 2 correos, uno al que realizo el contacto
