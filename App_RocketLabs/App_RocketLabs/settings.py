@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import os.path
+import dj_database_url
 from decouple import config
 from django.contrib.messages import constants as message_constants
 
@@ -41,9 +42,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&@np^x6zh6ar7wn)m-)&^kg576#5&-p&wjq9b-y$^hhrdt&24n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -106,7 +107,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+"""
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -117,7 +118,10 @@ DATABASES = {
         'PORT':''
     }
 }
+"""
+DATABASES['default'] =  dj_database_url.config()
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -155,8 +159,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+   os.path.join(BASE_DIR, 'static'),
+)
 
 # Configuracion de la carpeta raiz de media en la que se guardaran los
 # archivos subidos por los usuarios(Fotos, screenshots, etc)

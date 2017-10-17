@@ -22,3 +22,4 @@ social-auth-core==1.4.0
 static==1.1.1
 static3==0.7.0
 urllib3==1.22
+
