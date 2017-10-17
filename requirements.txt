@@ -22,8 +22,6 @@ social-auth-app-django==1.2.0
 social-auth-core==1.4.0
 static==1.1.1
 static3==0.7.0
-<<<<<<< HEAD
 urllib3==1.22
-=======
-urllib3==1.22
->>>>>>> 510be97581e5f4f66c4a6b2dd0d9cc093d47840b
+
+
