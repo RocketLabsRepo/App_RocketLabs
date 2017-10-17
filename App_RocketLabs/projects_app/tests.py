@@ -193,3 +193,10 @@ class ScreenshotModelTest(TestCase):
 
 		self.assertEqual(project_screens.count() , 1)
 		self.assertEqual(project_screens[0].name , "A second test Screenshot")
+
+class AllProjectsPage(TestCase):
+
+	def test_all_projects_page_returns_correct_html(self):
+		response = self.client.get('/projects/') #implicit test_all_projects_url_resolves_to_all_projects_view
+		self.assertTemplateUsed(response, 'projects_app/projects.html')
+
