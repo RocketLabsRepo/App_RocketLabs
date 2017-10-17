@@ -1,0 +1,35 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Crear paquete personalizado - RocketLabs{% endblock %}
+
+{% block content %}
+
+<div class="w3-container padding96-16" id="home">
+    {% if request.user.is_authenticated %}
+    	<h2 class="w3-center" >Crear paquete personalizado</h2>
+    	<p class="w3-center w3-large">Elija el servicio que desea.</p>
+    	<form method="POST">
+    		<div class="w3-row-padding w3-grayscale-min margintop64">
+            	{% for service in active_services %}
+            		{% csrf_token %} 
+            		<input type="checkbox" name="selected_services" id="option{{service.id}}" value={{service.id}} />
+            		<label for="option{{service.id}}"><b>{{service.name}}</b></label><br />
+            		
+            	{% empty %}
+            		
+            		<br><br>
+            		<p class="w3-center w3-large">Lo sentimos, actualmente no tenemos servicios disponibles.</p>
+
+            	{% endfor %}
+                <br>
+                <p class="w3-center">
+                    <button type= "submit" class="w3-button w3-block w3-black"><i class="fa fa-pencil"> </i> Crear paquete</button>
+                </p>
+                         
+    		</div>
+    	</form>
+    {% endif %}
+</div>
+
+{% endblock %}

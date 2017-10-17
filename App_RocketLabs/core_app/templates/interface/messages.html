@@ -1,0 +1,12 @@
+{% if messages %}
+	<div class="messages w3-container">
+	{% for message in messages %}
+		<div class="w3-panel w3-round w3-border {{ message.tags }} w3-display-container" role="alert">
+			<span onclick = "this.parentElement.style.display='none'" class="w3-padding link-hand w3-xlarge w3-display-right" aria-label="Cerrar">
+				&times;
+			</span>
+			<p>{{ message }}</p>
+		</div>
+	{% endfor %}
+	</div>
+{% endif %}

@@ -1,47 +1,47 @@
 {% extends 'core_app/base.html' %}
 {% load static %}
 
+{% block title %}Inicio{% endblock %}
+
 {% block content %}
+
 <!-- Header with full-height image -->
-<header class="bgimg-1 parallax w3-display-container w3-grayscale-min" id="home">
-  <div class="w3-display-left w3-text-white" id="padding48">
-    <span class="w3-jumbo w3-hide-small">Comienza algo que trascienda.</span><br>
-    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Comienza algo que trascienda.</span><br>
-    <span class="w3-large">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
+
+<header class="bgimg-1 parallax w3-display-container" id="home">
+  <div class="w3-display-left w3-text-white padding48">
+    <span class="w3-jumbo header-text w3-hide-small">¡Déjanos ayudarte a despegar!</span><br>
+    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Déjanos ayudarte a despegar.</span><br> <!-- Comienza algo que trascienda. -->
+    <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
     <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
-  </div> 
-  <div class="w3-display-bottomleft w3-text-grey w3-large" id="padding24-48">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <div class="w3-display-bottomleft w3-text-grey w3-large padding24-48">
+    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+    <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+    <a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
   </div>
 </header>
 
 <!-- About Section -->
-
 <div class="w3-container padding128-16" id="about">
-  <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑIA</h3>
+  <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑÍA</h3>
   <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y habilidades</p>
-  <div class="w3-row-padding w3-center margintop64 fadeInOnScroll">
-    <div class="w3-quarter">
+  <div class="w3-row-padding w3-margin-bottom w3-center margintop64">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
       <p class="w3-large">Alta calidad</p>
       <p>Nos esforzamos para que nuestros proyectos sean lo mejor del mercado.</p>
     </div>
-    <div class="w3-quarter">
+    <div class="w3-col m6 l3 w3-margin-bottom fadeInOnScroll">
       <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Pasión</p>
       <p>Amamos lo que hacemos, es un gran plus para ofrecerles un trabajo hecho con mucha dedicación.</p>
     </div>
-    <div class="w3-quarter">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Diseño</p>
       <p>Les ofrecemos los mejores diseños que tienen una gran atractivo y muchas interacciones.</p>
     </div>
-    <div class="w3-quarter">
+    <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Soporte</p>
       <p>Nuestras aplicaciones tienen soporte para todo lo que necesites.</p>
@@ -52,13 +52,18 @@
 <!-- Promo Section - "We know design" -->
 <div class="w3-container w3-light-grey padding128-16">
   <div class="w3-row-padding">
-    <div class="w3-col m6 ">
-      <h3 class="fadeInOnScroll">Sabemos diseñar.</h3>
-      <p class="fadeInOnScroll">Nos hemos capacitado para ofrecerte los mejores diseños.<br>Y seguimos en constante actualización para satisfacer las necesidades de nuestros clientes.</p>
-      <p class="fadeInOnScroll"><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a></p>
-    </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="{% static 'core_app/img/phone_buildings.jpg' %}" alt="Buildings" id="image700x394">
+      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/space-window.png' %}" alt="Buildings" >
+    </div>
+
+    <div class="w3-col m6 w3-margin-bottom">
+      <h3 class="fadeInOnScroll">Sabemos diseñar y desarrollar.</h3>
+      <p class="fadeInOnScroll">
+        Nos hemos capacitado para ofrecerte los mejores productos diseñados impecablemente. Y seguimos en constante actualización para satisfacer las necesidades de nuestros clientes.
+      </p><br>
+      <p class="fadeInOnScroll w3-center w3-large">
+        <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a>
+      </p>
     </div>
   </div>
 </div>
@@ -67,54 +72,40 @@
 <div class="w3-container padding128-16" id="team">
   <h3 class="w3-center">EL EQUIPO</h3>
   <p class="w3-center w3-large">Las caras de nuestra compañia</p>
-  <div class="w3-row-padding w3-grayscale margintop64">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team4.jpg' %}" alt="Rabindranath" class="widthOHP">
+  <div class="w3-row-padding w3-grayscale-min margintop64">
+    {% for member in team_members %}
 
-        <div class="w3-container">
-          <h3>Rabindranath Ferreira</h3>
-          <p class="w3-opacity">CEO & Founder</p>
-          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contáctame</button></p>
-        </div>
-      </div>
-    </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team1.jpg' %}" alt="César" class="widthOHP">
+
+      {% if member.profile.photo %}
+        <img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP">
+      {% else %}
+        <p>No hay imágen disponible</p>
+      {% endif %}
         <div class="w3-container">
-          <h3>César Gonzales</h3>
-          <p class="w3-opacity">Diseñador Gráfico</p>
-          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contáctame</button></p>
+          <h3>{{ member.get_full_name }}</h3>
+          <p class="w3-opacity tm-title-height">{{ member.profile.title }}</p>
+          <!--<p class="w3-justify tm-bio-height">{{ member.profile.bio }}</p>-->
+
+          <form action="{% url 'core_app:details_team_member' member.id %}">
+            <p><button type="submit "class="w3-button w3-btn w3-grey w3-block"><i class="fa fa-info-circle"></i> Ver detalles completos</button></p>
+          </form>
+
         </div>
       </div>
     </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team3.jpg' %}" alt="Rafael" class="widthOHP">
-        <div class="w3-container">
-          <h3>Rafael Vasquez</h3>
-          <p class="w3-opacity">Diseñador Web</p>
-          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contáctame</button></p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card-2">
-        <img src="{% static 'core_app/img/team2.jpg' %}" alt="Osvani" class="widthOHP">
-        <div class="w3-container">
-          <h3>Osvani Colina</h3>
-          <p class="w3-opacity">Programador Backend</p>
-          <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contáctame</button></p>
-        </div>
-      </div>
-    </div>
+  {% empty %}
+
+    <br><br>
+    <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos integrantes disponibles.</p>
+
+  {% endfor %}
   </div>
-  <p class="fadeInOnScroll" id="teambut"><a href="#work" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a></p>
+  <br>
+  <p class="w3-center" id="team-gallery-button">
+    <a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a>
+  </p>
 </div>
 
 <!-- Promo Section "Statistics" -->
@@ -141,46 +132,36 @@
 
 <div class="w3-container padding128-16" id="work">
   <h3 class="w3-center">NUESTRO TRABAJO</h3>
-  <p class="w3-center w3-large">Proyectos realizados para clientes satisfechos</p>
+  <p class="w3-center w3-large">Últimos proyectos realizados para clientes satisfechos</p>
 
   <!-- CARGAR DINAMICAMENTE LOS TRABAJOS REALIZADOS -->
 
-  <div class="w3-row-padding margintop64">
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_mic.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A microphone">
-    </div>
+    <div class="w3-row-padding margintop64">
 
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_phone.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A phone">
-    </div>
+    {% for object in latests_projects %}
+        <div class="w3-col l3 m6 w3-center w3-margin-bottom">
+          <div class="w3-card-2">
+            {% with object.get_preview_screenshot as image %}
+            <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
+            {% endwith %}
+            <div class="w3-container">
+              <p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
+              <p class="project-title-height w3-hide-small">{{ object.title }}</p>
+                    <a href="{% url 'projects_app:completed_project_details' object.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> Ver detalles</a>
+                </div>
+                </div>
+        </div>
 
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/foro_estudiantil.png' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="Forum-Estudiantil">
-    </div>
+    {% empty %}
+        <br><br>
+        <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
+    {% endfor %}
 
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_sound.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="Soundbox">
     </div>
-  </div>
-
-  <div class="w3-row-padding w3-section">
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tablet.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A tablet">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_camera.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A camera">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_typewriter.jpg' %}" onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A typewriter">
-    </div>
-
-    <div class="w3-col l3 m6">
-      <img src="{% static 'core_app/img/tech_tableturner.jpg' %}"  onclick="onClick(this)" class="w3-hover-opacity widthOHP" alt="A tableturner">
-    </div>
-  </div>
-  <p class="fadeInOnScroll"><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> Echa un vistazo a todos nuestros proyectos</a></p>
+    <br>
+    <p class="w3-center" id="work-gallery-button">
+        <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
+    </p>
 </div>
 
 <!-- Modal for full size images on click-->
@@ -194,36 +175,31 @@
 
 <!-- Seccion de tecnologías manejadas  -->
 <div class="w3-container w3-light-grey w3-padding-64">
-  <div class="w3-row-padding">
-    <div class="w3-col m6">
-      <h3>Tecnologías Dominadas</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br>
-      tempor incididunt ut labore et dolore.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br>
-      tempor incididunt ut labore et dolore.</p>
+    <h2 class="w3-center">Tecnologías Dominadas</h2>
+{% for group in skill_list %}
+    {% if forloop.first %}
+    <div class="w3-row-padding w3-margin-bottom margintop64">
+    {% else %}
+    <div class="w3-row-padding w3-margin-bottom w3-section">
+    {% endif %}
+
+    {% for skill in group %}
+        <div class="w3-col l3 m6 w3-content w3-center">
+            <img src="{{ skill.skill_logo.url }}" class="skills-logo" alt="{{ skill.name }}">
+            <p>{{ skill.name }}</p>
+        </div>
+    {% endfor %}
+
     </div>
-    <div class="w3-col m6">
-      <p class="w3-wide fadeInOnScroll"><i class="fa fa-desktop w3-margin-right"></i>Diseño Web</p>
-      <div class="w3-grey fadeInOnScroll">
-        <div class="w3-container w3-dark-grey w3-center" id="widthNP">90%</div>
-      </div>
-      <p class="w3-wide fadeInOnScroll"><i class="fa fa-check-square-o w3-margin-right"></i>Control de Calidad</p>
-      <div class="w3-grey fadeInOnScroll">
-        <div class="w3-container w3-dark-grey w3-center" id="widthEFP">85%</div>
-      </div>
-      <p class="w3-wide fadeInOnScroll"><i class="fa fa-database w3-margin-right"></i>Bases de Datos</p>
-      <div class="w3-grey fadeInOnScroll">
-        <div class="w3-container w3-dark-grey w3-center" id="widthSFP">75%</div>
-      </div>
-      <p class="w3-wide fadeInOnScroll"><strong>UX</strong> Experiencia de  Usuario</p>
-      <div class="w3-grey fadeInOnScroll">
-        <div class="w3-container w3-dark-grey w3-center" style="width:81%">81%</div>
-      </div>
-    </div>
-  </div>
+{% empty %}
+    <br><br>
+    <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos habilidades disponibles.</p>
+
+{% endfor %}
 </div>
 
 <!-- Pricing Section -->
+<!--
 <div class="w3-container w3-center w3-dark-grey padding128-16" id="pricing">
   <h3>PRECIOS</h3>
   <p class="w3-large">Elige un plan ajustado a tus necesidades.</p>
@@ -282,46 +258,47 @@
 
   </div>
 </div>
-
+-->
 <!-- Contact Section -->
 
-<div class="w3-container w3-light-grey padding128-16 bgimg-2" id="contact">
-  <h3 class="w3-center">CONTÁCTANOS</h3>
-  <p class="w3-center w3-large">Envianos un Mensaje</p>
-  <div class="w3-row-padding margintop64">
-    <div class="w3-col m5">
-      <h4>Ubícanos</h4>
-      <p>El infinito es nuestro límite</p>
-      <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Caracas, VE</p>
-      <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Santiago de Chile, CL</p>
-      <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +58 4125957873</p>
-      <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +56 9 67654739</p>
-      <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i> rocketlabs.customers@gmail.com </p>
-    </div>
-    
-     <div class="w3-col m7">
-      <form class="w3-container w3-card-4 w3-padding-16 w3-white">
-        <div class="w3-section">      
-          <label>Nombre de contacto:</label>
-          <input class="w3-input" type="text" name="Name" required>
-        </div>
-        <div class="w3-section">      
-          <label>Correo Electrónico:</label>
-          <input class="w3-input" type="text" name="Email" required>
-        </div>
-        <div class="w3-section">      
-          <label>Mensaje:</label>
-          <!--
-          <input class="w3-input" type="text" name="Message" required>
-        -->
-          <textarea class="w3-input" placeholder="Máximo 400 caracteres."></textarea>
-        </div> 
+<div class="w3-container w3-light-grey padding128-16 bgimg-2 parallax" id="contact">
 
-        <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"> Enviar </i></button>
-      
-      </form>
-    </div>
+  <div class ="w3-container w3-round-large contact-holder">
+    <h3 class="w3-center">CONTÁCTANOS</h3>
+    <div class="w3-row-padding w3-margin-top">
+      <div class="w3-col m5 w3-margin-bottom">
+        <h4>Ubícanos</h4>
+        <p>El infinito es nuestro límite</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Caracas, VE</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Santiago de Chile, CL</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +58 4125957873</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +56 9 67654739</p>
+        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i> rocketlabs.customers@gmail.com </p>
+      </div>
 
+       <div class="w3-col m7 w3-margin-bottom">
+        <h4>Envianos un Mensaje</h4>
+        <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'core_app:contact_submit' %}">
+        {% csrf_token %}
+
+        {% for field in contact_f %}
+            <div class="w3-section">
+                {{ field.label_tag }}<br>
+                {% if field.errors %}
+                    <div class="form-errors">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+            <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"></i> Enviar</button>
+      </div>
+    </div>
   </div>
+
 </div>
 {% endblock %}

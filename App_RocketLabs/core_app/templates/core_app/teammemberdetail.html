@@ -1,0 +1,63 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Perfil de nuestro empleado: {{ teammember.get_full_name }}{% endblock %}
+
+{% block content %}
+
+<div class="w3-container w3-light-grey padding96-16" id="home">
+	<div class="w3-row-padding">
+		<div class="w3-col l4 m6 w3-grayscale-min  w3-margin-bottom">
+			<div class="w3-card-4 w3-white">
+				{% if teammember.profile.photo %}
+				<img src="{{ teammember.profile.photo.url}}" alt="Avatar de {{ teammember.get_full_name }}" class="widthOHP">
+				{% else %}
+				<p class="w3-center">No hay imágen disponible.</p>
+				{% endif %}
+				<div class="w3-container">
+					<h3>{{ teammember.get_full_name }}</h3>
+					<p class="w3-opacity tm-title-height">{{ teammember.profile.title }}</p>
+					<!--
+					<p>Miembro desde: {{ teammember.date_joined.day }} de {{ teammember.date_joined.month }}, {{ teammember.date_joined.year }}</p>
+					-->
+
+					<a href="{{ teammember.profile.linkedln_link}}" target="_blank" class="w3-button w3-btn w3-large w3-light-gray w3-block  w3-margin-bottom">Mi Linked<i class="fa fa-linkedin-square w3-xlarge w3-text-blue"></i></a>
+
+				</div>
+			</div>
+			<p class="w3-center">
+				<a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-block w3-large w3-blue-gray"><i class="fa fa-arrow-left"> </i> Volver a todos nuestros integrantes</a>
+			</p>
+
+		</div>
+		<div class="w3-col l8 m6 ">
+			<div class="w3-card-2 w3-white w3-container w3-padding-16">
+				<h3 class="w3-center">Acerca de mi</h3>
+				<p class="w3-justify">{{ teammember.profile.bio }}</p>
+				<h3 class="w3-center">Mis habilidades</h3>
+				<div class="w3-container w3-light-grey w3-padding-16">
+				{% for group in known_skills %}
+				    {% if forloop.first %}
+				    <div class="w3-row-padding w3-margin-bottom w3-margin-top">
+				    {% else %}
+				    <div class="w3-row-padding w3-margin-bottom w3-section">
+				    {% endif %}
+
+				    {% for known_skill in group %}
+				        <div class="w3-col l3 m6 w3-content w3-center">
+				            <img src="{{ known_skill.skill.skill_logo.url }}" class="widthOHP" alt="{{ known_skill.skill.name }}">
+				            <p class="skill-name"><b>{{ known_skill.skill.name }}</b></p>
+				            <p class="w3-opacity skill-name">{{ known_skill.exp_level }}</p>
+				        </div>
+				    {% endfor %}
+
+				    </div>
+				{% empty %}
+				    <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos habilidades disponibles.</p>
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

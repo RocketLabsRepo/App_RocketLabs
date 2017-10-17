@@ -1,0 +1,15 @@
+
+Saludos desde Rocket Labs!
+
+Hemos recibido tu solicitud para desbloquear tu cuenta en nuestra página.
+
+Debes hacer click en el siguiente link para poder desbloquear tu cuenta:
+Link: {{ link }}
+
+
+
+*Importante: En caso de que no puedas hacer click, copia y pega la dirección en tu navegador.
+
+
+Sinceramente,
+El equipo de Rocket Labs.
