@@ -1,0 +1,15 @@
+
+Saludos desde Rocket Labs!
+
+Hemos recibido tu solicitud de contacto, pronto alguno de nuestros administradores se pondrá en contacto contigo.
+Te dejamos la información que nos has hecho llegar:
+
+Nombre: {{ name }}
+Teléfono: {{ phone_number }} 
+Asunto: {{ subject }} 
+Mensaje:
+{{ message}}
+
+
+Sinceramente,
+El equipo de Rocket Labs.
