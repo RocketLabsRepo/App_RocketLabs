@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from decouple import config
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -57,6 +58,23 @@ def register_view(request):
 		ruf = core_forms.RegisterUserForm(request.POST)
 		if ruf.is_valid():
 			user = ruf.save()
+			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
+			# al email indicado con sus credenciales.
+			
+			"""
+			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1']}
+			
+			msg_plain = render_to_string('registration/user_register_email.txt', context)
+			msg_html = render_to_string('registration/user_register_email.html', context)
+			
+			send_mail(
+					'Bienvenido a RocketLabs!', 	#titulo
+					msg_plain,							#mensaje txt
+					'RockectLabs@gmail.com',		#email de envio
+					[user.email],						#destinatario
+					html_message=msg_html,				#mensaje en html
+					)
+			"""
 			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
 			# al email indicado con sus credenciales.
 			
@@ -192,7 +210,25 @@ def changepassword_view(request):
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)
-			
+			"""
+				#Envio de email con las nuevas credenciales al correo electrónico del usuario
+			user = User.objects.get(pk=request.user.id)
+			user_profile = Perfil.objects.get(user = user)
+			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
+
+			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
+			msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+
+			send_mail(
+					'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+					msg_plain,									#mensaje txt
+					'foroestudiantil2@gmail.com',				#email de envio
+					[user.email],								#destinatario
+					html_message=msg_html,						#mensaje en html
+					)
+			"""
+				# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+
 			#Envio de email con las nuevas credenciales al correo electrónico del usuario
 			user = User.objects.get(pk=request.user.id)
 			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
@@ -209,6 +245,7 @@ def changepassword_view(request):
 					)		
 			
 			# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+
 			user = User.objects.get(pk=request.user.id)
 			user_profile = Profile.objects.get(user = user)
 			user_profile.is_blocked = False
@@ -224,6 +261,9 @@ def changepassword_view(request):
 def contact_submit(request):
 	contact_f = core_forms.ContactForm(request.POST or None)
 	if request.method == 'POST' and contact_f.is_valid():
+
+		contact_f.save()
+
 		contact_f.save()	
 		
 		context = {}
@@ -257,7 +297,6 @@ def contact_submit(request):
 				[config('HOST_USER')],								#destinatario
 				html_message=msg_html,								#mensaje en html
 				)		
-		
 		"""
 		Aqui deberiamos enviar 2 correos, uno al que realizo el contacto
 		y otro a nuestro propio correo de contacto de la empresa.
@@ -284,6 +323,34 @@ def recoverpassword_view(request):
 def restorepassword_view(request, pkuser):
 	PasswordForm = core_forms.DefinePassForm
 	user = User.objects.get(pk=pkuser)		
+
+	if request.method == 'POST' and form.is_valid():
+		form = PasswordForm(user , request.POST)
+		form.save()
+		update_session_auth_hash(request, form.user)
+		"""
+			#Envio de email con las nuevas credenciales al correo electrónico del usuario
+		user = User.objects.get(pk=request.user.id)
+		user_profile = Perfil.objects.get(user = user)
+		context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
+		
+		msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
+		msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+		
+		send_mail(
+				'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+				msg_plain,									#mensaje txt
+				'foroestudiantil2@gmail.com',				#email de envio
+				[user.email],								#destinatario
+				html_message=msg_html,						#mensaje en html
+				)
+		"""
+		# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+		user_profile = Profile.objects.get(user = user)
+		user_profile.is_blocked = False
+		user_profile.save()
+		return redirect('core_app:home')
+
 	if request.method == 'POST':
 		form = PasswordForm(user , request.POST) 
 		if form.is_valid():
@@ -311,6 +378,7 @@ def restorepassword_view(request, pkuser):
 			return redirect('core_app:home')
 		else:
 			return render(request, 'core_app/changepassword.html',{'form': form})
+
 	else:
 		form = PasswordForm(pkuser)
 		return render(request, 'core_app/changepassword.html',{'form': form})
@@ -321,6 +389,18 @@ def recoversecretlink_view(request):
 	if request.method == 'POST' and form.is_valid():
 		if User.objects.filter(email = form.cleaned_data['email']).exists():
 			user = User.objects.get(email=form.cleaned_data['email'])
+
+			send_mail(
+   		 			'Recuperacion de codigo unico',
+				    """Hola,
+Hemos recibido tu solicitud de recuperación de codigo unico. 
+Aqui lo tienes:""" + str(user.profile.secret_link) ,
+					config('HOST_USER'),
+				    [user.email],
+				    fail_silently=False,
+					)
+			return redirect('core_app:login')
+
 			context = {'secret_link':user.profile.secret_link}
 
 			msg_plain = render_to_string('core_app/mail/recover_secret_link_email.txt', context)
@@ -353,6 +433,20 @@ def unlockuser_view(request):
 			if(user.profile.is_blocked):
 				token = unlock_account_token.make_token(user)
 				uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+				send_mail(
+	   		 			'Desbloquear Cuenta',
+					    """Hola,
+	Hemos recibido tu solicitud para desbloquear cuenta. 
+	Aqui lo tienes: http://localhost:8000/unlockaccount/""" + str(uid) + "/" + str(token),
+						config('HOST_USER'),
+					    [user.email],
+					    fail_silently=False,
+						)
+				return redirect('core_app:unlockaccount_confirm')
+			else:
+				return redirect('core_app:unlockaccount_confirm')
+
 				
 				#Debemos cambiar el link cuando subamos la pagina al servidor
 				link = "http://localhost:8000/unlockaccount/" + str(uid) + "/" + str(token)
@@ -371,6 +465,7 @@ def unlockuser_view(request):
 						)
 				
 			return redirect('core_app:unlockaccount_confirm')
+
 		else:
 			return redirect('core_app:unlockaccount_confirm')
 	else:

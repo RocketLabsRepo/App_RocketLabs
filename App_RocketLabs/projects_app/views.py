@@ -55,4 +55,3 @@ def new_project(request):
 		context['form'] = proj_form
 		context['jump']= go_to_section
 		return render(request, 'projects_app/new_project.html',context)
-
