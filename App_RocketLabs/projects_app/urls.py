@@ -17,7 +17,12 @@ urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
     ]
 <<<<<<< HEAD
+<<<<<<< HEAD
 """
+=======
+"""
+
+>>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
 =======
 """
 

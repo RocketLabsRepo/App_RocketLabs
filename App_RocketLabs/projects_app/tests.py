@@ -50,6 +50,7 @@ Views Tests
 
 class AllProjectsPageTest(TestCase):
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	def test_all_projects_page_returns_correct_html(self):
 		response = self.client.get('/projects/') #implicit test_all_projects_url_resolves_to_all_projects_view
@@ -195,6 +196,8 @@ class ScreenshotModelTest(TestCase):
 		self.assertEqual(project_screens.count() , 1)
 		self.assertEqual(project_screens[0].name , "A second test Screenshot")
 =======
+=======
+>>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
 
 	def test_all_projects_page_returns_correct_html(self):
 		response = self.client.get('/projects/') #implicit test_all_projects_url_resolves_to_all_projects_view
@@ -346,4 +349,7 @@ class AllProjectsPage(TestCase):
 		response = self.client.get('/projects/') #implicit test_all_projects_url_resolves_to_all_projects_view
 		self.assertTemplateUsed(response, 'projects_app/projects.html')
 
+<<<<<<< HEAD
+>>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
+=======
 >>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac

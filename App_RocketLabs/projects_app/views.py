@@ -56,6 +56,10 @@ def new_project(request):
 		context['jump']= go_to_section
 		return render(request, 'projects_app/new_project.html',context)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
 =======
 
 >>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
