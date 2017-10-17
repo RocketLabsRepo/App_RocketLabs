@@ -12,18 +12,3 @@ urlpatterns = [
 	url(r'^(?P<project_pk>\d+)$', views.completed_project_details, name='completed_project_details'),
 	url(r'^new$', views.new_project, name='new_project'),
 ]
-"""
-urlpatterns += [
-        url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
-    ]
-<<<<<<< HEAD
-<<<<<<< HEAD
-"""
-=======
-"""
-
->>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
-=======
-"""
-
->>>>>>> 4f4175663d4a750862cf1ea866c6ca6dd21475ac
