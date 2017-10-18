@@ -7,7 +7,7 @@ Contenido:
 
 * "projects_app" : Es la app secundaria que almacena y regula los proyectos (Projects & Screenshots ), esta se encargará de desplegar todas las interfaces pertinentes.
 
-* "projects_app" : Es la app secundaria que almacena y regula los Paquetes y servicios (Bundles & Services), esta se encargará de desplegar todas las interfaces pertinentes.
+* "bundles_app" : Es la app secundaria que almacena y regula los Paquetes y servicios (Bundles & Services), esta se encargará de desplegar todas las interfaces pertinentes.
 
 
 Desarrolladores:
