@@ -1,0 +1,304 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+<!-- Header with full-height image -->
+
+<header class="bgimg-1 parallax w3-display-container" id="home">
+  <div class="w3-display-left w3-text-white padding48">
+    <span class="w3-jumbo header-text w3-hide-small">¡Déjanos ayudarte a despegar!</span><br>
+    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Déjanos ayudarte a despegar.</span><br> <!-- Comienza algo que trascienda. -->
+    <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
+    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
+  </div>
+  <div class="w3-display-bottomleft w3-text-grey w3-large padding24-48">
+    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+    <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+    <a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+  </div>
+</header>
+
+<!-- About Section -->
+<div class="w3-container padding128-16" id="about">
+  <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑÍA</h3>
+  <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y habilidades</p>
+  <div class="w3-row-padding w3-margin-bottom w3-center margintop64">
+    <div class="w3-col m6 l3 fadeInOnScroll">
+      <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
+      <p class="w3-large">Alta calidad</p>
+      <p>Nos esforzamos para que nuestros proyectos sean lo mejor del mercado.</p>
+    </div>
+    <div class="w3-col m6 l3 w3-margin-bottom fadeInOnScroll">
+      <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Pasión</p>
+      <p>Amamos lo que hacemos, es un gran plus para ofrecerles un trabajo hecho con mucha dedicación.</p>
+    </div>
+    <div class="w3-col m6 l3 fadeInOnScroll">
+      <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Diseño</p>
+      <p>Les ofrecemos los mejores diseños que tienen una gran atractivo y muchas interacciones.</p>
+    </div>
+    <div class="w3-col m6 l3 fadeInOnScroll">
+      <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Soporte</p>
+      <p>Nuestras aplicaciones tienen soporte para todo lo que necesites.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Promo Section - "We know design" -->
+<div class="w3-container w3-light-grey padding128-16">
+  <div class="w3-row-padding">
+    <div class="w3-col m6">
+      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/space-window.png' %}" alt="Buildings" >
+    </div>
+
+    <div class="w3-col m6 w3-margin-bottom">
+      <h3 class="fadeInOnScroll">Sabemos diseñar y desarrollar.</h3>
+      <p class="fadeInOnScroll">
+        Nos hemos capacitado para ofrecerte los mejores productos diseñados impecablemente. Y seguimos en constante actualización para satisfacer las necesidades de nuestros clientes.
+      </p><br>
+      <p class="fadeInOnScroll w3-center w3-large">
+        <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Team Section -->
+<div class="w3-container padding128-16" id="team">
+  <h3 class="w3-center">EL EQUIPO</h3>
+  <p class="w3-center w3-large">Las caras de nuestra compañia</p>
+  <div class="w3-row-padding w3-grayscale-min margintop64">
+    {% for member in team_members %}
+
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card-2">
+
+      {% if member.profile.photo %}
+        <img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP">
+      {% else %}
+        <p>No hay imágen disponible</p>
+      {% endif %}
+        <div class="w3-container">
+          <h3>{{ member.get_full_name }}</h3>
+          <p class="w3-opacity tm-title-height">{{ member.profile.title }}</p>
+          <!--<p class="w3-justify tm-bio-height">{{ member.profile.bio }}</p>-->
+
+          <form action="{% url 'core_app:details_team_member' member.id %}">
+            <p><button type="submit "class="w3-button w3-btn w3-grey w3-block"><i class="fa fa-info-circle"></i> Ver detalles completos</button></p>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  {% empty %}
+
+    <br><br>
+    <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos integrantes disponibles.</p>
+
+  {% endfor %}
+  </div>
+  <br>
+  <p class="w3-center" id="team-gallery-button">
+    <a href="{% url 'core_app:all_team_members' %}" class="w3-button w3-black"><i class="fa fa-group"> </i> Conoce a todos nuestros integrantes</a>
+  </p>
+</div>
+
+<!-- Promo Section "Statistics" -->
+<div class="w3-container w3-row w3-center w3-dark-grey w3-padding-64 ">
+  <div class="w3-quarter fadeInOnScroll">
+    <span class="w3-xxlarge">14+</span>
+    <br>Socios
+  </div>
+  <div class="w3-quarter fadeInOnScroll">
+    <span class="w3-xxlarge">55+</span>
+    <br>Proyectos finalizados
+  </div>
+  <div class="w3-quarter fadeInOnScroll">
+    <span class="w3-xxlarge">89+</span>
+    <br>Clientes Satisfechos
+  </div>
+  <div class="w3-quarter fadeInOnScroll">
+    <span class="w3-xxlarge">150+</span>
+    <br>Reuniones
+  </div>
+</div>
+
+<!-- Work Section -->
+
+<div class="w3-container padding128-16" id="work">
+  <h3 class="w3-center">NUESTRO TRABAJO</h3>
+  <p class="w3-center w3-large">Últimos proyectos realizados para clientes satisfechos</p>
+
+  <!-- CARGAR DINAMICAMENTE LOS TRABAJOS REALIZADOS -->
+
+    <div class="w3-row-padding margintop64">
+
+    {% for object in latests_projects %}
+        <div class="w3-col l3 m6 w3-center w3-margin-bottom">
+          <div class="w3-card-2">
+            {% with object.get_preview_screenshot as image %}
+            <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
+            {% endwith %}
+            <div class="w3-container">
+              <p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
+              <p class="project-title-height w3-hide-small">{{ object.title }}</p>
+                    <a href="{% url 'projects_app:completed_project_details' object.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> Ver detalles</a>
+                </div>
+                </div>
+        </div>
+
+    {% empty %}
+        <br><br>
+        <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos proyectos disponibles.</p>
+    {% endfor %}
+
+    </div>
+    <br>
+    <p class="w3-center" id="work-gallery-button">
+        <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver todos nuestros proyectos</a>
+    </p>
+</div>
+
+<!-- Modal for full size images on click-->
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+  <span class="w3-button w3-xxlarge w3-black w3-padding-large w3-display-topright" title="Cerrar imágen">X</span>
+  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+    <img id="img01" class="w3-image">
+    <p id="caption" class="w3-opacity w3-large"></p>
+  </div>
+</div>
+
+<!-- Seccion de tecnologías manejadas  -->
+<div class="w3-container w3-light-grey w3-padding-64">
+    <h2 class="w3-center">Tecnologías Dominadas</h2>
+{% for group in skill_list %}
+    {% if forloop.first %}
+    <div class="w3-row-padding w3-margin-bottom margintop64">
+    {% else %}
+    <div class="w3-row-padding w3-margin-bottom w3-section">
+    {% endif %}
+
+    {% for skill in group %}
+        <div class="w3-col l3 m6 w3-content w3-center">
+            <img src="{{ skill.skill_logo.url }}" class="skills-logo" alt="{{ skill.name }}">
+            <p>{{ skill.name }}</p>
+        </div>
+    {% endfor %}
+
+    </div>
+{% empty %}
+    <br><br>
+    <p class="w3-center w3-large">Lo sentimos, actualmente no tenemos habilidades disponibles.</p>
+
+{% endfor %}
+</div>
+
+<!-- Pricing Section -->
+<!--
+<div class="w3-container w3-center w3-dark-grey padding128-16" id="pricing">
+  <h3>PRECIOS</h3>
+  <p class="w3-large">Elige un plan ajustado a tus necesidades.</p>
+  <div class="w3-row-padding margintop64">
+
+    <div class="w3-third w3-section">
+      <ul class="w3-ul w3-white w3-hover-shadow">
+        <li class="w3-black w3-xlarge w3-padding-32">Plan Básico</li>
+        <li class="w3-padding-16"><b>10GB</b> Almacenamiento</li>
+        <li class="w3-padding-16"><b>10</b> Emails</li>
+        <li class="w3-padding-16"><b>10</b> Dominios</li>
+        <li class="w3-padding-16"><b>Endless</b> Soporte</li>
+        <li class="w3-padding-16">
+          <h2 class="w3-wide">$ 10</h2>
+          <span class="w3-opacity">por mes</span>
+        </li>
+        <li class="w3-light-grey w3-padding-24">
+          <button class="w3-button w3-black w3-padding-large">Registrate</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="w3-third">
+      <ul class="w3-ul w3-white w3-hover-shadow">
+        <li class="w3-blue w3-xlarge w3-padding-48">Plan Pro</li>
+        <li class="w3-padding-16"><b>25GB</b> Almacenamiento</li>
+        <li class="w3-padding-16"><b>25</b> Emails</li>
+        <li class="w3-padding-16"><b>25</b> Dominios</li>
+        <li class="w3-padding-16"><b>Endless</b> Soporte</li>
+        <li class="w3-padding-16">
+          <h2 class="w3-wide">$ 25</h2>
+          <span class="w3-opacity">por mes</span>
+        </li>
+        <li class="w3-light-grey w3-padding-24">
+          <button class="w3-button w3-black w3-padding-large">Registrate</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="w3-third w3-section">
+      <ul class="w3-ul w3-white w3-hover-shadow">
+        <li class="w3-black w3-xlarge w3-padding-32">Plan Premium</li>
+        <li class="w3-padding-16"><b>50GB</b> Almacenamiento</li>
+        <li class="w3-padding-16"><b>50</b> Emails</li>
+        <li class="w3-padding-16"><b>50</b> Dominios</li>
+        <li class="w3-padding-16"><b>Endless</b> Soporte</li>
+        <li class="w3-padding-16">
+          <h2 class="w3-wide">$ 50</h2>
+          <span class="w3-opacity">por mes</span>
+        </li>
+        <li class="w3-light-grey w3-padding-24">
+          <button class="w3-button w3-black w3-padding-large">Registrate</button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+-->
+<!-- Contact Section -->
+
+<div class="w3-container w3-light-grey padding128-16 bgimg-2 parallax" id="contact">
+
+  <div class ="w3-container w3-round-large contact-holder">
+    <h3 class="w3-center">CONTÁCTANOS</h3>
+    <div class="w3-row-padding w3-margin-top">
+      <div class="w3-col m5 w3-margin-bottom">
+        <h4>Ubícanos</h4>
+        <p>El infinito es nuestro límite</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Caracas, VE</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>  Santiago de Chile, CL</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +58 4125957873</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>  +56 9 67654739</p>
+        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i> rocketlabs.customers@gmail.com </p>
+      </div>
+
+       <div class="w3-col m7 w3-margin-bottom">
+        <h4>Envianos un Mensaje</h4>
+        <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'core_app:contact_submit' %}">
+        {% csrf_token %}
+
+        {% for field in contact_f %}
+            <div class="w3-section">
+                {{ field.label_tag }}<br>
+                {% if field.errors %}
+                    <div class="form-errors">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+            <button type="submit" class="w3-button w3-right w3-black"><i class="fa fa-paper-plane"></i> Enviar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

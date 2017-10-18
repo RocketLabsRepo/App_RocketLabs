@@ -1,0 +1,169 @@
+{% load staticfiles %}
+/*
+Pagina de estilos personalizada para app_RocketLabs
+
+Colaboradores:
+- Osvani Colina
+- Rafael Vasquez
+- Rabindranath Ferreira
+*/
+
+body,h1,h2,h3,h4,h5,h6 {
+	font-family: "Raleway", sans-serif;
+}
+
+body, html {
+    height: 100%;
+    line-height: 1.8;
+}
+
+.input-font{
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
+/* Full height image header */
+.bgimg-1{
+	background-image: url("../img/rocket.jpg");
+	min-height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgimg-2{
+	background-image: url("../img/satellite.jpg");
+	min-height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.contact-holder{
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.75);
+}
+
+.min-chevron-size{
+	min-height: 18px;
+	min-width: 18px;
+}
+
+/* Empleamos estas reglas para lograr efecto parallax */
+.parallax{
+	background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.link-hand{
+	cursor:pointer
+}
+
+.w3-bar .w3-button{
+    padding: 16px;
+}
+
+.fadeInOnScroll{
+	opacity:0;
+}
+
+.header-text{
+	text-shadow: 2px 2px #222;
+}
+
+.skills-logo{
+	max-width: 240px;
+}
+
+p.skill-name{
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+p.project-title{
+	padding: 0px;
+	margin: 8px 0;
+}
+
+.padding24-48{
+	padding: 24px 48px;
+}
+
+.project-title-height{
+	min-height: 85px;
+}
+
+.project-details{
+	display: none;
+}
+
+.tm-bio-height{
+	height: 72px;
+	line-height: 160%
+}
+
+.tm-title-height{
+	height: 48px;
+	line-height: 130%
+}
+
+.padding48{
+	padding: 48px;
+}
+
+.form-errors{
+	color: red;
+}
+
+div.form-group{
+	margin: 10px 0 10px 0;
+}
+
+.padding128-16{
+	padding:  128px 16px;
+}
+
+.padding96-16{
+	padding: 96px 16px;
+}
+
+.padding48-16{
+	padding: 32px 16px;
+}
+
+.image700x394{
+	width : 700px;
+	height: 394px;
+}
+
+.margintop64{
+	margin-top: 64px;
+}
+
+.widthOHP{
+	width : 100%;
+}
+
+
+
+#widthNP{
+	width: 90%;
+}
+
+#widthEFP{
+	width: 85%;
+}
+
+#widthSFP{
+	width: 75%;
+}
+
+.hidden-column{
+	min-height: 1px;
+}
+
+.box-height-350{
+	min-height: 350px;
+}

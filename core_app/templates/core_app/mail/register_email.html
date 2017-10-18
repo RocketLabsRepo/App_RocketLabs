@@ -1,0 +1,17 @@
+{% autoescape off %}
+
+Bienvenido a Rocket Labs!<br>
+<br>
+Tu registro de usuario ha sido exitoso, a continuación indicaremos tus credenciales:<br>
+<br>
+<strong>Usuario:</strong> {{ username }}<br>
+<strong>Contraseña:</strong> {{ password }}<br>
+<strong>Código único:</strong> {{ secret_link }}<br>
+<br>
+<em><strong>Importante:</strong> Almacena el código único para facilitarte la recuperación de tu contraseña en caso de que la olvides o tu cuenta sea bloqueada.</em> <br>
+<br>
+<em><strong>Te sugerimos que,</strong> la próxima vez que inicies sesión en nuestro sitio web, actualices tu información de pérfil completa para poderte ofrecer un servicio más comodo y personalizado.<br></em>
+<br>
+Sinceramente,<br>
+El equipo de Rocket Labs.<br>
+{% endautoescape %}

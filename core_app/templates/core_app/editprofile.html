@@ -1,0 +1,185 @@
+{% extends 'core_app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Mi panel de control{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-light-grey padding96-16" id="home">
+	<form enctype ="multipart/form-data" method="POST">
+		{% csrf_token %}
+		<div class="w3-row-padding">
+			<h2 class="w3-center"> Panel de Control </h2>
+
+			{% include 'interface/messages.html' %}
+
+			<div class="w3-col l4 m12 w3-grayscale-min  w3-margin-bottom">
+				<div class="w3-card-4 w3-white">
+					<!--
+						Si el usuario es miembro del equipo se despliega su imagen
+						y además se despliega la opción para subir su propia imagen.
+						-->
+
+				{% if request.user.profile.is_team_member %}
+					<div class="w3-container">
+						<fieldset>
+							<legend>Foto</legend>
+							{% if user.profile.photo %}
+							<img src="{{ user.profile.photo.url }}" class="widthOHP" alt = "Avatar de {{ user.get_full_name }}">
+							{% else %}
+							<p class="w3-center">No hay imágen disponible.</p>
+							{% endif %}
+							{{ member_form.photo }}
+							{% if member_form.photo.errors %}
+							<div class="form-errors">
+							{% for error in member_form.photo.errors %}
+							    <p>{{ error }}</p>
+							{% endfor %}
+							</div>
+		                    {% endif %}
+						</fieldset>
+					</div>
+				{% endif %}
+					<!--
+						Luego el usuario puede cambiar su nombre, apellido,
+						contraseña y correo electronico. (Si es cliente tambien
+						podrá alterar su nombre de empresa)
+						-->
+					<div class="w3-container w3-padding-16">
+						<fieldset>
+							<legend>Datos Personales</legend>
+							{% for field in user_form %}
+		                    <div class="form-group">
+		                        {{ field.label_tag }}<br>
+		                        {% if field.errors %}
+		                            <div class="form-errors">
+		                            {% for error in field.errors %}
+		                                <p>{{ error }}</p>
+		                            {% endfor %}
+		                            </div>
+							        {% endif %}
+							        {{ field }}
+							    </div>
+								{% endfor %}
+							<div class="form-group">
+								{{ client_form.company_name.label_tag }}
+								{{ client_form.company_name }}
+							</div>
+							<div class="form-group">
+								<label>Correo Electrónico:</label>
+								<p>{{ user.email }}</p>
+							</div>
+						</fieldset>
+						<a href="{% url 'core_app:change_email' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-at"> </i> Cambiar Correo Electrónico </a>
+						<a href="{% url 'core_app:changepass' %}" class="w3-button w3-block w3-btn w3-gray w3-margin-top"><i class="w3-large fa fa-key"> </i> Cambiar Contraseña </a>
+					</div>
+				</div>
+				<p class="w3-center">
+					<button type= "submit" class="w3-button w3-block w3-black w3-large"><i class="fa fa-check"> </i> Confirmar cambios</button>
+				</p>
+			</div>
+
+			<div class="w3-col l8 m12 ">
+				<div class="w3-card-4 w3-white">
+					<div class="w3-container w3-padding">
+						<!--
+						Si el usuario es miembro del equipo este podrá editar su bio
+						y su link de linkedIn...
+						-->
+					{% if request.user.profile.is_team_member %}
+						<div class="form-group">
+							{{ member_form.bio.label_tag }}
+							{{ member_form.bio }}
+						</div>
+						<div class="form-group">
+							{{ member_form.linkedln_link.label_tag }}
+							{{ member_form.linkedln_link }}
+						</div>
+					{% else %}
+						<!--
+						...en cambio si es un cliente solo podrá
+						ver sus proyectos.
+						-->
+						<div class="w3-container w3-padding-16">
+							<h3 class="w3-center">Mis proyectos.</h3>
+							<hr><h4>Proyectos en Progreso</h4>
+							<div class="w3-container">
+							{% for project in in_progress_projects %}
+								<div class="w3-border w3-card-2 w3-white w3-margin-bottom">
+									<div class="w3-container">
+										<p class="w3-large project-title">
+											<button type='button' class="w3-button w3-circle toggle-project-details w3-light-gray"><i class="fa fa-chevron-right min-chevron-size"></i></button> {{ project.title }}
+										</p>
+
+										<!-- A partir de acá se extiende con jQuery -->
+										<div class="project-details w3-container">
+											<label>Etapa actual:</label>
+											<p class="w3-large project-title">{{ project.current_stage }}</p>
+											<label>Paquete de Desarrollo:</label>
+											<p class="w3-large project-title">{{ project.bundle }}</p>
+											<label>Progreso:</label>
+											{% if project.done_percentage > 10 %}
+											<div class="w3-grey w3-margin-bottom">
+												<div class="w3-container w3-blue-gray w3-center" style="width:{{ project.done_percentage }}%">{{ project.done_percentage }}%</div>
+											</div>
+											<!-- Preferiblemente despues de 0% comenzar en 5% de proyecto hecho, si se aprueba -->
+											{% elif project.done_percentage > 4 %}
+											<div class="w3-grey w3-margin-bottom">
+												<div class="w3-blue-gray w3-center" style="width:{{ project.done_percentage }}%">{{ project.done_percentage }}%</div>
+											</div>
+											{% else %}
+											<div class="w3-grey w3-margin-bottom w3-center">
+												{{ project.done_percentage }}%
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							{% empty %}
+								<p class="w3-text-gray">
+									No tienes ningun proyecto en progreso. Pero puedes <a class="w3-text-indigo" href="{% url 'projects_app:new_project' %}"><em>Emitir un nuevo proyecto aquí</em></a>
+
+								</p>
+							{% endfor %}
+						{% if in_progress_projects %}
+						<p class="w3-center w3-large w3-grayscale-min">
+							<a class="w3-indigo w3-hover-blue w3-btn w3-button w3-center" href="{% url 'projects_app:new_project' %}"><i class="fa fa-plus-circle w3-xlarge"></i> Crear nuevo proyecto</a>
+						</p>
+						{% endif %}
+							</div>
+							<hr><h4>Proyectos Completos</h4>
+							<div class="w3-container">
+							{% for project in completed_projects %}
+								<div class="w3-border w3-card-2 w3-white w3-margin-bottom">
+									<div class="w3-container">
+										<p class=" w3-large project-title">
+											<button type='button' class="w3-button w3-circle toggle-project-details w3-light-gray"><i class="fa fa-chevron-right min-chevron-size"></i></button> {{ project.title }}
+										</p>
+
+										<div class="project-details w3-container">
+											<label>Progreso:</label>
+											<div class="w3-grey w3-margin-bottom">
+												<div class="w3-container w3-light-green w3-center w3-text-white" style="width:{{ project.done_percentage }}%">{{ project.done_percentage }}%</div>
+											</div>
+											<p>Realizado en: {{ project.str_duration }}</p>
+											<p class="w3-center">
+												<a href="{% url 'projects_app:completed_project_details' project.id %}" class="w3-button w3-gray"><i class="fa fa-info-circle w3-large"> </i> Ver detalles completos</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							{% empty %}
+								<p class="w3-text-gray">
+									No tienes ningun proyecto completado aún.
+								</p>
+							{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock %}

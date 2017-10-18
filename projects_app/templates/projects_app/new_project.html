@@ -1,0 +1,133 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Nuevo proyecto{% endblock %}
+
+{% block content %}
+
+<div class="w3-container w3-light-grey padding96-16" id="home">
+	<h2 class="w3-center">Nuevo Proyecto</h2>
+	<div class="w3-row-padding">
+		<div class="w3-col s0 m1 hidden-column"></div>
+		<div class="w3-col s12 m10">
+			<div class="w3-container w3-padding-24 w3-card-4 w3-white">
+				<form method="POST">
+					{% csrf_token %}
+					<!--
+					Primero se despliega una sección con instrucciones breves acerca
+					de la forma de trabajo, es decir, los pasos necesarios para crear un
+					proyecto, lo que sucederá una vez el cliente emita un nuevo proyecto
+					y cuando se comenzará la producción del mismo
+					-->
+					<h4>Intrucciones:</h4>
+					<div class="w3-container w3-justify">
+						<p >
+							Lorem ipsum dolor sit amet, consectetur dipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in prehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+						<p>
+							Duis aute irure dolor in prehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, amet, consectetur dipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+						</p>
+					</div>
+					<!--
+					Despues se despliega el formulario que el usuario debe completar para
+					emitir un proyecto nuevo, incluyendo los terminos y condiciones
+					de uso!
+					-->
+					<h4 id="form">Pasos para crear proyecto:</h4>
+					<div class="w3-container" >
+						<div class="form-group w3-row w3-section">
+							<div class="w3-col s1 w3-center">
+								<span class="w3-xxxlarge w3-hide-small w3-hide-medium w3-text-indigo w3-grayscale-min">&#x2776;</span>
+								<span class="w3-xlarge w3-hide-large w3-text-indigo w3-grayscale-min">&#x2776;</span>
+							</div>
+							<div class="w3-col s11 ">
+								<label class="w3-large" >{{ form.title.label }}:</label>
+								{% if form.title.errors %}
+		                            <div class="form-errors">
+		                            {% for error in form.title.errors %}
+		                                <p>{{ error }}</p>
+		                            {% endfor %}
+		                            </div>
+		                        {% endif %}
+								{{ form.title }}
+								<!--<input class="w3-input w3-border input-font" type="text">-->
+							</div>
+						</div>
+						<div class="form-group w3-row w3-section">
+							<div class="w3-col s1 w3-center">
+								<span class="w3-xxxlarge w3-hide-small w3-hide-medium w3-text-indigo w3-grayscale-min">&#x2777;</span>
+								<span class="w3-xlarge w3-hide-large w3-text-indigo w3-grayscale-min">&#x2777;</span>
+							</div>
+							<div class="w3-col s11">
+								<label class="w3-large">{{ form.description.label }}:</label>
+								{% if form.description.errors %}
+		                            <div class="form-errors">
+		                            {% for error in form.description.errors %}
+		                                <p>{{ error }}</p>
+		                            {% endfor %}
+		                            </div>
+		                        {% endif %}
+								{{ form.description }}
+								<!--<textarea class="w3-input w3-border input-font " rows='5'></textarea>-->
+							</div>
+						</div>
+
+						<div class="form-group w3-row w3-section">
+							<div class="w3-col s1 w3-center">
+								<div class="w3-xxxlarge w3-text-indigo w3-hide-small w3-hide-medium w3-grayscale-min">&#x2778;</div>
+								<span class="w3-xlarge w3-hide-large w3-text-indigo w3-grayscale-min">&#x2778;</span>
+							</div>
+							<div class="w3-col s11">
+								<label class="w3-large">{{ form.bundle.label }}:</label>
+								{% if form.bundle.errors %}
+		                            <div class="form-errors">
+		                            {% for error in form.bundle.errors %}
+		                                <p>{{ error }}</p>
+		                            {% endfor %}
+		                            </div>
+		                        {% endif %}
+								{{ form.bundle }}
+								<!--<select class="w3-input w3-border input-font">
+									<option value="volvo" selected>Paquete 1</option>
+									<option value="volvo2">Paquete 2</option>
+								</select>-->
+							</div>
+						</div>
+
+						<div class="form-group w3-row w3-section">
+							<div class="w3-col s1 w3-center">
+								<span class="w3-xxxlarge w3-hide-small w3-hide-medium w3-text-indigo w3-grayscale-min">&#x2779;</span>
+								<span class="w3-xlarge w3-hide-large w3-text-indigo w3-grayscale-min">&#x2779;</span>
+							</div>
+							<div class="w3-col s11">
+								<label class="w3-large">Acepta nuestros Términos y Condiciones de uso:</label>
+
+								{% include 'interface/terms_&_conditions.html' %}
+
+								<div class="w3-center w3-section">
+									{% if form.terms_confirm.errors %}
+			                            <div class="form-errors">
+			                            {% for error in form.terms_confirm.errors %}
+			                                <p>{{ error }}</p>
+			                            {% endfor %}
+			                            </div>
+			                        {% endif %}
+									{{ form.terms_confirm }}
+									<span class="w3-large w3-margin-left">{{ form.terms_confirm.label }}</span>
+									<!--<input type="checkbox"><span class="w3-large w3-margin-left">Acepto los Términos y Condiciones de uso.</span>-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<p class="w3-center">
+						<button type="submit "class="w3-button w3-black w3-xlarge w3-padding-large"><i class="fa fa-check "> </i> Aceptar</button>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% if jump %}
+    <script> window.location.hash = '#{{ jump }}'; </script>
+{% endif %}
+{% endblock %}

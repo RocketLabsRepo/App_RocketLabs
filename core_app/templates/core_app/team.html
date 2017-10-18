@@ -1,0 +1,42 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Todo los integrantes de RocketLabs{% endblock %}
+
+{% block content %}
+<div class="w3-container padding96-16" id="home">
+	<h2 class="w3-center" >EL EQUIPO</h2>
+	<p class="w3-center w3-large">Todos nuestros integrantes.</p>
+		
+	<div class="w3-row-padding w3-grayscale-min margintop64">
+	{% for member in teammember %}
+
+		<div class="w3-col l4 m6 w3-margin-bottom">
+			<div class="w3-card-4">
+
+			{% if member.profile.photo %}
+				<img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP">
+			{% else %}
+				<p>NO hay imágen disponible</p>
+			{% endif %}
+				<div class="w3-container">
+					<h3>{{ member.get_full_name }}</h3>
+					<p class="w3-opacity tm-title-height">{{ member.profile.title }}</p>
+					<!--<p class="w3-justify tm-bio-height">{{ member.profile.bio }}</p>-->
+					<a href="{% url 'core_app:details_team_member' member.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> Ver detalles completos</a>
+
+				</div>
+			</div>
+		</div>
+
+	{% empty %}
+
+		<br><br>
+		<p class="w3-center w3-large">Lo sentimos, actualmente no tenemos integrantes disponibles.</p>
+
+	{% endfor %}
+	</div>
+</div>
+
+
+{% endblock %}

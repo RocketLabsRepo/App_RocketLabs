@@ -1,0 +1,25 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Detalles de servicio{% endblock %}
+
+{% block content %}
+<div class="w3-container padding96-16" id="home">
+	<h2 class="w3-center" >Detalles de servicio</h2>
+
+	{% include 'interface/messages.html' %}
+
+	<p class="w3-center w3-large">{{service_detail.name}}</p>
+	<p class="w3-center w3-large">{{service_detail.about}}</p>
+	{% if service_detail.is_active %}	
+		<p class="w3-center w3-large">Servicio disponible.</p>
+	{% else %}
+		<p class="w3-center w3-large">Servicio NO disponible.</p>
+	{% endif %}	
+	{% if request.user.is_staff %}
+		<a href="{% url 'bundles_app:edit_service' service_detail.id %}" class="w3-button w3-btn w3-black w3-margin-top"><i class="w3-large fa fa-pencil-square-o"> </i> Editar Servicio </a>
+	{% endif %}
+</div>
+
+
+{% endblock %}

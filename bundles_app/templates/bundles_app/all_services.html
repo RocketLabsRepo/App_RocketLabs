@@ -1,0 +1,28 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Todo los servicios de RocketLabs{% endblock %}
+
+{% block content %}
+<div class="w3-container padding96-16" id="home">
+	<h2 class="w3-center" >Servicios</h2>
+	<p class="w3-center w3-large">Todos nuestros Servicios.</p>
+		
+	<div class="w3-row-padding w3-grayscale-min margintop64">
+	{% for service in services %}
+		<a href="{% url 'bundles_app:detail_service' service.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> {{service.name}} </a>
+
+	{% empty %}
+
+		<br><br>
+		<p class="w3-center w3-large">Lo sentimos, actualmente no tenemos servicios disponibles.</p>
+
+	{% endfor %}
+		<p class="w3-center w3-margin-top">
+			<a href="{% url 'bundles_app:create_service' %}" class="w3-button w3-black"><i class="fa  fa-plus-square w3-large"> </i> Crear Nuevo Servicio</a>
+		</p>
+	</div>
+</div>
+
+
+{% endblock %}
