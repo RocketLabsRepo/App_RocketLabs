@@ -1,5 +1,5 @@
 *.pyc
 db.sqlite3
 __pycache__
-App_RocketLabs/.env
-/App_RocketLabs/media
+.env
+media/
