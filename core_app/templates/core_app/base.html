@@ -1,0 +1,122 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %} | Rocket Labs</title>
+
+    <!-- Hojas de Estilo -->
+    <!-- Link no local para la hoja de estilos de la W3Schools
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    -->
+    <link rel="stylesheet" href="{% static 'core_app/css/w3.css'%}">
+    <link rel="stylesheet" href="{% static 'core_app/css/familyraleway.css'%}">
+    <link rel="stylesheet" href="{% static 'core_app/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'core_app/css/mystyle.css' %}">
+  </head>
+
+  <body>
+  <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-card-2" id="myNavbar">
+        <a href="{% url 'core_app:home' %}" class="w3-bar-item w3-button w3-wide">Rocket Labs</a>
+        <!-- Right-sided navbar links -->
+        <div class="w3-right w3-hide-small">
+          <a href="{% url 'core_app:home' %}#team" class="w3-bar-item w3-button">
+            <i class="w3-xlarge fa fa-group w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="w3-large fa fa-group"></i> EQUIPO
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#work" class="w3-bar-item w3-button">
+            <i class="fa fa-th w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-th w3-large"></i> TRABAJOS
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#pricing" class=" w3-bar-item w3-button">
+            <i class="fa fa-usd w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-usd w3-large"></i> PRECIOS
+            </span>
+          </a>
+          <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button">
+            <i class="fa fa-envelope w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-envelope w3-large"></i> CONTACTO
+            </span>
+          </a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'core_app:edit_profile' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-user-circle w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-user-circle w3-large"></i> {{ user.username }}
+            </span>
+          </a>
+          <a href="{% url 'core_app:logout' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-sign-out w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-sign-out w3-large"></i> SALIR
+            </span>
+          </a>
+        {% else %}
+          <a href="{% url 'core_app:login' %}" class="w3-bar-item w3-button">
+            <i class="fa fa-sign-in w3-xlarge w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="fa fa-sign-in w3-large"></i> INGRESAR
+            </span>
+          </a>
+        {% endif %}
+        </div>
+        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar <span class="w3-xlarge">&times;</span></a>
+      <a href="{% url 'core_app:home' %}#team" onclick="w3_close()" class="w3-bar-item w3-button">EQUIPO</a>
+      <a href="{% url 'core_app:home' %}#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
+      <a href="{% url 'core_app:home' %}#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>
+      <a href="{% url 'core_app:home' %}#contact" onclick="w3_close()" class="w3-bar-item w3-button"> CONTACTO</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'core_app:edit_profile' %}" onclick="w3_close()"  class="w3-bar-item w3-button"> VER PERFIL</a>
+      <a href="{% url 'core_app:logout' %}" onclick="w3_close()" class="w3-bar-item w3-button"> CERRAR SESIÓN</a>
+    {% else %}
+      <a href="{% url 'core_app:login' %}" onclick="w3_close()"  class="w3-bar-item w3-button"> INGRESAR</a>
+    {% endif %}
+    </nav>
+
+    <!-- Acá termina la barra de navegación y comienza el contenido  -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Acá termina el contenido y comienza el pie de página -->
+
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64">
+        <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i> Volver al top</a>
+        <div class="w3-xlarge w3-section">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+            <a href="https://twitter.com/"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+            <a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+        </div>
+        <p>Rocket Labs</p>
+    </footer>
+
+    <!-- Incluimos los scripts de js y jQuery version de desarrollo  -->
+    <script src="{% static 'core_app/js/jquery-3.2.1.js'%}"></script>
+    <script src="{% static 'core_app/js/myjs.js'%}"></script>
+
+  </body>
+</html>
