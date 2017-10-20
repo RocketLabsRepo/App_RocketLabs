@@ -336,17 +336,6 @@ def recoversecretlink_view(request):
 			if User.objects.filter(email = form.cleaned_data['email']).exists():
 				user = User.objects.get(email=form.cleaned_data['email'])
 
-				send_mail(
-	   		 			'Recuperacion de codigo unico',
-					    """Hola,
-	Hemos recibido tu solicitud de recuperación de codigo unico. 
-	Aqui lo tienes:""" + str(user.profile.secret_link) ,
-						config('HOST_USER'),
-					    [user.email],
-					    fail_silently=False,
-						)
-				return redirect('core_app:login')
-
 				context = {'secret_link':user.profile.secret_link}
 
 				msg_plain = render_to_string('core_app/mail/recover_secret_link_email.txt', context)
