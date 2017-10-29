@@ -1,18 +1,3 @@
-Core_app
-	Registro
-	- Cuando se ingresa con la cuenta gmail, si ya existe un usuario con ese correo lo duplica.
-	- Cuando se ingresa con facebook, no toma el correo electronico del usuario.
+Se han corregido bugs detectados, faltan buscar mas. Si se consiguen alguno ponganlo abajo diciendo en que app esta y cual funcionalidad es.
 
-	Recuperar Contraseña
-	- Si se introducen datos erroneos, no notifica.
 
-	Recuperar Codigo unico
-	- Si se introduce una entrada que no es un correo(falta de @), no notifica.
-
-	Desbloquear Cuenta
-	- Si se introduce una entrada que no es un correo(falta de @), no notifica.
-
-Project_app
-	Emitir Proyecto
-	- Al momento de elegir el paquete, salen todos los paquetes (incluyendo los personalizados)
-	- Falta opcion de crear paquete personalizado
