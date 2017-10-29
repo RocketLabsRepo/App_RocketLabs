@@ -58,27 +58,7 @@ def register_view(request):
 		ruf = core_forms.RegisterUserForm(request.POST)
 		if ruf.is_valid():
 			user = ruf.save()
-			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
-			# al email indicado con sus credenciales.
-			
-			"""
-			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1']}
-			
-			msg_plain = render_to_string('registration/user_register_email.txt', context)
-			msg_html = render_to_string('registration/user_register_email.html', context)
-			
-			send_mail(
-					'Bienvenido a RocketLabs!', 	#titulo
-					msg_plain,							#mensaje txt
-					'RockectLabs@gmail.com',		#email de envio
-					[user.email],						#destinatario
-					html_message=msg_html,				#mensaje en html
-					)
-			"""
-			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
-			# al email indicado con sus credenciales.
-			
-			
+
 			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1'], 'secret_link':user.profile.secret_link}
 			
 			msg_plain = render_to_string('core_app/mail/register_email.txt', context)
@@ -123,8 +103,10 @@ def login_view(request):
 				allowed_hosts=request.get_host(),
 			)
 			return redirect(next_url) if next_url_is_safe else redirect('core_app:home')
-
-	return render(request, 'core_app/login.html', {'loginf': form })
+	else:
+		if request.user.is_authenticated:
+			logout(request)
+		return render(request, 'core_app/login.html', {'loginf': form })
 
 
 # View para cerrar la sesión de usuarios
@@ -210,24 +192,6 @@ def changepassword_view(request):
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)
-			"""
-				#Envio de email con las nuevas credenciales al correo electrónico del usuario
-			user = User.objects.get(pk=request.user.id)
-			user_profile = Perfil.objects.get(user = user)
-			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
-
-			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
-			msg_html = render_to_string('registration/user_pwdreset_email.html', context)
-
-			send_mail(
-					'Cambio de Contraseña - Foro-Estudiantil!', #titulo
-					msg_plain,									#mensaje txt
-					'foroestudiantil2@gmail.com',				#email de envio
-					[user.email],								#destinatario
-					html_message=msg_html,						#mensaje en html
-					)
-			"""
-				# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
 
 			#Envio de email con las nuevas credenciales al correo electrónico del usuario
 			user = User.objects.get(pk=request.user.id)
@@ -307,50 +271,28 @@ def contact_submit(request):
 
 @sensitive_post_parameters()
 def recoverpassword_view(request):
-	form = core_forms.RecoverPassForm(request.POST or None)
-	if request.method == 'POST' and form.is_valid():
-		if User.objects.filter(username = form.cleaned_data['user']).exists():
-			user = User.objects.get(username = form.cleaned_data['user'])
-			if(user.profile.secret_link == form.cleaned_data['secret_link'] ):	
-				print(form.cleaned_data['user'])
-				link = "/restorepass/" + str(user.id)
-				return HttpResponseRedirect(link)
+	
+	if request.method == 'POST':
+		form = core_forms.RecoverPassForm(request.POST or None)
+		if form.is_valid():
+			if User.objects.filter(username = form.cleaned_data['user']).exists():
+				user = User.objects.get(username = form.cleaned_data['user'])
+				if(user.profile.secret_link == form.cleaned_data['secret_link'] ):	
+					print(form.cleaned_data['user'])
+					link = "/restorepass/" + str(user.id)
+					return HttpResponseRedirect(link)
+			messages.error(request, 'Datos incorrectos.')
+			return redirect('core_app:recover_pass')
 	else:
 		form = core_forms.RecoverPassForm()
+		if request.user.is_authenticated:
+			logout(request)
 		return render (request, 'core_app/recoverpass.html', { 'form' : form })
 
 @sensitive_post_parameters()
 def restorepassword_view(request, pkuser):
 	PasswordForm = core_forms.DefinePassForm
 	user = User.objects.get(pk=pkuser)		
-
-	if request.method == 'POST' and form.is_valid():
-		form = PasswordForm(user , request.POST)
-		form.save()
-		update_session_auth_hash(request, form.user)
-		"""
-			#Envio de email con las nuevas credenciales al correo electrónico del usuario
-		user = User.objects.get(pk=request.user.id)
-		user_profile = Perfil.objects.get(user = user)
-		context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
-		
-		msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
-		msg_html = render_to_string('registration/user_pwdreset_email.html', context)
-		
-		send_mail(
-				'Cambio de Contraseña - Foro-Estudiantil!', #titulo
-				msg_plain,									#mensaje txt
-				'foroestudiantil2@gmail.com',				#email de envio
-				[user.email],								#destinatario
-				html_message=msg_html,						#mensaje en html
-				)
-		"""
-		# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
-		user_profile = Profile.objects.get(user = user)
-		user_profile.is_blocked = False
-		user_profile.save()
-		return redirect('core_app:home')
-
 	if request.method == 'POST':
 		form = PasswordForm(user , request.POST) 
 		if form.is_valid():
@@ -377,6 +319,8 @@ def restorepassword_view(request, pkuser):
 			user_profile.save()
 			return redirect('core_app:home')
 		else:
+			if request.user.is_authenticated:
+				logout(request)
 			return render(request, 'core_app/changepassword.html',{'form': form})
 
 	else:
@@ -385,38 +329,31 @@ def restorepassword_view(request, pkuser):
 
 @sensitive_post_parameters()
 def recoversecretlink_view(request):
-	form = core_forms.RecoverSecretLinkForm(request.POST or None)
-	if request.method == 'POST' and form.is_valid():
-		if User.objects.filter(email = form.cleaned_data['email']).exists():
-			user = User.objects.get(email=form.cleaned_data['email'])
+	
+	if request.method == 'POST':
+		form = core_forms.RecoverSecretLinkForm(request.POST or None)
+		if form.is_valid():
+			if User.objects.filter(email = form.cleaned_data['email']).exists():
+				user = User.objects.get(email=form.cleaned_data['email'])
 
-			send_mail(
-   		 			'Recuperacion de codigo unico',
-				    """Hola,
-Hemos recibido tu solicitud de recuperación de codigo unico. 
-Aqui lo tienes:""" + str(user.profile.secret_link) ,
-					config('HOST_USER'),
-				    [user.email],
-				    fail_silently=False,
-					)
+				context = {'secret_link':user.profile.secret_link}
+
+				msg_plain = render_to_string('core_app/mail/recover_secret_link_email.txt', context)
+				msg_html = render_to_string('core_app/mail/recover_secret_link_email.html', context)
+
+				send_mail(
+						'Recuperación de código único - Rocket Labs!', 		#titulo
+						msg_plain,											#mensaje txt
+						config('HOST_USER'),								#email de envio
+						[user.email],										#destinatario
+						html_message=msg_html,								#mensaje en html
+						)
+			messages.success(request, 'Se ha enviado al correo indicado el codigo unico') #En caso de que no exista se le envia tambien esta notificacion		
 			return redirect('core_app:login')
-
-			context = {'secret_link':user.profile.secret_link}
-
-			msg_plain = render_to_string('core_app/mail/recover_secret_link_email.txt', context)
-			msg_html = render_to_string('core_app/mail/recover_secret_link_email.html', context)
-
-			send_mail(
-					'Recuperación de código único - Rocket Labs!', 		#titulo
-					msg_plain,											#mensaje txt
-					config('HOST_USER'),								#email de envio
-					[user.email],										#destinatario
-					html_message=msg_html,								#mensaje en html
-					)
-		messages.success(request, 'Se ha enviado al correo indicado el codigo unico') #En caso de que no exista se le envia tambien esta notificacion		
-		return redirect('core_app:login')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
+		if request.user.is_authenticated:
+			logout(request)
 		return render(request, 'core_app/recoversecretlink.html',{'form': form})
 
 #3 view para desbloquear usuario
@@ -426,50 +363,40 @@ Aqui lo tienes:""" + str(user.profile.secret_link) ,
 
 @sensitive_post_parameters()
 def unlockuser_view(request):
-	form = core_forms.RecoverSecretLinkForm(request.POST or None)
-	if request.method == 'POST' and form.is_valid():
-		if User.objects.filter(email = form.cleaned_data['email']).exists():
-			user = User.objects.get(email= form.cleaned_data['email'])
-			if(user.profile.is_blocked):
-				token = unlock_account_token.make_token(user)
-				uid = urlsafe_base64_encode(force_bytes(user.pk))
+	
+	if request.method == 'POST':
+		form = core_forms.RecoverSecretLinkForm(request.POST or None)
+		if form.is_valid():
+			if User.objects.filter(email = form.cleaned_data['email']).exists():
+				user = User.objects.get(email= form.cleaned_data['email'])
+				if(user.profile.is_blocked):
+					token = unlock_account_token.make_token(user)
+					uid = urlsafe_base64_encode(force_bytes(user.pk))
+					
+					#Debemos cambiar el link cuando subamos la pagina al servidor
+					link = "http://localhost:8000/unlockaccount/" + str(uid) + "/" + str(token)
+					
+					#Enviamos el correo al usuario con el link para el cambio de contraseña
+					context = {'link':link}
+					msg_plain = render_to_string('core_app/mail/unlock_user_email.txt', context)
+					msg_html = render_to_string('core_app/mail/unlock_user_email.html', context)
 
-				send_mail(
-	   		 			'Desbloquear Cuenta',
-					    """Hola,
-	Hemos recibido tu solicitud para desbloquear cuenta. 
-	Aqui lo tienes: http://localhost:8000/unlockaccount/""" + str(uid) + "/" + str(token),
-						config('HOST_USER'),
-					    [user.email],
-					    fail_silently=False,
-						)
+					send_mail(
+							'Desbloqueo de cuenta - Rocket Labs!', 				#titulo
+							msg_plain,											#mensaje txt
+							config('HOST_USER'),								#email de envio
+							[user.email],										#destinatario
+							html_message=msg_html,								#mensaje en html
+							)
+					
 				return redirect('core_app:unlockaccount_confirm')
+
 			else:
 				return redirect('core_app:unlockaccount_confirm')
-
-				
-				#Debemos cambiar el link cuando subamos la pagina al servidor
-				link = "http://localhost:8000/unlockaccount/" + str(uid) + "/" + str(token)
-				
-				#Enviamos el correo al usuario con el link para el cambio de contraseña
-				context = {'link':link}
-				msg_plain = render_to_string('core_app/mail/unlock_user_email.txt', context)
-				msg_html = render_to_string('core_app/mail/unlock_user_email.html', context)
-
-				send_mail(
-						'Desbloqueo de cuenta - Rocket Labs!', 				#titulo
-						msg_plain,											#mensaje txt
-						config('HOST_USER'),								#email de envio
-						[user.email],										#destinatario
-						html_message=msg_html,								#mensaje en html
-						)
-				
-			return redirect('core_app:unlockaccount_confirm')
-
-		else:
-			return redirect('core_app:unlockaccount_confirm')
 	else:
 		form = core_forms.RecoverSecretLinkForm()
+		if request.user.is_authenticated:
+			logout(request)
 		return render(request, 'core_app/unlockaccount.html',{'form': form})
 
 def unlockaccountconfirm_view(request):

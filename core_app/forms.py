@@ -238,12 +238,7 @@ class RecoverPassForm(forms.Form):
 	user = forms.CharField(label="Nombre de usuario", max_length=64, required=True, error_messages=my_default_errors)
 	secret_link = forms.CharField(label="Código único", max_length = 25, required=True, error_messages=my_default_errors)
 
-	def clean_user(self):
-		user = self.cleaned_data.get('user')
-		if User.objects.filter(username = user).exists():
-			return user
-		else:
-			raise forms.ValidationError(_("El usuario no existe"), code ="User_Dont_Exist")
+
 
 
 #Formulario para enviar codigounico
@@ -256,7 +251,7 @@ class RecoverSecretLinkForm(forms.ModelForm):
 
 		labels = { 'email':_('Correo Electrónico'),}
 
-		widgets = {	'email': forms.TextInput(attrs={'class':'w3-input w3-border input-font' }),}
+		widgets = {	'email': forms.EmailInput(attrs={'class':'w3-input w3-border input-font' }),}
 
 # Formulario para cambiar el email
 class ChangeEmailForm(forms.ModelForm):
