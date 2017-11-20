@@ -15,8 +15,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import os.path
-import dj_database_url
-from decouple import config
+#from decouple import config
 from django.contrib.messages import constants as message_constants
 
 MESSAGE_LEVEL = message_constants.DEBUG
@@ -61,7 +60,7 @@ INSTALLED_APPS = [
     'core_app',
     'bundles_app',
     'projects_app',
-    'social_django', 
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
     'social_django.middleware.SocialAuthExceptionMiddleware', # Redes sociales
 ]
 
@@ -122,25 +121,32 @@ SOCIAL_AUTH_PIPELINE = (
 #Estas lineas son para tomar el email de facebook
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id,name,email', 
+    'fields': 'id,name,email',
 }
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+"""
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST':config('DB_HOST'), 
+        'NAME': os.environ["DB_NAME"],
+        'USER': os.environ["DB_USER"],
+        'PASSWORD': os.environ["DB_PASSWORD"],
+        'HOST':os.environ["DB_HOST"],
         'PORT':''
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 #DATABASES = { 'default': dj_database_url.config() }
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -178,12 +184,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-   os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = "/home/osvanicolina/App_RocketLabs/core_app/static"
 
 # Configuracion de la carpeta raiz de media en la que se guardaran los
 # archivos subidos por los usuarios(Fotos, screenshots, etc)
@@ -198,10 +200,10 @@ LOGIN_URL = 'core_app:login'
 LOGOUT_URL = 'core_app:logout'
 LOGIN_REDIRECT_URL = 'core_app:home'
 
-SOCIAL_AUTH_FACEBOOK_KEY = config('SA_FBKEY')  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = config('SA_FBSECRET')  # App Secret
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SA_GPKEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SA_GPSECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ["SA_FBKEY"]  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ["SA_FBSECRET"]  # App Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ["SA_GPKEY"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ["SA_GPSECRET"]
 
 # Configuración para el envio de correos desde nuestra plataforma
 # Desde un correo gmail.com
@@ -210,5 +212,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config('HOST_USER')
-EMAIL_HOST_PASSWORD = config('HOST_PASSWORD')
+EMAIL_HOST_USER = os.environ["HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["HOST_PASSWORD"]
