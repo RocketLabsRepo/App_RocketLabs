@@ -414,8 +414,8 @@ class unlockaccount_view(View):
             user = None
 
         if user is not None and unlock_account_token.check_token(user, token):            
-			user.profile.is_blocked = False
-			return HttpResponseRedirect('/restorepass/'+str(user.id))
+            user.profile.is_blocked = False
+            return HttpResponseRedirect('/restorepass/'+str(user.id))
         else:
             # invalid link
             return render(request, 'core_app/index.html')
