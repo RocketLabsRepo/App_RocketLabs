@@ -18,7 +18,7 @@ class Service(models.Model):
 	is_active = models.BooleanField(default = True)
 
 	def __str__(self):
-		return self.name.encode('utf-8', errors='replace')
+		return self.name#.encode('utf-8', errors='replace')
 
 """""""""""""""""""""""""""
 Bundle Model
@@ -28,7 +28,7 @@ class Bundle(models.Model):
 
 	class Meta:
 		ordering = ["id"]
-	
+
 	services = models.ManyToManyField(Service)
 
 	title = models.CharField(max_length = 100)
@@ -40,7 +40,7 @@ class Bundle(models.Model):
 
 	def __str__(self):
 		if self.is_custom:
-			return "{}:{}".format(self.title, self.id).encode('utf-8', errors='replace')
+			return "{}:{}".format(self.title, self.id)#.encode('utf-8', errors='replace')
 		else:
 			return self.title.encode('utf-8', errors='replace')
 

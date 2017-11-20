@@ -9,7 +9,7 @@ from projects_app.models import Project
 
 # Helper function: Yields a generator with objects in l grouped in groups of n.
 def grouped(l, n):
-    for i in xrange(0, len(l), n):
+    for i in range(0, len(l), n):
         yield l[i:i+n]
 
 # Create your views here.
