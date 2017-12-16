@@ -37,7 +37,7 @@ class Project(models.Model):
 	finish_date = models.DateTimeField(blank = True, null=True, default=None)
 
 	def __str__(self):
-		return self.title.encode('utf-8', errors='replace')
+		return self.title#.encode('utf-8', errors='replace')
 
 	def get_preview_screenshot(self):
 		return self.screenshot_set.get(is_preview=True)
@@ -68,7 +68,7 @@ class Screenshot(models.Model):
 	date_uploaded = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
-		return "{} | {}".format(self.project.title , self.name).encode('utf-8', errors='replace')
+		return "{} | {}".format(self.project.title , self.name)#.encode('utf-8', errors='replace')
 
 	def mark_as_only_preview(self):
 		screens = Screenshot.objects.filter(project=self.project)
