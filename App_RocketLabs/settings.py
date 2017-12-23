@@ -185,7 +185,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/home/osvanicolina/App_RocketLabs/core_app/static"
+STATIC_ROOT = "/home/rldeploy/App_RocketLabs/core_app/static"
 
 # Configuracion de la carpeta raiz de media en la que se guardaran los
 # archivos subidos por los usuarios(Fotos, screenshots, etc)

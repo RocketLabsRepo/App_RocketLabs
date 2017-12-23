@@ -18,7 +18,7 @@ class Service(models.Model):
 	is_active = models.BooleanField(default = True)
 
 	def __str__(self):
-		return self.name#.encode('utf-8', errors='replace')
+		return self.name.encode('utf-8', errors='replace')
 
 """""""""""""""""""""""""""
 Bundle Model

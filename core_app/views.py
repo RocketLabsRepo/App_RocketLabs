@@ -4,13 +4,12 @@ from __future__ import unicode_literals
 from decouple import config
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.template.loader import render_to_string
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import  login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import force_text, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode, is_safe_url
 from django.views import View
@@ -25,7 +24,7 @@ from projects_app.models import Project
 
 # Helper function: Yields a generator with objects in l grouped in groups of n.
 def grouped(l, n):
-    for i in range(0, len(l), n):
+    for i in xrange(0, len(l), n):
         yield l[i:i+n]
 
 

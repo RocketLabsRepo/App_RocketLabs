@@ -41,7 +41,7 @@ class Profile(models.Model):
 
 	def __str__(self):
 
-		return "{}'s profile".format(self.user.get_username())#.encode('utf-8', errors='replace')
+		return "{}'s profile".format(self.user.get_username()).encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -58,7 +58,7 @@ class Request(models.Model):
 	sent_date = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
-		return self.subject#.encode('utf-8', errors='replace')
+		return self.subject.encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -73,7 +73,7 @@ class Skill(models.Model):
 	about = models.TextField(max_length=255, blank=True, default='')
 
 	def __str__(self):
-		return self.name#.encode('utf-8', errors='replace')
+		return self.name.encode('utf-8', errors='replace')
 
 
 """""""""""""""""""""""""""
@@ -96,7 +96,7 @@ class knows(models.Model):
 		unique_together = (("user", "skill"),)
 
 	def __str__(self):
-		return "{} knows {}".format(self.user,self.skill)#.encode('utf-8', errors='replace')
+		return "{} knows {}".format(self.user,self.skill).encode('utf-8', errors='replace')
 
 
 
