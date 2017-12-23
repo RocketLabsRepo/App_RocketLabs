@@ -26,36 +26,40 @@
         <a href="{% url 'core_app:home' %}" class="w3-bar-item w3-button w3-wide">Rocket Labs</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
+          <a href="{% url 'core_app:home' %}#vision" class="w3-bar-item w3-button">
+            <i class="w3-xlarge fa fa-eye w3-hide-large"></i>
+            <span class="w3-hide-medium">
+              <i class="w3-large fa fa-eye"></i> Visión
+            </span>
+          </a>
           <a href="{% url 'core_app:home' %}#team" class="w3-bar-item w3-button">
             <i class="w3-xlarge fa fa-group w3-hide-large"></i>
             <span class="w3-hide-medium">
-              <i class="w3-large fa fa-group"></i> EQUIPO
+              <i class="w3-large fa fa-group"></i> Equipo
             </span>
           </a>
           <a href="{% url 'core_app:home' %}#work" class="w3-bar-item w3-button">
             <i class="fa fa-th w3-xlarge w3-hide-large"></i>
             <span class="w3-hide-medium">
-              <i class="fa fa-th w3-large"></i> TRABAJOS
+              <i class="fa fa-th w3-large"></i> Trabajos
             </span>
           </a>
           <a href="{% url 'core_app:home' %}#pricing" class=" w3-bar-item w3-button">
             <i class="fa fa-usd w3-xlarge w3-hide-large"></i>
             <span class="w3-hide-medium">
-              <i class="fa fa-usd w3-large"></i> PRECIOS
+              <i class="fa fa-usd w3-large"></i> Paquetes
             </span>
           </a>
           <a href="{% url 'core_app:home' %}#contact" class="w3-bar-item w3-button">
             <i class="fa fa-envelope w3-xlarge w3-hide-large"></i>
             <span class="w3-hide-medium">
-              <i class="fa fa-envelope w3-large"></i> CONTACTO
+              <i class="fa fa-envelope w3-large"></i> Contacto
             </span>
           </a>
         {% if user.is_authenticated %}
           <a href="{% url 'core_app:edit_profile' %}" class="w3-bar-item w3-button">
             <i class="fa fa-user-circle w3-xlarge w3-hide-large"></i>
-            <span class="w3-hide-medium">
-              <i class="fa fa-user-circle w3-large"></i> {{ user.username }}
-            </span>
+            <span class="w3-hide-medium"> {{ user.username }}</span>
           </a>
           <a href="{% url 'core_app:logout' %}" class="w3-bar-item w3-button">
             <i class="fa fa-sign-out w3-xlarge w3-hide-large"></i>
@@ -67,7 +71,7 @@
           <a href="{% url 'core_app:login' %}" class="w3-bar-item w3-button">
             <i class="fa fa-sign-in w3-xlarge w3-hide-large"></i>
             <span class="w3-hide-medium">
-              <i class="fa fa-sign-in w3-large"></i> INGRESAR
+              <i class="fa fa-sign-in w3-large"></i> Ingresar
             </span>
           </a>
         {% endif %}
@@ -83,6 +87,7 @@
     <!-- Sidebar on small screens when clicking the menu icon -->
     <nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
       <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar <span class="w3-xlarge">&times;</span></a>
+      <a href="{% url 'core_app:home' %}#vision" onclick="w3_close()" class="w3-bar-item w3-button">VISION</a>
       <a href="{% url 'core_app:home' %}#team" onclick="w3_close()" class="w3-bar-item w3-button">EQUIPO</a>
       <a href="{% url 'core_app:home' %}#work" onclick="w3_close()" class="w3-bar-item w3-button"> TRABAJOS</a>
       <a href="{% url 'core_app:home' %}#pricing" onclick="w3_close()" class="w3-bar-item w3-button"> PRECIOS</a>

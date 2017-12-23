@@ -10,9 +10,10 @@
 <header class="bgimg-1 parallax w3-display-container" id="home">
   <div class="w3-display-left w3-text-white padding48">
     <span class="w3-jumbo header-text w3-hide-small">¡Déjanos ayudarte a despegar!</span><br>
-    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">Déjanos ayudarte a despegar.</span><br> <!-- Comienza algo que trascienda. -->
-    <span class="w3-large header-text">Deja de desperdiciar tu valioso tiempo con proyectos que no son para ti.</span>
-    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprende más y empieza hoy.</a></p>
+    <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">¡Déjanos ayudarte a despegar!</span><br>
+    <!-- <span class="w3-large header-text">No desperdicies tu valioso tiempo con proyectos que no son para ti.</span> -->
+    <span class="w3-large header-text">Nuestras soluciones estan diseñadas para ahorrar tu valioso tiempo.</span>
+    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprenda más y empieze hoy.</a></p>
   </div>
   <div class="w3-display-bottomleft w3-text-grey w3-large padding24-48">
     <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
@@ -24,46 +25,47 @@
 <!-- About Section -->
 <div class="w3-container padding128-16" id="about">
   <h3 class="w3-center fadeInOnScroll">ACERCA DE LA COMPAÑÍA</h3>
-  <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y habilidades</p>
+  <p class="w3-center w3-large fadeInOnScroll">Nuestros valores y principios</p>
   <div class="w3-row-padding w3-margin-bottom w3-center margintop64">
     <div class="w3-col m6 l3 fadeInOnScroll">
-      <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
+      <i class="fa fa-diamond w3-margin-bottom w3-jumbo w3-center"></i>
       <p class="w3-large">Alta calidad</p>
-      <p>Nos esforzamos para que nuestros proyectos sean lo mejor del mercado.</p>
+      <p>Nos esforzamos para que nuestros proyectos sean los mejores del mercado, empleando las últimas técnicas y tendencias.</p>
     </div>
     <div class="w3-col m6 l3 w3-margin-bottom fadeInOnScroll">
       <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Pasión</p>
-      <p>Amamos lo que hacemos, es un gran plus para ofrecerles un trabajo hecho con mucha dedicación.</p>
+      <p>Amamos lo que hacemos, es un gran plus el ofrecer un trabajo hecho con mucho cuidado y esfuerzo.</p>
     </div>
     <div class="w3-col m6 l3 fadeInOnScroll">
-      <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
+      <i class="fa fa-desktop w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Diseño</p>
-      <p>Les ofrecemos los mejores diseños que tienen un gran atractivo y muchas interacciones.</p>
+      <p>Les ofrecemos los mejores diseños con un gran atractivo, distribución e interacciones llamativas para los clientes.</p>
     </div>
     <div class="w3-col m6 l3 fadeInOnScroll">
       <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Soporte</p>
-      <p>Nuestras aplicaciones tienen soporte para todo lo que necesites.</p>
+      <p>Nuestras soluciones poseen soporte para todo lo que puedas necesitar y más.</p>
     </div>
   </div>
 </div>
 
-<!-- Promo Section - "We know design" -->
-<div class="w3-container w3-light-grey padding128-16">
+<!-- Promo Section - "Nuestra Vision" -->
+<div class="w3-container w3-light-grey padding128-16" id="vision" >
   <div class="w3-row-padding">
     <div class="w3-col m6">
       <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/space-window.png' %}" alt="Buildings" >
     </div>
 
-    <div class="w3-col m6 w3-margin-bottom">
-      <h3 class="fadeInOnScroll">Sabemos diseñar y desarrollar.</h3>
+    <div class="w3-col m6 w3-margin-bottom w3-center">
+      <h3 class="fadeInOnScroll w3-padding-16">Nuestra Visión</h3>
       <p class="fadeInOnScroll">
-        Nos hemos capacitado para ofrecerte los mejores productos diseñados impecablemente. Y seguimos en constante actualización para satisfacer las necesidades de nuestros clientes.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas facilisis sem id volutpat. Phasellus vel maximus augue. Fusce non porttitor lectus, et maximus eros. Pellentesque sit amet placerat quam. Proin egestas orci dui, ut accumsan elit varius eu.
+        Sed lacinia feugiat massa, eu cursus nulla tempor in. Praesent varius in tellus non rhoncus. Nullam at consequat turpis.
       </p><br>
-      <p class="fadeInOnScroll w3-center w3-large">
+      <!--<p class="fadeInOnScroll w3-center w3-large">
         <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a>
-      </p>
+      </p>-->
     </div>
   </div>
 </div>
@@ -76,10 +78,13 @@
     {% for member in team_members %}
 
     <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card-2">
+      <div class="w3-card-4">
 
       {% if member.profile.photo %}
-        <img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP">
+
+        <a href="{% url 'core_app:details_team_member' member.id %}">
+            <img src="{{ member.profile.photo.url}}" alt="Avatar de {{ member.get_full_name }}" class="widthOHP w3-hover-opacity">
+        </a>
       {% else %}
         <p>No hay imágen disponible</p>
       {% endif %}
@@ -88,9 +93,9 @@
           <p class="w3-opacity tm-title-height">{{ member.profile.title }}</p>
           <!--<p class="w3-justify tm-bio-height">{{ member.profile.bio }}</p>-->
 
-          <form action="{% url 'core_app:details_team_member' member.id %}">
+          <!--<form action="{% url 'core_app:details_team_member' member.id %}">
             <p><button type="submit "class="w3-button w3-btn w3-grey w3-block"><i class="fa fa-info-circle"></i> Ver detalles completos</button></p>
-          </form>
+          </form>-->
 
         </div>
       </div>
@@ -200,7 +205,7 @@
 
 <!-- Pricing Section -->
 
-<div class="w3-container w3-center w3-dhite padding128-16" id="pricing">
+<div class="w3-container w3-center w3-dhite padding128-16" >
   <h2>SERVICIOS Y PAQUETES</h2>
   <br>
   <div class="w3-row-padding margintop64">
@@ -304,7 +309,7 @@
 </div>
 
 
-<div class="w3-container w3-center w3-dark-grey padding128-16" >
+<div class="w3-container w3-center w3-dark-grey padding128-16" id="pricing" >
   <h2>Los Paquetes que Ofrecemos</h2>
 
   <div class="w3-row-padding margintop64">
@@ -312,10 +317,10 @@
     <div class="w3-third  w3-section">
       <ul class="w3-ul w3-card-2 w3-white w3-hover-shadow">
         <li class="w3-black w3-xlarge w3-padding-32">Full Web App</li>
-        <li class="w3-padding-8">Desarrollo de su aplicación web a la medida</li>
-        <li class="w3-padding-8">Responsive Design</li>
-        <li class="w3-padding-8">Integración con RRSS</li>
-        <li class="w3-padding-8">Mailing Lists</li>
+        <li class="w3-padding-16">Desarrollo de su aplicación web a la medida</li>
+        <li class="w3-padding-16">Responsive Design</li>
+        <li class="w3-padding-16">Integración con RRSS</li>
+        <li class="w3-padding-16">Mailing Lists</li>
 
         <li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
@@ -326,7 +331,7 @@
     <div class="w3-third">
       <ul class="w3-ul w3-white w3-hover-shadow">
         <li class="w3-teal w3-xlarge w3-padding-32">Premium</li>
-        <li class="w3-padding-32">Todos los servicios de los paquetes <b>Full Web App</b> y <b>Marketing Online</b> en un solo sitio para tu conveniencia</li>
+        <li class="w3-padding-32">Todos los servicios de <b>Full Web App</b> y <b>Marketing Online</b> en un solo paquete para tu conveniencia.</li>
         <li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
         </li>
@@ -336,10 +341,10 @@
     <div class="w3-third w3-section">
       <ul class="w3-ul w3-white w3-hover-shadow">
         <li class="w3-indigo w3-xlarge w3-padding-32">Marketing Online</li>
-        <li class="w3-padding-8">Community Management</li>
-        <li class="w3-padding-8">SEO</li>
-        <li class="w3-padding-8">Branding</li>
-        <li class="w3-padding-8">Mercadeo por RRSS</li>
+        <li class="w3-padding-16">Community Management</li>
+        <li class="w3-padding-16">SEO</li>
+        <li class="w3-padding-16">Branding</li>
+        <li class="w3-padding-16">Mercadeo por RRSS</li>
 
         <li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
