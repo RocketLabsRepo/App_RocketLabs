@@ -39,6 +39,14 @@ body, html {
     background-size: cover;
 }
 
+.bgimg-3{
+	background-image: url("../img/logoBGServices2.png");
+	min-height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .contact-holder{
 	background-color: #fff;
 	background-color: rgba(255,255,255,0.75);
@@ -69,12 +77,16 @@ body, html {
 	opacity:0;
 }
 
+.slideDownOnScroll{
+	display:none;
+}
+
 .header-text{
 	text-shadow: 2px 2px #222;
 }
 
 .skills-logo{
-	max-width: 240px;
+	max-width: 200px;
 }
 
 p.skill-name{
@@ -146,7 +158,9 @@ div.form-group{
 	width : 100%;
 }
 
-
+.bundle{
+    position: relative;
+}
 
 #widthNP{
 	width: 90%;

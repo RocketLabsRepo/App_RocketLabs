@@ -15,7 +15,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import os.path
-#from decouple import config
+from decouple import config
 from django.contrib.messages import constants as message_constants
 
 MESSAGE_LEVEL = message_constants.DEBUG

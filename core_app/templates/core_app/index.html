@@ -13,7 +13,7 @@
     <span class="w3-xxlarge header-text w3-hide-large w3-hide-medium">¡Déjanos ayudarte a despegar!</span><br>
     <!-- <span class="w3-large header-text">No desperdicies tu valioso tiempo con proyectos que no son para ti.</span> -->
     <span class="w3-large header-text">Nuestras soluciones estan diseñadas para ahorrar tu valioso tiempo.</span>
-    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprenda más y empieze hoy.</a></p>
+    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Aprenda más y empiece hoy.</a></p>
   </div>
   <div class="w3-display-bottomleft w3-text-grey w3-large padding24-48">
     <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
@@ -54,15 +54,19 @@
 <div class="w3-container w3-light-grey padding128-16" id="vision" >
   <div class="w3-row-padding">
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/space-window.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/logoRLwindow5.png' %}" alt="Buildings" >
     </div>
 
     <div class="w3-col m6 w3-margin-bottom w3-center">
       <h3 class="fadeInOnScroll w3-padding-16">Nuestra Visión</h3>
       <p class="fadeInOnScroll">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas facilisis sem id volutpat. Phasellus vel maximus augue. Fusce non porttitor lectus, et maximus eros. Pellentesque sit amet placerat quam. Proin egestas orci dui, ut accumsan elit varius eu.
-        Sed lacinia feugiat massa, eu cursus nulla tempor in. Praesent varius in tellus non rhoncus. Nullam at consequat turpis.
+       Rocket Labs es una empresa de outsourcing de Software Factory, Marketing Digital y SEO, con profesionales ubicados en Venezuela y Chile.
+       Nuestra meta es crear soluciones de software altamente efectivas y expandirnos en EE. UU., Europa y América Latina.
       </p><br>
+       <p class="fadeInOnScroll">
+        Crear productos innovadores y audaces al tiempo que nuestros clientes lo requieren es nuestro mayor foco.
+        Rocket Labs tiene un equipo talentoso, honesto, responsable y orientado a los resultados que trabaja en un entorno ágil para desarrollar software que haga la diferencia.
+       </p><br>
       <!--<p class="fadeInOnScroll w3-center w3-large">
         <a href="{% url 'projects_app:all_completed_projects' %}" class="w3-button w3-black"><i class="fa fa-th"> </i> Mira nuestro trabajo</a>
       </p>-->
@@ -71,14 +75,14 @@
 </div>
 
 <!-- Team Section -->
-<div class="w3-container padding128-16" id="team">
+<div class="bgimg-3 parallax w3-container padding128-16" id="team">
   <h3 class="w3-center">EL EQUIPO</h3>
   <p class="w3-center w3-large">Las caras de nuestra compañia</p>
   <div class="w3-row-padding w3-grayscale-min margintop64">
     {% for member in team_members %}
 
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card-4">
+    <div class="w3-col  l3 m6 w3-margin-bottom">
+      <div class="w3-card-4 w3-white">
 
       {% if member.profile.photo %}
 
@@ -115,27 +119,28 @@
 
 <!-- Promo Section "Statistics" -->
 <div class="w3-container w3-row w3-center w3-dark-grey w3-padding-64 ">
+
   <div class="w3-quarter fadeInOnScroll">
-    <span class="w3-xxlarge">14+</span>
+    <span class="w3-xxlarge">5+</span>
     <br>Socios
   </div>
   <div class="w3-quarter fadeInOnScroll">
-    <span class="w3-xxlarge">55+</span>
+    <span class="w3-xxlarge">4+</span>
     <br>Proyectos finalizados
   </div>
   <div class="w3-quarter fadeInOnScroll">
-    <span class="w3-xxlarge">89+</span>
+    <span class="w3-xxlarge">3+</span>
     <br>Clientes Satisfechos
   </div>
   <div class="w3-quarter fadeInOnScroll">
-    <span class="w3-xxlarge">150+</span>
+    <span class="w3-xxlarge">20+</span>
     <br>Reuniones
   </div>
 </div>
 
 <!-- Work Section -->
 
-<div class="w3-container padding128-16" id="work">
+<div class="bgimg-3 parallax w3-container padding128-16" id="work">
   <h3 class="w3-center">NUESTRO TRABAJO</h3>
   <p class="w3-center w3-large">Últimos proyectos realizados para clientes satisfechos</p>
 
@@ -145,16 +150,16 @@
 
     {% for object in latests_projects %}
         <div class="w3-col l3 m6 w3-center w3-margin-bottom">
-          <div class="w3-card-2">
+            <div class="w3-card-2 w3-white ">
             {% with object.get_preview_screenshot as image %}
-            <img src="{{ image.img.url }}" class="widthOHP" alt="{{ image.name }}">
+            <img src="{{ image.img.url }}" class="widthOHP " alt="{{ image.name }}">
             {% endwith %}
-            <div class="w3-container">
-              <p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
-              <p class="project-title-height w3-hide-small">{{ object.title }}</p>
-                    <a href="{% url 'projects_app:completed_project_details' object.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> Ver detalles</a>
+                <div class="w3-container">
+                  <p class="w3-hide-medium w3-hide-large">{{ object.title }}</p>
+                  <p class="project-title-height w3-hide-small">{{ object.title }}</p>
+                        <a href="{% url 'projects_app:completed_project_details' object.id %}" class="w3-button w3-btn w3-light-grey w3-block w3-margin-bottom"><i class="fa fa-info-circle"></i> Ver detalles</a>
                 </div>
-                </div>
+            </div>
         </div>
 
     {% empty %}
@@ -205,12 +210,12 @@
 
 <!-- Pricing Section -->
 
-<div class="w3-container w3-center w3-dhite padding128-16" >
+<div class=" w3-container w3-center w3-dhite padding128-16" >
   <h2>SERVICIOS Y PAQUETES</h2>
   <br>
   <div class="w3-row-padding margintop64">
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/Precio.jpg' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/Precio.jpg' %}" alt="Buildings" >
     </div>
 
     <div class="w3-col m6 w3-margin-bottom margintop64">
@@ -229,13 +234,13 @@
       </p><br>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/RRSS.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/RRSS.png' %}" alt="Buildings" >
     </div>
   </div>
 
   <div class="w3-row-padding margintop64">
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthSFP" src="{% static 'core_app/img/responsive.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthSFP fadeInOnScroll" src="{% static 'core_app/img/responsive.png' %}" alt="Buildings" >
     </div>
     <div class="w3-col m6 w3-margin-bottom margintop64">
       <h3 class="fadeInOnScroll">Responsive Design</h3>
@@ -253,13 +258,13 @@
       </p><br>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/Correo.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/Correo.png' %}" alt="Buildings" >
     </div>
   </div>
 
   <div class="w3-row-padding margintop64">
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/community_manager.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/community_manager.png' %}" alt="Buildings" >
     </div>
 
     <div class="w3-col m6 w3-margin-bottom margintop64">
@@ -278,13 +283,13 @@
       </p><br>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/SEO.png' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/SEO.png' %}" alt="Buildings" >
     </div>
   </div>
 
   <div class="w3-row-padding margintop64">
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthOHP" src="{% static 'core_app/img/branding.jpg' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthOHP fadeInOnScroll" src="{% static 'core_app/img/branding.jpg' %}" alt="Buildings" >
     </div>
 
     <div class="w3-col m6 w3-margin-bottom margintop64">
@@ -303,7 +308,7 @@
       </p><br>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large widthSFP" src="{% static 'core_app/img/redes_sociales.jpg' %}" alt="Buildings" >
+      <img class="w3-image w3-round-large widthSFP fadeInOnScroll" src="{% static 'core_app/img/redes_sociales.jpg' %}" alt="Buildings" >
     </div>
   </div>
 </div>
@@ -314,7 +319,7 @@
 
   <div class="w3-row-padding margintop64">
 
-    <div class="w3-third  w3-section">
+    <div class="w3-third  w3-section bundle">
       <ul class="w3-ul w3-card-2 w3-white w3-hover-shadow">
         <li class="w3-black w3-xlarge w3-padding-32">Full Web App</li>
         <li class="w3-padding-16">Desarrollo de su aplicación web a la medida</li>
@@ -322,23 +327,23 @@
         <li class="w3-padding-16">Integración con RRSS</li>
         <li class="w3-padding-16">Mailing Lists</li>
 
-        <li class="w3-light-grey w3-padding-24">
+        <!--<li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
+        </li>-->
       </ul>
     </div>
 
-    <div class="w3-third">
+    <div class="w3-third w3-section bundle">
       <ul class="w3-ul w3-white w3-hover-shadow">
         <li class="w3-teal w3-xlarge w3-padding-32">Premium</li>
         <li class="w3-padding-32">Todos los servicios de <b>Full Web App</b> y <b>Marketing Online</b> en un solo paquete para tu conveniencia.</li>
-        <li class="w3-light-grey w3-padding-24">
+        <!--<li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
+        </li>-->
       </ul>
     </div>
 
-    <div class="w3-third w3-section">
+    <div class="w3-third w3-section bundle">
       <ul class="w3-ul w3-white w3-hover-shadow">
         <li class="w3-indigo w3-xlarge w3-padding-32">Marketing Online</li>
         <li class="w3-padding-16">Community Management</li>
@@ -346,9 +351,9 @@
         <li class="w3-padding-16">Branding</li>
         <li class="w3-padding-16">Mercadeo por RRSS</li>
 
-        <li class="w3-light-grey w3-padding-24">
+        <!--<li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
+        </li>-->
       </ul>
     </div>
 

@@ -373,7 +373,7 @@ def unlockuser_view(request):
 					uid = urlsafe_base64_encode(force_bytes(user.pk))
 
 					#Debemos cambiar el link cuando subamos la pagina al servidor
-					link = "http://localhost:8000/unlockaccount/" + str(uid) + "/" + str(token)
+					link = "http://www.rocketlabsgroup.com/unlockaccount/" + str(uid) + "/" + str(token)
 
 					#Enviamos el correo al usuario con el link para el cambio de contraseña
 					context = {'link':link}

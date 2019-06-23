@@ -40,7 +40,7 @@ class Bundle(models.Model):
 
 	def __str__(self):
 		if self.is_custom:
-			return "{}:{}".format(self.title, self.id)#.encode('utf-8', errors='replace')
+			return "{}:{}".format(self.title, self.id).encode('utf-8', errors='replace')
 		else:
 			return self.title.encode('utf-8', errors='replace')
 

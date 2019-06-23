@@ -36,10 +36,22 @@ $(document).ready(function(){
       /* If the object is completely visible in the window, fade it it */
       if( bottom_of_window > bottom_of_object ){
 
-          $(this).animate({'opacity':'1'},800);
+          $(this).animate({'opacity':'1'},600);
       }
-    }); 
+    });
+
+
   });
+
+  //Script para efecto de hover de los paquetes.
+  $("div.bundle").hover(function(){
+    //$(this).removeClass(" w3-section ");
+    $(this).animate({top:'-=30'}, 200);
+    }, function(){
+    //$(this).addClass(" w3-section ");
+    $(this).animate({top:'+=30'}, 200);
+});
+
 
   //Script para desplegar los detalles de un proyecto en el panel de control.
   $('button.toggle-project-details').on( "click", function(){
